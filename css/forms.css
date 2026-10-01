@@ -257,3 +257,76 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* Icon Input Containers (Search & Filter Inputs) */
+.icon-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid var(--form-element-border-color);
+  border-radius: var(--control-border-radius, 4px);
+  background-color: var(--form-element-bg-color);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.icon-input:focus-within {
+  border-color: var(--form-element-focus-border-color, var(--blue-hex));
+  box-shadow: 0 0 0 2px rgba(14, 110, 184, 0.2);
+}
+
+.icon-input > input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.75rem;
+  border: none !important;
+  background-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: var(--form-element-text-color);
+  font-family: inherit;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.icon-input > .icon,
+.icon-input > i {
+  border: none;
+  background-color: transparent;
+  padding: 0 0.5rem 0 0.85rem;
+  color: var(--muted-text-color, var(--dark-grey-hex));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.icon-input > input:first-child + .icon,
+.icon-input > input:first-child + i {
+  padding: 0 0.85rem 0 0.5rem;
+}
+
+.icon-input > .button,
+.icon-input > button,
+.icon-input > .clear-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 0 0.75rem 0 0.25rem;
+  color: var(--muted-text-color, var(--dark-grey-hex));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.icon-input > .button:hover,
+.icon-input > button:hover,
+.icon-input > .clear-btn:hover {
+  color: var(--primary-text-color);
+}
+

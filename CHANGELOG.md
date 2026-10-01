@@ -6,6 +6,7 @@ All notable changes to this project are documented here.
 > for the versioning and changelog conventions used across the HiNoLuGi projects.
 
 ## v2.0.1-pre
+- FrontEnd: Refined catalogue item title contrast, action button dark theme styling, and search input layout.
 
 ## v2.0.0 [released: 2026-09-19]
 - Docs: Documented complete API surface across all JavaScript modules and classes.
