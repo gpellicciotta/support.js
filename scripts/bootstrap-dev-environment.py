@@ -48,7 +48,7 @@ def setup() -> int:
         print("[!] npm not found on the PATH; install Node.js LTS first.", file=sys.stderr)
         return 1
     ok = run_step("Installing dependencies (npm ci)", [npm, "ci"])
-    ok = ok and run_step("Checking formatting", [npm, "run", "format:check"])
+    ok = ok and run_step("Linting", [npm, "run", "lint"])
     ok = ok and run_step("Running unit tests", [npm, "test"])
     return 0 if ok else 1
 

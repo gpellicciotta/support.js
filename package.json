@@ -24,8 +24,8 @@
   },
   "scripts": {
     "test": "vitest run",
-    "format": "prettier --write \"js/**/*.mjs\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
-    "format:check": "prettier --check \"js/**/*.mjs\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
+    "lint": "eslint .",
+    "format": "eslint . --fix",
     "release-notes": "node scripts/extract-release-notes.mjs"
   },
   "repository": {
@@ -42,7 +42,10 @@
     "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
-    "prettier": "3.9.6",
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.13.0",
     "vitest": "^5.0.5"
   }
 }

@@ -196,7 +196,8 @@ export default class CollectionEditor {
       if (this.deleteButtonEl) {
         if (count > 0) {
           enable(this.deleteButtonEl, count === 1 ? 'Delete the selected item' : `Delete the ${count} selected items`);
-        } else {
+        }
+        else {
           disable(this.deleteButtonEl, 'No items have been selected for deletion');
         }
       }
@@ -206,10 +207,12 @@ export default class CollectionEditor {
         if (this.onSelectionChange) {
           this.onSelectionChange(count, selected);
         }
-      } else {
+      }
+      else {
         this._lastSelectedCount = count;
       }
-    } finally {
+    }
+    finally {
       this._isUpdatingSelection = false;
     }
   }
@@ -225,14 +228,16 @@ export default class CollectionEditor {
     if (this.emptyStateEl) {
       if (total > 0) {
         disable(this.emptyStateEl);
-      } else {
+      }
+      else {
         enable(this.emptyStateEl);
       }
     }
     if (this.listEl) {
       if (total > 0) {
         enable(this.listEl);
-      } else {
+      }
+      else {
         disable(this.listEl);
       }
     }
@@ -276,7 +281,8 @@ export default class CollectionEditor {
     }
     if (prepend && this.listEl.firstChild) {
       this.listEl.insertBefore(rowEl, this.listEl.firstChild);
-    } else {
+    }
+    else {
       this.listEl.appendChild(rowEl);
     }
     this.updateEmptyState();

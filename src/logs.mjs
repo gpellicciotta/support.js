@@ -82,10 +82,12 @@ export function defaultHandler(logEvent) {
   if (logEvent.level >= ERROR_LEVEL) {
     logPrefix = `${logPrefix}[error] `;
     logFn = console.error;
-  } else if (logEvent.level >= WARNING_LEVEL) {
+  }
+  else if (logEvent.level >= WARNING_LEVEL) {
     logPrefix = `${logPrefix}[warning] `;
     logFn = console.warn;
-  } else if (logEvent.level <= TRACE_LEVEL) {
+  }
+  else if (logEvent.level <= TRACE_LEVEL) {
     logPrefix = `${logPrefix}[trace] `;
     logFn = console.debug;
   }
@@ -105,9 +107,11 @@ export function levelToLevelName(level) {
   let levelName = 'info';
   if (level >= ERROR_LEVEL) {
     levelName = 'error';
-  } else if (level >= WARNING_LEVEL) {
+  }
+  else if (level >= WARNING_LEVEL) {
     levelName = 'warning';
-  } else if (level <= TRACE_LEVEL) {
+  }
+  else if (level <= TRACE_LEVEL) {
     levelName = 'trace';
   }
   return levelName;
@@ -143,12 +147,14 @@ function fireLogEvent(logEvent) {
   const callbacks = logHandlers.slice(); // Take a copy
   if (callbacks.length === 0) {
     defaultHandler(logEvent);
-  } else {
+  }
+  else {
     for (let i = 0; i < callbacks.length; i++) {
       try {
         callbacks[i].call(null, logEvent);
         calls += 1;
-      } catch (err) {
+      }
+      catch (err) {
         const errLogEvent = {
           id: ++logEventId,
           time: new Date(),
@@ -188,19 +194,22 @@ export class Logger {
         'min-level': this.minLevel,
       };
     }
-    if (props.hasOwnProperty('name')) {
+    if (Object.hasOwn(props, 'name')) {
       this.name = props['name'];
     }
-    if (props.hasOwnProperty('min-level')) {
+    if (Object.hasOwn(props, 'min-level')) {
       if (props['min-level']) {
         this.minLevel = +props['min-level'];
-      } else {
+      }
+      else {
         this.minLevel = null;
       }
-    } else if (props.hasOwnProperty('minLevel')) {
+    }
+    else if (Object.hasOwn(props, 'minLevel')) {
       if (props['minLevel']) {
         this.minLevel = +props['minLevel'];
-      } else {
+      }
+      else {
         this.minLevel = null;
       }
     }
@@ -467,7 +476,8 @@ export function formatLogMessage(message, { level, origin, timestamp, forFile = 
     const lvlClean = level.trim().toUpperCase();
     if (forFile) {
       parts.push(formatSeverityIndicator(lvlClean));
-    } else if (lvlClean === 'WARN' || lvlClean === 'WARNING' || lvlClean === 'ERROR') {
+    }
+    else if (lvlClean === 'WARN' || lvlClean === 'WARNING' || lvlClean === 'ERROR') {
       // On stdout/stderr, only emit ERROR and WARN indicators; strip other severity indicators
       parts.push(formatSeverityIndicator(lvlClean));
     }
@@ -529,7 +539,8 @@ export class CliLogger {
         if (fs) {
           fs.appendFileSync(this.logPath, text, 'utf-8');
         }
-      } catch {
+      }
+      catch {
         // Best-effort file logging; swallow to not let logging itself crash the CLI
       }
     }
@@ -573,7 +584,8 @@ export class CliLogger {
     const stdText = formatLogMessage(message, { level, origin: effectiveOrigin, timestamp: ts, forFile: false });
     if (toStderr) {
       process.stderr.write(stdText);
-    } else if (toStdout) {
+    }
+    else if (toStdout) {
       process.stdout.write(stdText);
     }
   }

@@ -30,12 +30,12 @@ class MockElement {
   remove() {
     if (this.parent) {
       const idx = this.parent.children.indexOf(this);
-      if (idx >= 0) this.parent.children.splice(idx, 1);
+      if (idx >= 0) { this.parent.children.splice(idx, 1); }
       this.parent = null;
     }
   }
   get lastElementChild() {
-    if (this.children.length > 0) return this.children[this.children.length - 1];
+    if (this.children.length > 0) { return this.children[this.children.length - 1]; }
     const child = new MockElement('div');
     this.appendChild(child);
     return child;
@@ -43,7 +43,7 @@ class MockElement {
   querySelector(sel) {
     if (sel.startsWith('#')) {
       const id = sel.slice(1);
-      if (this.attributes.get('id') === id) return this;
+      if (this.attributes.get('id') === id) { return this; }
     }
     const elem = new MockElement('div');
     elem.classList.add('main');

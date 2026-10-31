@@ -99,7 +99,8 @@ export default class AppNotificationBar extends AppView {
         const targetContainer = this.domParentEl || this.componentUIEl;
         if (this.expandCollapseToggle.checked) {
           targetContainer?.classList.add('expanded');
-        } else {
+        }
+        else {
           targetContainer?.classList.remove('expanded');
         }
       });
@@ -152,7 +153,7 @@ export default class AppNotificationBar extends AppView {
    * @returns {void}
    */
   updateMainUI() {
-    if (!this.notificationBarRootEl) return;
+    if (!this.notificationBarRootEl) { return; }
     this.notificationBarItems = [];
     this.notificationBarRootEl.innerHTML = '';
     const notifications = typeof this.app?.getNotifications === 'function' ? this.app.getNotifications() : [];
@@ -168,7 +169,8 @@ export default class AppNotificationBar extends AppView {
     if (container) {
       if (container.dataset) {
         container.dataset.notificationCount = String(this.notificationBarItems.length);
-      } else if (typeof container.setAttribute === 'function') {
+      }
+      else if (typeof container.setAttribute === 'function') {
         container.setAttribute('data-notification-count', String(this.notificationBarItems.length));
       }
     }
@@ -200,8 +202,8 @@ export default class AppNotificationBar extends AppView {
     const type = note.type ? note.type : '?';
     const actionButtonHtml = note.action
       ? `<button class="action-button" data-action="notification-action" title="${escapeHtml(note.action.label)}">${
-          note.action.icon ? `<i class="${note.action.icon}"></i>` : escapeHtml(note.action.label)
-        }</button>`
+        note.action.icon ? `<i class="${note.action.icon}"></i>` : escapeHtml(note.action.label)
+      }</button>`
       : '';
     const newNote = htmlToElement(`
       <li class="notification" data-notification-id="${noteId}" title="${type} notification created ${time}">

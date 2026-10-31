@@ -99,7 +99,8 @@ test('sendRequest performs successful GET request and returns status, data, head
     assert.equal(response.status, 200);
     assert.deepEqual(response.data, { result: 'ok', count: 1 });
     assert.equal(response.headers.get('x-server-version'), '1.0');
-  } finally {
+  }
+  finally {
     server.close();
   }
 });
@@ -141,7 +142,8 @@ test('sendRequest preserves auth options.headers merging behavior and authHeader
     assert.equal(receivedHeaders.accept, 'application/vnd.api+json');
     assert.equal(receivedHeaders['content-type'], 'application/json');
     assert.deepEqual(JSON.parse(receivedBody), payload);
-  } finally {
+  }
+  finally {
     server.close();
   }
 });
@@ -151,16 +153,20 @@ test('sendRequest maps error responses into ApiError subclasses', async () => {
     if (req.url === '/err401') {
       res.writeHead(401, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Token expired' }));
-    } else if (req.url === '/err400-notfound') {
+    }
+    else if (req.url === '/err400-notfound') {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'No counter with id 99' }));
-    } else if (req.url === '/err400-val') {
+    }
+    else if (req.url === '/err400-val') {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Validation failed' }));
-    } else if (req.url === '/err409') {
+    }
+    else if (req.url === '/err409') {
       res.writeHead(409, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Name already taken' }));
-    } else {
+    }
+    else {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Internal crash' }));
     }
@@ -195,7 +201,8 @@ test('sendRequest maps error responses into ApiError subclasses', async () => {
       async () => sendRequest(baseUrl, 'GET', '/err500'),
       (err) => err instanceof ApiError && err.status === 500,
     );
-  } finally {
+  }
+  finally {
     server.close();
   }
 });
@@ -217,7 +224,8 @@ test('sendRequest handles redirect manual without following or erroring on 3xx',
     assert.equal(res.status, 302);
     assert.equal(res.data, null);
     assert.equal(res.headers.get('location'), '/target');
-  } finally {
+  }
+  finally {
     server.close();
   }
 });

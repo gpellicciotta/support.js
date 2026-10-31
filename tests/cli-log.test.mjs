@@ -116,7 +116,8 @@ describe('CliLogger', () => {
     };
     try {
       fn();
-    } finally {
+    }
+    finally {
       process.stdout.write = origOut;
       process.stderr.write = origErr;
     }
@@ -166,7 +167,8 @@ describe('CliLogger', () => {
       const { out } = withCapturedStdio(() => verboseDebug.debug('secret detail'));
       assert.equal(out, '');
       assert.match(fs.readFileSync(tmpFile, 'utf-8'), /secret detail/);
-    } finally {
+    }
+    finally {
       fs.rmSync(tmpFile, { force: true });
     }
   });
@@ -177,8 +179,9 @@ describe('CliLogger', () => {
       const logger = new CliLogger({ logPath: tmpFile, origin: 'demo' });
       withCapturedStdio(() => logger.info('recorded'));
       const contents = fs.readFileSync(tmpFile, 'utf-8');
-      assert.match(contents, /\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] \*\*\[INFO\]\*\*  <demo> recorded/);
-    } finally {
+      assert.match(contents, /\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\] \*\*\[INFO\]\*\* {2}<demo> recorded/);
+    }
+    finally {
       fs.rmSync(tmpFile, { force: true });
     }
   });

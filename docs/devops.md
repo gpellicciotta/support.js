@@ -36,10 +36,10 @@ npx vitest run
 
 ### Formatting
 ```bash
-# Check formatting (CI-safe, no writes)
-npm run format:check
+# Check style with ESLint Stylistic (CI-safe, no writes)
+npm run lint
 
-# Reformat all source files with Prettier
+# Fix style issues automatically
 npm run format
 ```
 

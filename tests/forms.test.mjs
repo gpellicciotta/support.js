@@ -36,8 +36,8 @@ class FakeElement {
   }
 
   get textContent() {
-    if (this._textContent !== undefined) return this._textContent;
-    if (this.children.length > 0) return this.children.map((c) => c.textContent).join('');
+    if (this._textContent !== undefined) { return this._textContent; }
+    if (this.children.length > 0) { return this.children.map((c) => c.textContent).join(''); }
     return this._innerHTML || '';
   }
 

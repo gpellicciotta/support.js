@@ -21,7 +21,7 @@ class MockElement {
 
   setAttribute(k, v) {
     this._attrs.set(k, String(v));
-    if (k === 'id') this.id = String(v);
+    if (k === 'id') { this.id = String(v); }
   }
 
   getAttribute(k) {
@@ -55,13 +55,13 @@ class MockElement {
   remove() {
     if (this.parent) {
       const idx = this.parent.children.indexOf(this);
-      if (idx >= 0) this.parent.children.splice(idx, 1);
+      if (idx >= 0) { this.parent.children.splice(idx, 1); }
       this.parent = null;
     }
   }
 
   get lastElementChild() {
-    if (this.children.length > 0) return this.children[this.children.length - 1];
+    if (this.children.length > 0) { return this.children[this.children.length - 1]; }
     const child = new MockElement('div');
     this.appendChild(child);
     return child;
@@ -70,17 +70,17 @@ class MockElement {
   querySelector(sel) {
     if (sel.startsWith('#')) {
       const id = sel.slice(1).split(' ')[0];
-      if (this.id === id || this._attrs.get('id') === id) return this;
+      if (this.id === id || this._attrs.get('id') === id) { return this; }
     }
     if (sel.startsWith('.')) {
       const cls = sel.slice(1).split(' ')[0];
-      if (this.classList.contains(cls)) return this;
+      if (this.classList.contains(cls)) { return this; }
     }
     for (const child of this.children) {
-      if (child.id === sel.slice(1) || child._attrs.get('id') === sel.slice(1)) return child;
-      if (sel.startsWith('.') && child.classList.contains(sel.slice(1).split(' ')[0])) return child;
+      if (child.id === sel.slice(1) || child._attrs.get('id') === sel.slice(1)) { return child; }
+      if (sel.startsWith('.') && child.classList.contains(sel.slice(1).split(' ')[0])) { return child; }
       const found = child.querySelector(sel);
-      if (found) return found;
+      if (found) { return found; }
     }
     const elem = new MockElement('div');
     return elem;
@@ -138,7 +138,7 @@ describe('AppActionBar', () => {
               el._html = html;
               const idMatch = html.match(/id="([^"]+)"/);
               const root = new MockElement('div');
-              if (idMatch) root.id = idMatch[1];
+              if (idMatch) { root.id = idMatch[1]; }
               const list = new MockElement('ol');
               list.classList.add('action-bar');
               list.classList.add('main');
@@ -146,7 +146,7 @@ describe('AppActionBar', () => {
               el.content.children = [root];
               root.parent = el.content;
               el.content.querySelector = (sel) => {
-                if (idMatch && sel === '#' + idMatch[1]) return root;
+                if (idMatch && sel === '#' + idMatch[1]) { return root; }
                 return root.querySelector(sel);
               };
             },
@@ -227,7 +227,7 @@ describe('AppActionBar', () => {
     const parent = new MockElement('div');
     bar.attach(parent);
 
-    const [item1, sep, item2] = bar.actionBarItems;
+    const [item1, sep] = bar.actionBarItems;
     assert.equal(sep.rootElement.classList.contains('disabled'), false);
 
     // Disable action1 via event

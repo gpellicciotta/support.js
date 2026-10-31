@@ -60,7 +60,7 @@ def main() -> int:
         print("[!] npm or node_modules missing; run scripts/bootstrap-dev-environment.py first.", file=sys.stderr)
         return 1
     commands = {
-        "lint": [[npm, "run", "format:check"]],
+        "lint": [[npm, "run", "lint"]],
         "format": [[npm, "run", "format"]],
         "test": [[npm, "test"]],
         "pack": [[npm, "pack", "--dry-run"]],

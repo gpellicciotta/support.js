@@ -120,7 +120,8 @@ export class Matrix {
           this._vals[r][c] = matrix._vals[r][c];
         }
       }
-    } else if (fillValue instanceof Array) {
+    }
+    else if (fillValue instanceof Array) {
       const array = fillValue;
       if (array.length !== this._rows) {
         throw new Error('Fill-value array has ' + array.length + ' rows while expecting ' + this._rows);
@@ -137,14 +138,16 @@ export class Matrix {
           this._vals[r][c] = array[r][c];
         }
       }
-    } else if (fillValue instanceof Function) {
+    }
+    else if (fillValue instanceof Function) {
       const func = fillValue;
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           this._vals[r][c] = func(r, c);
         }
       }
-    } else {
+    }
+    else {
       // Scalar value
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
@@ -219,7 +222,8 @@ export class Matrix {
           }
         }
       }
-    } else {
+    }
+    else {
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           if (this._vals[r][c] !== other) {
@@ -246,7 +250,8 @@ export class Matrix {
           result._vals[r][c] = this._vals[r][c] + other._vals[r][c];
         }
       }
-    } else {
+    }
+    else {
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           result._vals[r][c] = this._vals[r][c] + other;
@@ -271,7 +276,8 @@ export class Matrix {
           result._vals[r][c] = this._vals[r][c] - other._vals[r][c];
         }
       }
-    } else {
+    }
+    else {
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           result._vals[r][c] = this._vals[r][c] - other;
@@ -296,7 +302,8 @@ export class Matrix {
           result._vals[r][c] = this._vals[r][c] * other._vals[r][c];
         }
       }
-    } else {
+    }
+    else {
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           result._vals[r][c] = this._vals[r][c] * other;
@@ -359,7 +366,8 @@ export class Matrix {
           result._vals[r][c] = this._vals[r][c] / other._vals[r][c];
         }
       }
-    } else {
+    }
+    else {
       for (let r = 0; r < this._rows; r++) {
         for (let c = 0; c < this._cols; c++) {
           result._vals[r][c] = this._vals[r][c] / other;

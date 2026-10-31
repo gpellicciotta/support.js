@@ -163,7 +163,7 @@ function createSnowFlake() {
   newElement.style.right = `${xPos}px`;
   newElement.style.color = randomElement(snowOptions.colors);
   newElement.style.fontSize = `${size}px`;
-  //newElement.style.width = `${size}px`;
+  // newElement.style.width = `${size}px`;
   newElement.style.height = `${size}px`;
   newElement.style.zIndex = `${zIndex}`;
   newElement.style.pointerEvents = 'none';

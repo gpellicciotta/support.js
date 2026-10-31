@@ -241,12 +241,9 @@ describe('startLongRunningOperation', () => {
 
   test('coordinates with app.startProgress and app.stopProgress', async () => {
     const comp = makeComponent();
-    let startCalls = 0;
     let stopCalls = 0;
     comp.app = {
-      startProgress: () => {
-        startCalls++;
-      },
+      startProgress: () => {},
       stopProgress: () => {
         stopCalls++;
       },

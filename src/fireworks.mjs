@@ -127,8 +127,8 @@ function setCanvasSizes(canvasEl) {
   const canvasHeight = +getComputedStyle(canvasEl).getPropertyValue('height').slice(0, -2);
 
   // Set logical bounds
-  //canvasEl.style.width = canvasWidth + 'px';
-  //canvasEl.style.height = canvasHeight + 'px';
+  // canvasEl.style.width = canvasWidth + 'px';
+  // canvasEl.style.height = canvasHeight + 'px';
 
   // Set physical bounds based on CSS bounds:
   canvasEl.width = canvasWidth * window.devicePixelRatio;
@@ -260,7 +260,8 @@ class Firework {
         this._particles.splice(0, 1); // Remove
         this.explode(explosionCenter);
       }
-    } else {
+    }
+    else {
       // If already exploded into multiple particles
       for (let i = this._particles.length - 1; i >= 0; i--) {
         const p = this._particles[i];
@@ -345,6 +346,7 @@ class Firework {
           this.explodeAsSvgPath(origin, svgPathEl);
           break;
         }
+      // falls through to the normal explosion when the SVG path element is missing
       }
       case 'normal':
       default:
@@ -556,10 +558,10 @@ class Particle {
     ctx.beginPath();
     ctx.arc(this._pos.x, this._pos.y, 1, 0, Math.PI * 2, false);
     ctx.fill();
-    //ctx.strokeStyle = color;
-    //ctx.beginPath();
-    //ctx.arc(this._pos.x, this._pos.y, 1, 0, Math.PI * 2, false);
-    //ctx.stroke();
+    // ctx.strokeStyle = color;
+    // ctx.beginPath();
+    // ctx.arc(this._pos.x, this._pos.y, 1, 0, Math.PI * 2, false);
+    // ctx.stroke();
 
     for (let i = 0; i < this._trails.length - 1; i++) {
       const trail = this._trails[i];
@@ -580,7 +582,7 @@ class Particle {
     ctx.arc(lastTrail.x, lastTrail.y, 2, 0, Math.PI * 2, false);
     ctx.fill();
 
-    //for (let i = 0; i < this._trails.length; i++) {
+    // for (let i = 0; i < this._trails.length; i++) {
     //  let trail = this._trails[i];
     //  alpha = (this._lifespan - i - 1) / 100.0;
     //  color = "hsla(" + this._hue + ", 50%, 50%, " + alpha + ")";
@@ -592,8 +594,8 @@ class Particle {
     //  ctx.beginPath();
     //  ctx.arc(trail.x, trail.y, 1, 0, Math.PI * 2, false);
     //  ctx.stroke();
-    //}
-    //fireworksInfo.mainCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
-    //fireworksInfo.mainCtx.fillRect(0, 0, fireworksInfo.canvasWidth, fireworksInfo.canvasHeight);
+    // }
+    // fireworksInfo.mainCtx.fillStyle = 'rgba(0, 0, 0, 0.15)';
+    // fireworksInfo.mainCtx.fillRect(0, 0, fireworksInfo.canvasWidth, fireworksInfo.canvasHeight);
   }
 }

@@ -16,7 +16,8 @@ export function randomRgbColor(withAlpha = false) {
   if (withAlpha) {
     const a = random(1, 10) / 10;
     return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a + ')';
-  } else {
+  }
+  else {
     return 'rgb(' + r + ', ' + g + ', ' + b + ')';
   }
 }
@@ -39,7 +40,8 @@ export function hslToRgb(h, s, l) {
 
   if (s === 0.0) {
     r = g = b = l; // achromatic
-  } else {
+  }
+  else {
     const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
     const p = 2 * l - q;
     r = hueToRgb(p, q, h + 1.0 / 3.0);
@@ -98,14 +100,17 @@ export function rgbToHsl(r, g, b) {
   if (max === min) {
     h = 0.0;
     s = 0.0;
-  } else {
+  }
+  else {
     const d = max - min;
     s = l > 0.5 ? d / (2.0 - max - min) : d / (max + min);
     if (r > g && r > b) {
       h = (g - b) / d + (g < b ? 6.0 : 0.0);
-    } else if (g > b) {
+    }
+    else if (g > b) {
       h = (b - r) / d + 2.0;
-    } else {
+    }
+    else {
       h = (r - g) / d + 4.0;
     }
     h /= 6.0;
@@ -437,7 +442,8 @@ function colorNameToRgba(n) {
 function colorComponentValue(v) {
   if (v.endsWith('%')) {
     return Math.floor(constrain(parseInt(v.substr(0, v.length - 1), 10), 0, 100) * 2.55);
-  } else {
+  }
+  else {
     return constrain(parseInt(v, 10), 0, 255);
   }
 }
@@ -445,7 +451,8 @@ function colorComponentValue(v) {
 function alphaComponentValue(v) {
   if (v.endsWith('%')) {
     return constrain(parseInt(v.substr(0, v.length - 1), 10), 0, 100) / 100;
-  } else {
+  }
+  else {
     const a = parseFloat(v);
     if (a <= 0.0) {
       return 0.0;
@@ -554,28 +561,32 @@ export function rgbaToString(v) {
 export function textContrastColor(r, g, b) {
   // Based on answer in https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
 
-  //if c <= 0.03928 then c = c/12.92 else c = ((c+0.055)/1.055) ^ 2.4
-  //L = 0.2126 * r + 0.7152 * g + 0.0722 * b
+  // if c <= 0.03928 then c = c/12.92 else c = ((c+0.055)/1.055) ^ 2.4
+  // L = 0.2126 * r + 0.7152 * g + 0.0722 * b
 
   if (r <= 0.03928) {
     r = r / 12.92;
-  } else {
+  }
+  else {
     r = Math.pow((r + 0.055) / 1.055, 2.4);
   }
   if (g <= 0.03928) {
     g = g / 12.92;
-  } else {
+  }
+  else {
     g = Math.pow((g + 0.055) / 1.055, 2.4);
   }
   if (b <= 0.03928) {
     b = b / 12.92;
-  } else {
+  }
+  else {
     b = Math.pow((b + 0.055) / 1.055, 2.4);
   }
   const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
   if (l > 0.179) {
     return 'black';
-  } else {
+  }
+  else {
     return 'white';
   }
 }

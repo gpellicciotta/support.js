@@ -128,17 +128,20 @@ function checkDocumentStatus() {
   if (document.hidden) {
     lastDocumentStatus = 'hidden';
     lastDocumentStatusCheck = newCheckTime;
-  } else if (lastDocumentStatus === 'hidden') {
+  }
+  else if (lastDocumentStatus === 'hidden') {
     // Transition detected
     lastDocumentStatus = 'visible';
     lastDocumentStatusCheck = newCheckTime;
     fireDocumentActivated();
-  } else if (newCheckTime - lastDocumentStatusCheck > 2000) {
+  }
+  else if (newCheckTime - lastDocumentStatusCheck > 2000) {
     // We mist 2 check cycles? Assume because tab inactivation
     lastDocumentStatus = 'visible';
     lastDocumentStatusCheck = newCheckTime;
     fireDocumentActivated();
-  } else {
+  }
+  else {
     lastDocumentStatusCheck = newCheckTime;
   }
 }
@@ -185,12 +188,14 @@ export function onDomReady(callback) {
   //   if document already ready to go, schedule the ready function to run
   if (document.readyState === 'complete') {
     setTimeout(fireDomReady, 1);
-  } else if (!globalDomReadyEventHandlerInstalled) {
+  }
+  else if (!globalDomReadyEventHandlerInstalled) {
     // otherwise if we don't have event handlers installed, install them
     if (document.addEventListener) {
       // Use window load event (since DOMContentLoaded doesn't guarantee that all CSS or other resources have been fully loaded)
       window.addEventListener('load', fireDomReady, false);
-    } else {
+    }
+    else {
       // must be IE
       document.attachEvent('onreadystatechange', onReadyStateChange);
       window.attachEvent('onload', fireDomReady);
@@ -371,13 +376,14 @@ export function onDoubleTap(targetElement, dblTapCallback) {
   let tapTimer = null;
   targetElement.addEventListener('touchstart', function () {
     // Double-tap
-    //e.preventDefault(); // Don't zoom
+    // e.preventDefault(); // Don't zoom
     if (tapTimer == null) {
       // No tap yet
       tapTimer = setTimeout(function () {
         tapTimer = null;
       }, 500); // Set timer, but erase after .5s
-    } else {
+    }
+    else {
       // Already one tap (and not auto-erased so within .5s of first tap)
       clearTimeout(tapTimer);
       tapTimer = null;
@@ -427,7 +433,8 @@ export function onSwipe(targetElement, swipeCallback, dblTapCallback = null) {
       // horizontal gesture
       swipeDir = distX < 0 ? 'left' : 'right'; // if dist traveled is negative, it indicates left swipe
       dist = Math.abs(distX);
-    } else if (Math.abs(distY) > MIN_DIST && Math.abs(distX) < MAX_PERPENDICULAR_DIST) {
+    }
+    else if (Math.abs(distY) > MIN_DIST && Math.abs(distX) < MAX_PERPENDICULAR_DIST) {
       // vertical gesture
       swipeDir = distY < 0 ? 'up' : 'down'; // if dist traveled is negative, it indicates up swipe
       dist = Math.abs(distY);
@@ -456,7 +463,8 @@ export function onSwipe(targetElement, swipeCallback, dblTapCallback = null) {
       // But also treat as possible start of swipe gesture:
       const touchObj = e.touches[0];
       touchStart = { x: touchObj.pageX, y: touchObj.pageY, time: new Date().getTime() };
-    } else {
+    }
+    else {
       // Already one tap (and not auto-erased so within .5s of first tap)
       clearTimeout(tapTimer);
       tapTimer = null;
@@ -500,7 +508,7 @@ export function onSwipe(targetElement, swipeCallback, dblTapCallback = null) {
   });
 
   targetElement.addEventListener('touchmove', function (e) {
-    //e.preventDefault(); // Prevent scrolling when inside element
+    // e.preventDefault(); // Prevent scrolling when inside element
     const touchObj = e.touches[0];
     if (touchObj) {
       touchEnd = { x: touchObj.pageX, y: touchObj.pageY, time: new Date().getTime() };
@@ -558,17 +566,20 @@ export function onMove(targetElement, minDist, moveCallback) {
         dist = horDist;
         if (moveEnd.x > moveStart.x) {
           dir = 'right';
-        } else {
+        }
+        else {
           dir = 'left';
         }
       }
-    } else {
+    }
+    else {
       // Vertical move dominates
       if (vertDist >= minDist) {
         dist = vertDist;
         if (moveEnd.y > moveStart.y) {
           dir = 'down';
-        } else {
+        }
+        else {
           dir = 'up';
         }
       }
@@ -659,7 +670,7 @@ export function onMove(targetElement, minDist, moveCallback) {
 
   targetElement.addEventListener('touchmove', function (e) {
     if (moveStart) {
-      //e.preventDefault(); // Prevent scrolling when inside element
+      // e.preventDefault(); // Prevent scrolling when inside element
       const touchObj = e.touches[0];
       if (touchObj) {
         moveEnd = { x: touchObj.pageX, y: touchObj.pageY, time: new Date().getTime() };

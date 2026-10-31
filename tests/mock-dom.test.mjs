@@ -1,10 +1,9 @@
-import { test, describe, beforeEach, afterEach } from 'vitest';
+import { test, describe, beforeEach } from 'vitest';
 import assert from 'node:assert/strict';
 import {
   MockElement,
   MockDocument,
   MockDocumentFragment,
-  MockTextNode,
   installMockDom,
   uninstallMockDom,
 } from '../src/mock-dom.mjs';

@@ -26,7 +26,7 @@ class MockElement {
 
   setAttribute(k, v) {
     this._attrs.set(k, String(v));
-    if (k === 'id') this.id = String(v);
+    if (k === 'id') { this.id = String(v); }
   }
 
   getAttribute(k) {
@@ -42,13 +42,13 @@ class MockElement {
   remove() {
     if (this.parent) {
       const idx = this.parent.children.indexOf(this);
-      if (idx >= 0) this.parent.children.splice(idx, 1);
+      if (idx >= 0) { this.parent.children.splice(idx, 1); }
       this.parent = null;
     }
   }
 
   get lastElementChild() {
-    if (this.children.length > 0) return this.children[this.children.length - 1];
+    if (this.children.length > 0) { return this.children[this.children.length - 1]; }
     const child = new MockElement('div');
     this.appendChild(child);
     return child;
@@ -65,12 +65,12 @@ class MockElement {
   closest(sel) {
     let curr = this;
     while (curr) {
-      if (curr.tag === sel) return curr;
-      if (sel.startsWith('.') && curr.classList.contains(sel.slice(1))) return curr;
-      if (sel.startsWith('#') && (curr.id === sel.slice(1) || curr._attrs.get('id') === sel.slice(1))) return curr;
+      if (curr.tag === sel) { return curr; }
+      if (sel.startsWith('.') && curr.classList.contains(sel.slice(1))) { return curr; }
+      if (sel.startsWith('#') && (curr.id === sel.slice(1) || curr._attrs.get('id') === sel.slice(1))) { return curr; }
       if (sel.includes('[data-action=') && curr.dataset?.action) {
         const expected = sel.match(/\[data-action="([^"]+)"\]/)?.[1];
-        if (expected && curr.dataset.action === expected) return curr;
+        if (expected && curr.dataset.action === expected) { return curr; }
       }
       curr = curr.parent;
     }
@@ -80,13 +80,13 @@ class MockElement {
   querySelector(sel) {
     if (sel.startsWith('#')) {
       const id = sel.slice(1).split(' ')[0];
-      if (this.id === id || this._attrs.get('id') === id) return this;
+      if (this.id === id || this._attrs.get('id') === id) { return this; }
     }
     for (const child of this.children) {
-      if (child.id === sel.slice(1) || child._attrs.get('id') === sel.slice(1)) return child;
-      if (sel.startsWith('.') && child.classList.contains(sel.slice(1))) return child;
+      if (child.id === sel.slice(1) || child._attrs.get('id') === sel.slice(1)) { return child; }
+      if (sel.startsWith('.') && child.classList.contains(sel.slice(1))) { return child; }
       const found = child.querySelector(sel);
-      if (found) return found;
+      if (found) { return found; }
     }
     const elem = new MockElement('div');
     return elem;
@@ -122,7 +122,7 @@ function parseNotificationHtml(html) {
   const messageSpan = new MockElement('span');
   messageSpan.classList.add('message');
   const msgMatch = html.match(/<span class="message">([^<]*)<\/span>/);
-  if (msgMatch) messageSpan.innerHTML = msgMatch[1];
+  if (msgMatch) { messageSpan.innerHTML = msgMatch[1]; }
   li.appendChild(messageSpan);
 
   const actionBar = new MockElement('span');
@@ -161,14 +161,15 @@ describe('AppNotificationBar', () => {
                 const root = parseNotificationHtml(html);
                 el.content.children = [root];
                 root.parent = el.content;
-              } else {
+              }
+              else {
                 const idMatch = html.match(/id="([^"]+)"/);
                 const root = new MockElement('div');
-                if (idMatch) root.id = idMatch[1];
+                if (idMatch) { root.id = idMatch[1]; }
                 el.content.children = [root];
                 root.parent = el.content;
                 el.content.querySelector = (sel) => {
-                  if (idMatch && sel === '#' + idMatch[1]) return root;
+                  if (idMatch && sel === '#' + idMatch[1]) { return root; }
                   return root.querySelector(sel);
                 };
               }

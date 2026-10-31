@@ -83,7 +83,8 @@ export class EventEmitter {
       try {
         typedSpecificCallbacks[i].call(thisObject, event);
         calls += 1;
-      } catch (err) {
+      }
+      catch (err) {
         log.trace('Callback failed for event: %O: %O', event, err);
       }
     }

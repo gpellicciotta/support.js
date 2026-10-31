@@ -1,4 +1,4 @@
-import { describe, it, test } from 'vitest';
+import { describe, it } from 'vitest';
 import assert from 'node:assert/strict';
 
 // Set up minimal browser DOM globals for Node test environment before importing webapp modules
@@ -14,11 +14,12 @@ class MockDOMElement {
       contains: (c) => this.classList._classes.has(c),
       toggle: (c, force) => {
         if (force !== undefined) {
-          if (force) this.classList.add(c);
-          else this.classList.remove(c);
-        } else {
-          if (this.classList.contains(c)) this.classList.remove(c);
-          else this.classList.add(c);
+          if (force) { this.classList.add(c); }
+          else { this.classList.remove(c); }
+        }
+        else {
+          if (this.classList.contains(c)) { this.classList.remove(c); }
+          else { this.classList.add(c); }
         }
       },
     };
@@ -82,7 +83,8 @@ class MockDOMElement {
     const idx = this.children.indexOf(refChild);
     if (idx >= 0) {
       this.children.splice(idx, 0, newChild);
-    } else {
+    }
+    else {
       this.children.push(newChild);
     }
     return newChild;
@@ -91,13 +93,13 @@ class MockDOMElement {
   remove() {
     if (this.parentNode) {
       const idx = this.parentNode.children.indexOf(this);
-      if (idx >= 0) this.parentNode.children.splice(idx, 1);
+      if (idx >= 0) { this.parentNode.children.splice(idx, 1); }
       this.parentNode = null;
     }
   }
 
   addEventListener(evt, fn) {
-    if (!this._listeners.has(evt)) this._listeners.set(evt, []);
+    if (!this._listeners.has(evt)) { this._listeners.set(evt, []); }
     this._listeners.get(evt).push(fn);
   }
 
@@ -105,7 +107,7 @@ class MockDOMElement {
     if (this._listeners.has(evt)) {
       const arr = this._listeners.get(evt);
       const idx = arr.indexOf(fn);
-      if (idx >= 0) arr.splice(idx, 1);
+      if (idx >= 0) { arr.splice(idx, 1); }
     }
   }
 
@@ -134,33 +136,33 @@ class MockDOMElement {
   }
 
   _matches(sel) {
-    if (!sel) return false;
+    if (!sel) { return false; }
     let s = sel.trim();
     if (s.endsWith(':checked')) {
-      if (this.type !== 'checkbox' || !this.checked) return false;
+      if (this.type !== 'checkbox' || !this.checked) { return false; }
       s = s.slice(0, -8).trim();
-      if (!s) return true;
+      if (!s) { return true; }
     }
-    if (s === 'li' && this.tagName === 'LI') return true;
-    if (s === 'input' && this.tagName === 'INPUT') return true;
-    if (s === 'button' && this.tagName === 'BUTTON') return true;
-    if (s === 'span' && this.tagName === 'SPAN') return true;
+    if (s === 'li' && this.tagName === 'LI') { return true; }
+    if (s === 'input' && this.tagName === 'INPUT') { return true; }
+    if (s === 'button' && this.tagName === 'BUTTON') { return true; }
+    if (s === 'span' && this.tagName === 'SPAN') { return true; }
     if (s.startsWith('li.')) {
       const cls = s.slice(3);
       return this.tagName === 'LI' && this.classList.contains(cls);
     }
-    if (s.startsWith('#')) return this.attributes.get('id') === s.slice(1);
+    if (s.startsWith('#')) { return this.attributes.get('id') === s.slice(1); }
     if (s.startsWith('.')) {
       const parts = s.split('.').filter(Boolean);
       return parts.every((c) => this.classList.contains(c));
     }
-    if (s === '[data-action]') return !!this.dataset.action;
+    if (s === '[data-action]') { return !!this.dataset.action; }
     return false;
   }
 
   closest(sel) {
-    if (this._matches(sel)) return this;
-    if (this.parentNode) return this.parentNode.closest(sel);
+    if (this._matches(sel)) { return this; }
+    if (this.parentNode) { return this.parentNode.closest(sel); }
     return null;
   }
 
@@ -168,9 +170,9 @@ class MockDOMElement {
     const parts = sel.split(/[\s>]+/).filter(Boolean);
     const target = parts[parts.length - 1];
     for (let c of this.children) {
-      if (c._matches(target)) return c;
+      if (c._matches(target)) { return c; }
       const res = c.querySelector(target);
-      if (res) return res;
+      if (res) { return res; }
     }
     return null;
   }
@@ -180,7 +182,7 @@ class MockDOMElement {
     const target = parts[parts.length - 1];
     let res = [];
     for (let c of this.children) {
-      if (c._matches(target)) res.push(c);
+      if (c._matches(target)) { res.push(c); }
       res.push(...c.querySelectorAll(target));
     }
     return res;
@@ -190,9 +192,9 @@ class MockDOMElement {
 function parseSimpleHtml(html) {
   const comp = new MockDOMElement('li');
   const classMatch = html.match(/class="([^"]+)"/);
-  if (classMatch) comp.className = classMatch[1];
+  if (classMatch) { comp.className = classMatch[1]; }
   const idMatch = html.match(/id="([^"]+)"/);
-  if (idMatch) comp.setAttribute('id', idMatch[1]);
+  if (idMatch) { comp.setAttribute('id', idMatch[1]); }
   const dataMatches = html.matchAll(/data-([a-z0-9-]+)="([^"]+)"/g);
   for (const match of dataMatches) {
     comp.setAttribute(`data-${match[1]}`, match[2]);
@@ -206,7 +208,7 @@ function parseSimpleHtml(html) {
   const input = new MockDOMElement('input');
   input.type = 'checkbox';
   const chIdMatch = html.match(/id="(mark-for-deletion-[^"]+)"/);
-  if (chIdMatch) input.setAttribute('id', chIdMatch[1]);
+  if (chIdMatch) { input.setAttribute('id', chIdMatch[1]); }
   label.appendChild(input);
   actionSpan.appendChild(label);
   comp.appendChild(actionSpan);

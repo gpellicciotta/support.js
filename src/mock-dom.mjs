@@ -29,10 +29,10 @@ function splitCommas(sel) {
     const ch = sel[i];
     if (inQuote) {
       cur += ch;
-      if (ch === inQuote) inQuote = null;
+      if (ch === inQuote) { inQuote = null; }
       continue;
     }
-    if (ch === '"' || ch === "'") {
+    if (ch === '"' || ch === '\'') {
       inQuote = ch;
       cur += ch;
       continue;
@@ -48,13 +48,13 @@ function splitCommas(sel) {
       continue;
     }
     if (ch === ',' && !inBracket) {
-      if (cur.trim()) parts.push(cur.trim());
+      if (cur.trim()) { parts.push(cur.trim()); }
       cur = '';
       continue;
     }
     cur += ch;
   }
-  if (cur.trim()) parts.push(cur.trim());
+  if (cur.trim()) { parts.push(cur.trim()); }
   return parts;
 }
 
@@ -68,10 +68,10 @@ function tokenizeSelector(sel) {
     const ch = sel[i];
     if (inQuote) {
       cur += ch;
-      if (ch === inQuote) inQuote = null;
+      if (ch === inQuote) { inQuote = null; }
       continue;
     }
-    if (ch === '"' || ch === "'") {
+    if (ch === '"' || ch === '\'') {
       inQuote = ch;
       cur += ch;
       continue;
@@ -92,7 +92,7 @@ function tokenizeSelector(sel) {
     }
 
     if (ch === '>' || ch === '+' || ch === '~') {
-      if (cur.trim()) rawTokens.push(cur.trim());
+      if (cur.trim()) { rawTokens.push(cur.trim()); }
       cur = '';
       rawTokens.push(ch);
       continue;
@@ -109,7 +109,7 @@ function tokenizeSelector(sel) {
 
     cur += ch;
   }
-  if (cur.trim()) rawTokens.push(cur.trim());
+  if (cur.trim()) { rawTokens.push(cur.trim()); }
 
   const tokens = [];
   for (let i = 0; i < rawTokens.length; i++) {
@@ -117,8 +117,8 @@ function tokenizeSelector(sel) {
     if (t === ' ') {
       const prev = tokens[tokens.length - 1];
       const next = rawTokens[i + 1];
-      if (!prev || prev === '>' || prev === '+' || prev === '~' || prev === ' ') continue;
-      if (next === '>' || next === '+' || next === '~') continue;
+      if (!prev || prev === '>' || prev === '+' || prev === '~' || prev === ' ') { continue; }
+      if (next === '>' || next === '+' || next === '~') { continue; }
     }
     tokens.push(t);
   }
@@ -126,8 +126,8 @@ function tokenizeSelector(sel) {
 }
 
 function matchCompound(element, sel) {
-  if (!element || !(element instanceof MockElement)) return false;
-  if (!sel || sel === '*') return true;
+  if (!element || !(element instanceof MockElement)) { return false; }
+  if (!sel || sel === '*') { return true; }
 
   const attrRegex = /\[([a-zA-Z0-9_:-]+)(?:([~|^$*]?=)(?:"([^"]*)"|'([^']*)'|([^\]]+)))?\]/g;
   let remaining = sel;
@@ -141,34 +141,35 @@ function matchCompound(element, sel) {
     if (!element.hasAttribute(attrName)) {
       if (attrName.startsWith('data-')) {
         const dKey = attrName.slice(5).replace(/-([a-z0-9])/g, (_, l) => l.toUpperCase());
-        if (element.dataset[dKey] === undefined) return false;
-      } else {
+        if (element.dataset[dKey] === undefined) { return false; }
+      }
+      else {
         return false;
       }
     }
 
     if (op) {
       const actual = element.getAttribute(attrName);
-      if (op === '=' && actual !== expected) return false;
-      if (op === '^=' && (!actual || !actual.startsWith(expected))) return false;
-      if (op === '$=' && (!actual || !actual.endsWith(expected))) return false;
-      if (op === '*=' && (!actual || !actual.includes(expected))) return false;
-      if (op === '~=' && (!actual || !actual.split(/\s+/).includes(expected))) return false;
-      if (op === '|=' && (!actual || (actual !== expected && !actual.startsWith(expected + '-')))) return false;
+      if (op === '=' && actual !== expected) { return false; }
+      if (op === '^=' && (!actual || !actual.startsWith(expected))) { return false; }
+      if (op === '$=' && (!actual || !actual.endsWith(expected))) { return false; }
+      if (op === '*=' && (!actual || !actual.includes(expected))) { return false; }
+      if (op === '~=' && (!actual || !actual.split(/\s+/).includes(expected))) { return false; }
+      if (op === '|=' && (!actual || (actual !== expected && !actual.startsWith(expected + '-')))) { return false; }
     }
   }
   remaining = remaining.replace(attrRegex, '');
 
   if (remaining.includes(':checked')) {
-    if (!element.checked) return false;
+    if (!element.checked) { return false; }
     remaining = remaining.replace(/:checked/g, '');
   }
   if (remaining.includes(':disabled')) {
-    if (!element.disabled) return false;
+    if (!element.disabled) { return false; }
     remaining = remaining.replace(/:disabled/g, '');
   }
   if (remaining.includes(':first-child')) {
-    if (!element.parentNode || element.parentNode.children[0] !== element) return false;
+    if (!element.parentNode || element.parentNode.children[0] !== element) { return false; }
     remaining = remaining.replace(/:first-child/g, '');
   }
   if (remaining.includes(':last-child')) {
@@ -180,7 +181,7 @@ function matchCompound(element, sel) {
 
   const idMatch = remaining.match(/#([a-zA-Z0-9_-]+)/);
   if (idMatch) {
-    if (element.id !== idMatch[1] && element.getAttribute('id') !== idMatch[1]) return false;
+    if (element.id !== idMatch[1] && element.getAttribute('id') !== idMatch[1]) { return false; }
     remaining = remaining.replace(/#[a-zA-Z0-9_-]+/, '');
   }
 
@@ -188,22 +189,22 @@ function matchCompound(element, sel) {
   if (classMatches) {
     for (const cm of classMatches) {
       const cls = cm.slice(1);
-      if (!element.classList.contains(cls)) return false;
+      if (!element.classList.contains(cls)) { return false; }
     }
     remaining = remaining.replace(/\.[a-zA-Z0-9_-]+/g, '');
   }
 
   const tag = remaining.trim();
   if (tag && tag !== '*') {
-    if (element.tagName !== tag.toUpperCase()) return false;
+    if (element.tagName !== tag.toUpperCase()) { return false; }
   }
 
   return true;
 }
 
 function matchesSelector(element, selector) {
-  if (!element || !(element instanceof MockElement)) return false;
-  if (!selector) return false;
+  if (!element || !(element instanceof MockElement)) { return false; }
+  if (!selector) { return false; }
 
   const parts = splitCommas(selector);
   if (parts.length > 1) {
@@ -211,28 +212,30 @@ function matchesSelector(element, selector) {
   }
 
   const tokens = tokenizeSelector(selector);
-  if (tokens.length === 0) return false;
+  if (tokens.length === 0) { return false; }
 
   function matchStep(node, tokenIdx) {
-    if (!node || !(node instanceof MockElement)) return false;
+    if (!node || !(node instanceof MockElement)) { return false; }
     const compound = tokens[tokenIdx];
-    if (!matchCompound(node, compound)) return false;
-    if (tokenIdx === 0) return true;
+    if (!matchCompound(node, compound)) { return false; }
+    if (tokenIdx === 0) { return true; }
 
     const combinator = tokens[tokenIdx - 1];
     const prevCompoundIdx = tokenIdx - 2;
 
     if (combinator === '>') {
       return matchStep(node.parentNode, prevCompoundIdx);
-    } else if (combinator === ' ') {
+    }
+    else if (combinator === ' ') {
       let cur = node.parentNode;
       while (cur) {
-        if (matchStep(cur, prevCompoundIdx)) return true;
+        if (matchStep(cur, prevCompoundIdx)) { return true; }
         cur = cur.parentNode;
       }
       return false;
-    } else if (combinator === '+') {
-      if (!node.parentNode) return false;
+    }
+    else if (combinator === '+') {
+      if (!node.parentNode) { return false; }
       const sibs = node.parentNode.children;
       const idx = sibs.indexOf(node);
       if (idx > 0) {
@@ -247,7 +250,7 @@ function matchesSelector(element, selector) {
 }
 
 function parseHtml(html) {
-  if (!html || typeof html !== 'string') return [];
+  if (!html || typeof html !== 'string') { return []; }
 
   const root = new MockDocumentFragment();
   const stack = [root];
@@ -284,7 +287,8 @@ function parseHtml(html) {
       const textNode = new MockTextNode(text);
       if (parent.tagName === 'TEMPLATE' && parent.content) {
         parent.content.appendChild(textNode);
-      } else {
+      }
+      else {
         parent.appendChild(textNode);
       }
       continue;
@@ -309,7 +313,7 @@ function parseHtml(html) {
     let attrMatch;
     while ((attrMatch = attrRegex.exec(rawAttrs)) !== null) {
       const attrName = attrMatch[1];
-      if (attrName === '/') continue;
+      if (attrName === '/') { continue; }
       const attrVal = attrMatch[2] ?? attrMatch[3] ?? attrMatch[4] ?? '';
       el.setAttribute(attrName, attrVal);
     }
@@ -318,7 +322,8 @@ function parseHtml(html) {
     if (currentParent) {
       if (currentParent.tagName === 'TEMPLATE' && currentParent.content) {
         currentParent.content.appendChild(el);
-      } else {
+      }
+      else {
         currentParent.appendChild(el);
       }
     }
@@ -342,7 +347,7 @@ function serializeNode(node) {
   const tag = node.tagName.toLowerCase();
   const attrs = [];
 
-  if (node.id) attrs.push(`id="${escapeAttr(node.id)}"`);
+  if (node.id) { attrs.push(`id="${escapeAttr(node.id)}"`); }
   if (node.classList._classes.size > 0) {
     attrs.push(`class="${escapeAttr(Array.from(node.classList._classes).join(' '))}"`);
   }
@@ -391,7 +396,7 @@ function createDatasetProxy(element) {
     {},
     {
       get(target, prop) {
-        if (typeof prop === 'symbol') return target[prop];
+        if (typeof prop === 'symbol') { return target[prop]; }
         if (prop === 'toJSON') {
           return () => {
             const res = {};
@@ -429,7 +434,7 @@ function createDatasetProxy(element) {
         return true;
       },
       has(target, prop) {
-        if (typeof prop === 'symbol') return prop in target;
+        if (typeof prop === 'symbol') { return prop in target; }
         const kebab = 'data-' + prop.replace(/([A-Z])/g, '-$1').toLowerCase();
         return element.attributes.has(kebab) || prop in target;
       },
@@ -556,7 +561,7 @@ export class MockElement {
       _classes: new Set(),
       add: (...cls) =>
         cls.forEach((c) => {
-          if (c && typeof c === 'string') this.classList._classes.add(c.trim());
+          if (c && typeof c === 'string') { this.classList._classes.add(c.trim()); }
         }),
       remove: (...cls) => cls.forEach((c) => this.classList._classes.delete(c)),
       contains: (c) => this.classList._classes.has(c),
@@ -564,7 +569,8 @@ export class MockElement {
         const shouldAdd = force !== undefined ? Boolean(force) : !this.classList._classes.has(c);
         if (shouldAdd) {
           this.classList._classes.add(c);
-        } else {
+        }
+        else {
           this.classList._classes.delete(c);
         }
         return shouldAdd;
@@ -632,7 +638,8 @@ export class MockElement {
   set id(val) {
     if (val != null && val !== '') {
       this.setAttribute('id', val);
-    } else {
+    }
+    else {
       this.removeAttribute('id');
     }
   }
@@ -651,7 +658,8 @@ export class MockElement {
   set title(val) {
     if (val != null && val !== '') {
       this.setAttribute('title', val);
-    } else {
+    }
+    else {
       this.removeAttribute('title');
     }
   }
@@ -701,7 +709,8 @@ export class MockElement {
     this._disabled = Boolean(val);
     if (this._disabled) {
       this.setAttribute('disabled', '');
-    } else {
+    }
+    else {
       this.removeAttribute('disabled');
     }
   }
@@ -721,7 +730,8 @@ export class MockElement {
     this._checked = Boolean(val);
     if (this._checked) {
       this.setAttribute('checked', '');
-    } else {
+    }
+    else {
       this.removeAttribute('checked');
     }
   }
@@ -808,7 +818,8 @@ export class MockElement {
       for (const node of parsed) {
         this.content.appendChild(node);
       }
-    } else {
+    }
+    else {
       for (const node of parsed) {
         this.appendChild(node);
       }
@@ -860,7 +871,7 @@ export class MockElement {
    * @returns {MockElement|null} Next sibling element or null.
    */
   get nextElementSibling() {
-    if (!this.parentNode) return null;
+    if (!this.parentNode) { return null; }
     const idx = this.parentNode.children.indexOf(this);
     return idx >= 0 && idx < this.parentNode.children.length - 1 ? this.parentNode.children[idx + 1] : null;
   }
@@ -870,7 +881,7 @@ export class MockElement {
    * @returns {MockElement|null} Previous sibling element or null.
    */
   get previousElementSibling() {
-    if (!this.parentNode) return null;
+    if (!this.parentNode) { return null; }
     const idx = this.parentNode.children.indexOf(this);
     return idx > 0 ? this.parentNode.children[idx - 1] : null;
   }
@@ -886,11 +897,14 @@ export class MockElement {
     this.attributes.set(name, strVal);
     if (name === 'class') {
       this.classList.value = strVal;
-    } else if (name === 'disabled') {
+    }
+    else if (name === 'disabled') {
       this._disabled = true;
-    } else if (name === 'checked') {
+    }
+    else if (name === 'checked') {
       this._checked = true;
-    } else if (name === 'value') {
+    }
+    else if (name === 'value') {
       this._value = strVal;
     }
     this._innerHTMLStale = true;
@@ -929,9 +943,11 @@ export class MockElement {
     this.attributes.delete(name);
     if (name === 'class') {
       this.classList._classes.clear();
-    } else if (name === 'disabled') {
+    }
+    else if (name === 'disabled') {
       this._disabled = false;
-    } else if (name === 'checked') {
+    }
+    else if (name === 'checked') {
       this._checked = false;
     }
     this._innerHTMLStale = true;
@@ -943,7 +959,7 @@ export class MockElement {
    * @returns {MockElement|MockTextNode|MockDocumentFragment} Appended child node.
    */
   appendChild(child) {
-    if (!child) return child;
+    if (!child) { return child; }
     if (child.nodeType === 11 || child instanceof MockDocumentFragment) {
       const toMove = [...child.childNodes];
       for (const c of toMove) {
@@ -991,7 +1007,7 @@ export class MockElement {
    * @returns {MockElement|MockTextNode|MockDocumentFragment} Inserted node.
    */
   insertBefore(newNode, referenceNode) {
-    if (!newNode) return newNode;
+    if (!newNode) { return newNode; }
     if (newNode.nodeType === 11 || newNode instanceof MockDocumentFragment) {
       const toMove = [...newNode.childNodes];
       for (const c of toMove) {
@@ -1011,11 +1027,13 @@ export class MockElement {
       if (newNode.nodeType === 1 || newNode instanceof MockElement) {
         this.children.push(newNode);
       }
-    } else {
+    }
+    else {
       const nodeIdx = this.childNodes.indexOf(referenceNode);
       if (nodeIdx >= 0) {
         this.childNodes.splice(nodeIdx, 0, newNode);
-      } else {
+      }
+      else {
         this.childNodes.push(newNode);
       }
 
@@ -1023,7 +1041,8 @@ export class MockElement {
         const childIdx = this.children.indexOf(referenceNode);
         if (childIdx >= 0) {
           this.children.splice(childIdx, 0, newNode);
-        } else {
+        }
+        else {
           this.children.push(newNode);
         }
       }
@@ -1094,7 +1113,7 @@ export class MockElement {
    * @returns {void}
    */
   addEventListener(type, listener, options) {
-    if (typeof listener !== 'function') return;
+    if (typeof listener !== 'function') { return; }
     if (!this._listeners.has(type)) {
       this._listeners.set(type, []);
     }
@@ -1109,10 +1128,10 @@ export class MockElement {
    * @returns {void}
    */
   removeEventListener(type, listener) {
-    if (!this._listeners.has(type)) return;
+    if (!this._listeners.has(type)) { return; }
     const list = this._listeners.get(type);
     const idx = list.findIndex((e) => e.fn === listener);
-    if (idx >= 0) list.splice(idx, 1);
+    if (idx >= 0) { list.splice(idx, 1); }
   }
 
   /**
@@ -1135,11 +1154,11 @@ export class MockElement {
    */
   dispatchEvent(event) {
     const evt = typeof event === 'object' && event !== null ? event : { type: String(event) };
-    if (!evt.type) return true;
+    if (!evt.type) { return true; }
 
     evt.target ||= this;
     evt.currentTarget = this;
-    if (evt.defaultPrevented === undefined) evt.defaultPrevented = false;
+    if (evt.defaultPrevented === undefined) { evt.defaultPrevented = false; }
     if (evt.preventDefault === undefined) {
       evt.preventDefault = () => {
         evt.defaultPrevented = true;
@@ -1158,7 +1177,8 @@ export class MockElement {
         const entry = listeners[i];
         try {
           entry.fn.call(node, evt);
-        } catch (err) {
+        }
+        catch (err) {
           console.error(err);
         }
         if (entry.once) {
@@ -1170,7 +1190,8 @@ export class MockElement {
       if (typeof inlineHandler === 'function') {
         try {
           inlineHandler.call(node, evt);
-        } catch (err) {
+        }
+        catch (err) {
           console.error(err);
         }
       }
@@ -1196,9 +1217,9 @@ export class MockElement {
    */
   querySelector(sel) {
     for (const child of this.children) {
-      if (matchesSelector(child, sel)) return child;
+      if (matchesSelector(child, sel)) { return child; }
       const found = child.querySelector(sel);
-      if (found) return found;
+      if (found) { return found; }
     }
     return null;
   }
@@ -1212,7 +1233,7 @@ export class MockElement {
     const results = [];
     function collect(node) {
       for (const child of node.children) {
-        if (matchesSelector(child, sel)) results.push(child);
+        if (matchesSelector(child, sel)) { results.push(child); }
         collect(child);
       }
     }
@@ -1228,7 +1249,7 @@ export class MockElement {
   closest(sel) {
     let cur = this;
     while (cur) {
-      if (cur instanceof MockElement && matchesSelector(cur, sel)) return cur;
+      if (cur instanceof MockElement && matchesSelector(cur, sel)) { return cur; }
       cur = cur.parentNode;
     }
     return null;
@@ -1241,7 +1262,8 @@ export class MockElement {
   focus() {
     if (this._ownerDocument) {
       this._ownerDocument.activeElement = this;
-    } else if (globalThis.document && 'activeElement' in globalThis.document) {
+    }
+    else if (globalThis.document && 'activeElement' in globalThis.document) {
       globalThis.document.activeElement = this;
     }
     this.dispatchEvent({ type: 'focus', target: this });
@@ -1254,7 +1276,8 @@ export class MockElement {
   blur() {
     if (this._ownerDocument && this._ownerDocument.activeElement === this) {
       this._ownerDocument.activeElement = null;
-    } else if (globalThis.document && globalThis.document.activeElement === this) {
+    }
+    else if (globalThis.document && globalThis.document.activeElement === this) {
       globalThis.document.activeElement = null;
     }
     this.dispatchEvent({ type: 'blur', target: this });
@@ -1361,7 +1384,7 @@ export class MockDocument {
       }
       for (const child of node.children) {
         const found = search(child);
-        if (found) return found;
+        if (found) { return found; }
       }
       return null;
     }
@@ -1421,7 +1444,7 @@ export class MockDocument {
    * @returns {void}
    */
   addEventListener(type, listener, options) {
-    if (typeof listener !== 'function') return;
+    if (typeof listener !== 'function') { return; }
     if (!this._listeners.has(type)) {
       this._listeners.set(type, []);
     }
@@ -1436,10 +1459,10 @@ export class MockDocument {
    * @returns {void}
    */
   removeEventListener(type, listener) {
-    if (!this._listeners.has(type)) return;
+    if (!this._listeners.has(type)) { return; }
     const list = this._listeners.get(type);
     const idx = list.findIndex((e) => e.fn === listener);
-    if (idx >= 0) list.splice(idx, 1);
+    if (idx >= 0) { list.splice(idx, 1); }
   }
 
   /**
@@ -1603,7 +1626,8 @@ export function installMockDom(options = {}) {
     for (const [key, val] of Object.entries(previousGlobals)) {
       if (val === undefined) {
         delete globalThis[key];
-      } else {
+      }
+      else {
         globalThis[key] = val;
       }
     }

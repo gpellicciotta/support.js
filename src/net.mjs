@@ -174,7 +174,8 @@ export async function sendRequest(baseUrl, method, path, options = {}) {
   if (text) {
     try {
       data = JSON.parse(text);
-    } catch {
+    }
+    catch {
       data = null;
     }
   }
@@ -211,7 +212,8 @@ export function redirectToAuth({ authServiceBaseUrl, appName, redirectUrl, appLo
     if (typeof sessionStorage !== 'undefined' && sessionStorage !== null) {
       sessionStorage.setItem('sign-in-method', signInMethod);
     }
-  } catch (e) {
+  }
+  catch (e) {
     // Non-fatal if storage is unavailable or restricted
   }
 

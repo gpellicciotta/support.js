@@ -1,4 +1,4 @@
-import { beforeAll, afterAll, describe, it, test } from 'vitest';
+import { beforeAll, afterAll, describe, it } from 'vitest';
 import assert from 'node:assert/strict';
 import { StorageAdapter, MemoryStorageAdapter, IndexedDbStorageAdapter } from '../src/storages.mjs';
 
@@ -221,7 +221,8 @@ describe('IndexedDbStorageAdapter - Contract & Configuration without Browser Ind
         () => adapter.open('test_user'),
         /IndexedDB is not supported or available in this environment/,
       );
-    } finally {
+    }
+    finally {
       if (originalIndexedDB !== undefined) {
         globalThis.indexedDB = originalIndexedDB;
       }
@@ -265,7 +266,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       const req = { result: undefined, error: null, onsuccess: null, onerror: null };
       queueMicrotask(() => {
         req.result = this.data.get(key);
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -274,7 +275,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       const req = { result: [], error: null, onsuccess: null, onerror: null };
       queueMicrotask(() => {
         req.result = Array.from(this.data.values());
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -285,7 +286,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
         const finalKey = key !== undefined && key !== null ? key : value[this.options.keyPath || 'id'];
         this.data.set(finalKey, value);
         req.result = finalKey;
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -294,7 +295,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       const req = { result: undefined, error: null, onsuccess: null, onerror: null };
       queueMicrotask(() => {
         this.data.delete(key);
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -303,7 +304,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       const req = { result: undefined, error: null, onsuccess: null, onerror: null };
       queueMicrotask(() => {
         this.data.clear();
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -312,7 +313,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       const req = { result: 0, error: null, onsuccess: null, onerror: null };
       queueMicrotask(() => {
         req.result = this.data.size;
-        if (req.onsuccess) req.onsuccess({ target: req });
+        if (req.onsuccess) { req.onsuccess({ target: req }); }
       });
       return req;
     }
@@ -354,7 +355,8 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
   afterAll(() => {
     if (originalIndexedDB !== undefined) {
       globalThis.indexedDB = originalIndexedDB;
-    } else {
+    }
+    else {
       delete globalThis.indexedDB;
     }
   });
@@ -447,8 +449,8 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
         queueMicrotask(() => {
           const db = new MockIDBDatabase(dbName, version);
           req.result = db;
-          if (req.onupgradeneeded) req.onupgradeneeded({ target: { result: db } });
-          if (req.onsuccess) req.onsuccess({ target: { result: db } });
+          if (req.onupgradeneeded) { req.onupgradeneeded({ target: { result: db } }); }
+          if (req.onsuccess) { req.onsuccess({ target: { result: db } }); }
         });
         return req;
       },
@@ -489,7 +491,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       open: () => {
         const req = { result: null, error: new Error('Simulated QuotaExceededError'), onerror: null };
         queueMicrotask(() => {
-          if (req.onerror) req.onerror(new Event('error'));
+          if (req.onerror) { req.onerror(new Event('error')); }
         });
         return req;
       },
@@ -507,7 +509,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
     store.get = () => {
       const req = { result: undefined, error: new Error('Disk read error'), onsuccess: null, onerror: null };
       queueMicrotask(() => {
-        if (req.onerror) req.onerror({ target: req });
+        if (req.onerror) { req.onerror({ target: req }); }
       });
       return req;
     };
@@ -516,7 +518,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       open: () => {
         const req = { result: mockDb, error: null, onsuccess: null };
         queueMicrotask(() => {
-          if (req.onsuccess) req.onsuccess({ target: { result: mockDb } });
+          if (req.onsuccess) { req.onsuccess({ target: { result: mockDb } }); }
         });
         return req;
       },

@@ -19,7 +19,7 @@ export function extractReleaseNotes(changelogText, version) {
   }
 
   let endIndex = lines.findIndex((line, i) => i > startIndex && /^##\s+/.test(line));
-  if (endIndex === -1) endIndex = lines.length;
+  if (endIndex === -1) { endIndex = lines.length; }
 
   return lines
     .slice(startIndex + 1, endIndex)

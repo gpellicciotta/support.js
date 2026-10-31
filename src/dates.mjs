@@ -1,7 +1,6 @@
 /**
  * Date and time calculations, formatting, calendar utilities, and wire serialization.
  */
-import { randomFloat } from './math.mjs';
 
 const MILLIS_PER_DAY = 1000 * 60 * 60 * 24;
 
@@ -43,13 +42,15 @@ export function date() {
     const month = arguments[1];
     const dayInMonth = arguments[2];
     return new Date(year, month - 1, dayInMonth);
-  } else if (arguments.length === 1) {
+  }
+  else if (arguments.length === 1) {
     const d = new Date();
     const arg = arguments[0];
     if (typeof arg === 'number') {
       d.setTime(arg);
       return d;
-    } else if (typeof arg === 'string') {
+    }
+    else if (typeof arg === 'string') {
       let t = Date.parse(arg);
       if (isNaN(t)) {
         const dateRegex = new RegExp('^\\s*' + datePattern + '\\s*$');
@@ -59,11 +60,12 @@ export function date() {
         }
       }
       if (isNaN(t)) {
-        throw new Error("Argument '" + arg + "' cannot be interpreted as a valid date");
+        throw new Error('Argument \'' + arg + '\' cannot be interpreted as a valid date');
       }
       d.setTime(t);
       return d;
-    } else if (arg instanceof Date || Object.prototype.toString.call(arg) === '[object Date]') {
+    }
+    else if (arg instanceof Date || Object.prototype.toString.call(arg) === '[object Date]') {
       return new Date(arg.getTime());
     }
   }
@@ -111,7 +113,7 @@ export function monthsDiff(date1, date2) {
   // Otherwise:
   const restMonthsInFirstYear = 13 - m1;
   const restMonthsInLastYear = m2 - 1;
-  const monthsInBetweenYears = (y2 - y1 - 1) /* Since we only want in-between years*/ * 12;
+  const monthsInBetweenYears = (y2 - y1 - 1) /* Since we only want in-between years */ * 12;
   return factor * (restMonthsInFirstYear + monthsInBetweenYears + restMonthsInLastYear);
 }
 
@@ -393,7 +395,8 @@ export function formatTime(dateTime) {
 export function formatRelativeDateTime(dateTime) {
   if (!(dateTime instanceof Date)) {
     dateTime = toDateTime(dateTime);
-  } else {
+  }
+  else {
     // Ensure UTC
     dateTime.setTime(Date.parse(dateTime.toISOString()));
   }
@@ -409,36 +412,49 @@ export function formatRelativeDateTime(dateTime) {
     // In past
     if (diffSeconds < 2) {
       return 'now';
-    } else if (diffSeconds < 51) {
+    }
+    else if (diffSeconds < 51) {
       return `${diffSeconds} seconds ago`;
-    } else if (diffSeconds < 121) {
+    }
+    else if (diffSeconds < 121) {
       return `1 minute ago`;
-    } else if (diffSeconds < SECONDS_IN_HOUR) {
+    }
+    else if (diffSeconds < SECONDS_IN_HOUR) {
       const diffMinutes = Math.floor(diffSeconds / 60);
       return `${diffMinutes} minutes ago`;
-    } else if (diffSeconds < SECONDS_IN_DAY && dateTime.getDay() === now.getDay()) {
+    }
+    else if (diffSeconds < SECONDS_IN_DAY && dateTime.getDay() === now.getDay()) {
       return formatTime(dateTime);
-    } else if (diffSeconds < 2 * SECONDS_IN_DAY && diffDays < 2) {
+    }
+    else if (diffSeconds < 2 * SECONDS_IN_DAY && diffDays < 2) {
       return 'yesterday';
-    } else {
+    }
+    else {
       return formatDate(dateTime);
     }
-  } else {
+  }
+  else {
     // In future
     if (diffSeconds < 2) {
       return 'now';
-    } else if (diffSeconds < 51) {
+    }
+    else if (diffSeconds < 51) {
       return `in ${diffSeconds} seconds`;
-    } else if (diffSeconds < 121) {
+    }
+    else if (diffSeconds < 121) {
       return `in 1 minute`;
-    } else if (diffSeconds < SECONDS_IN_HOUR) {
+    }
+    else if (diffSeconds < SECONDS_IN_HOUR) {
       const diffMinutes = Math.floor(diffSeconds / 60);
       return `in ${diffMinutes} minutes`;
-    } else if (diffSeconds < SECONDS_IN_DAY && dateTime.getDay() === now.getDay()) {
+    }
+    else if (diffSeconds < SECONDS_IN_DAY && dateTime.getDay() === now.getDay()) {
       return formatTime(dateTime);
-    } else if (diffSeconds < 2 * SECONDS_IN_DAY && diffDays < 2) {
+    }
+    else if (diffSeconds < 2 * SECONDS_IN_DAY && diffDays < 2) {
       return 'tomorrow';
-    } else {
+    }
+    else {
       return formatDate(dateTime);
     }
   }

@@ -47,7 +47,8 @@ function resolveFileFromDirectory(dirPath) {
       if (fs.existsSync(indexPath) && fs.statSync(indexPath).isFile()) {
         return indexPath;
       }
-    } else if (stat.isFile()) {
+    }
+    else if (stat.isFile()) {
       return dirPath;
     }
   }
@@ -81,7 +82,8 @@ export function createStaticServer(options = {}) {
     let urlPath;
     try {
       urlPath = decodeURIComponent(rawUrl.split('?')[0].split('#')[0]);
-    } catch {
+    }
+    catch {
       res.writeHead(400, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('Bad Request');
       return;
@@ -113,7 +115,8 @@ export function createStaticServer(options = {}) {
             resolvedFilePath = matched;
             break;
           }
-        } else if (urlPath.startsWith(route.prefix + '/')) {
+        }
+        else if (urlPath.startsWith(route.prefix + '/')) {
           const subPath = urlPath.slice(route.prefix.length + 1);
           const candidatePath = path.resolve(targetResolved, subPath);
 
@@ -176,7 +179,8 @@ export function createStaticServer(options = {}) {
 
       res.writeHead(200, headers);
       fs.createReadStream(resolvedFilePath).pipe(res);
-    } catch (err) {
+    }
+    catch (err) {
       res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end(`Server error: ${err.message}`);
     }
@@ -202,7 +206,8 @@ export function createStaticServer(options = {}) {
             return;
           }
           reject(err);
-        } else {
+        }
+        else {
           resolve();
         }
       });

@@ -31,7 +31,8 @@ export function clamp(val, min, max) {
     const newX = _scalarClamp(val.x, min.x, max.x);
     const newY = _scalarClamp(val.y, min.y, max.y);
     return new Vector(newX, newY);
-  } else {
+  }
+  else {
     return _scalarClamp(val, min, max);
   }
 }
@@ -74,7 +75,8 @@ export function pointOrientation(p1, p2, p3) {
   const slope23 = (p3.y - p2.y) / (p3.x - p2.x);
   if (slope12 > slope23) {
     return 'clockwise';
-  } else if (slope12 < slope23) {
+  }
+  else if (slope12 < slope23) {
     return 'counterclockwise';
   }
   return 'collinear';
@@ -228,9 +230,11 @@ export function shortestDistanceToLineSegment(p, a, b) {
   let closestPoint;
   if (u < 0) {
     closestPoint = a;
-  } else if (u > 1) {
+  }
+  else if (u > 1) {
     closestPoint = b;
-  } else {
+  }
+  else {
     closestPoint = {
       x: a.x + u * dx,
       y: b.y + u * dy,

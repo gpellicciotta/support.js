@@ -31,7 +31,7 @@
  */
 export function parseChangelog(markdownText, options = {}) {
   const maxReleases = options.maxReleases || 20;
-  if (!markdownText || typeof markdownText !== 'string') return [];
+  if (!markdownText || typeof markdownText !== 'string') { return []; }
 
   const lines = markdownText.split(/\r?\n/);
   const releases = [];
@@ -47,7 +47,7 @@ export function parseChangelog(markdownText, options = {}) {
     if (versionMatch) {
       if (currentRelease) {
         releases.push(currentRelease);
-        if (releases.length >= maxReleases) break;
+        if (releases.length >= maxReleases) { break; }
       }
 
       const version = versionMatch[1];
@@ -57,9 +57,11 @@ export function parseChangelog(markdownText, options = {}) {
       const allBrackets = line.match(/\[([^\]]+)\]/g);
       if (allBrackets && allBrackets.length > 0) {
         tag = allBrackets.map((b) => b.replace(/^\[|\]$/g, '')).join(' • ');
-      } else if (versionMatch[3]) {
+      }
+      else if (versionMatch[3]) {
         tag = versionMatch[3].trim();
-      } else if (versionMatch[4]) {
+      }
+      else if (versionMatch[4]) {
         tag = versionMatch[4].trim();
       }
 
@@ -77,7 +79,7 @@ export function parseChangelog(markdownText, options = {}) {
     // Parse bullet points inside a release section
     if (currentRelease && line.startsWith('- ')) {
       let rawText = line.substring(2).trim();
-      if (!rawText) continue;
+      if (!rawText) { continue; }
 
       let isBreaking = false;
       if (rawText.toLowerCase().includes('[breaking]')) {

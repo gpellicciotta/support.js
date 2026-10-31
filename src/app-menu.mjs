@@ -78,12 +78,14 @@ export default class AppMenu extends Component {
       liEl.classList.add('item');
       if (action == null) {
         liEl.classList.add('separator');
-      } else {
+      }
+      else {
         let aEl = document.createElement(action.href ? 'a' : 'button');
         aEl.setAttribute('data-action', actionId);
         if (typeof this.app?.isActionEnabled === 'function' && !this.app.isActionEnabled(actionId)) {
           disable(liEl, action['disabled-reason']);
-        } else {
+        }
+        else {
           enable(liEl);
         }
         if (action.href) {
@@ -94,7 +96,8 @@ export default class AppMenu extends Component {
         }
         if (action.icon) {
           aEl.innerHTML = action.icon + '&nbsp;' + action.title;
-        } else {
+        }
+        else {
           aEl.innerHTML = action.title || actionId;
         }
         menuItem.aElement = aEl;
@@ -141,7 +144,8 @@ export default class AppMenu extends Component {
         ) {
           if (e.action.disabled) {
             disable(menuItem.rootElement, e.action['disabled-reason']);
-          } else {
+          }
+          else {
             enable(menuItem.rootElement);
           }
         }
@@ -154,11 +158,13 @@ export default class AppMenu extends Component {
             if (!menuItem.rootElement.classList.contains('disabled')) {
               activeElementsSinceLastSeparator += 1;
             }
-          } else {
+          }
+          else {
             // Check whether the separator should be disabled
             if (activeElementsSinceLastSeparator) {
               enable(menuItem.rootElement);
-            } else {
+            }
+            else {
               disable(menuItem.rootElement);
             }
             activeElementsSinceLastSeparator = 0;

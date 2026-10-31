@@ -62,7 +62,8 @@ export function pagedResult(envelope, fetchPageOrPaging, maybeFetchPage) {
   if (Array.isArray(envelope) && typeof fetchPageOrPaging === 'object' && fetchPageOrPaging !== null) {
     actualEnvelope = { items: envelope, ...fetchPageOrPaging };
     fetchPage = maybeFetchPage;
-  } else if (Array.isArray(envelope)) {
+  }
+  else if (Array.isArray(envelope)) {
     return singlePage(envelope);
   }
 

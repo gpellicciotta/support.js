@@ -12,7 +12,8 @@ describe('fireLogEvent', () => {
     addLogHandler(failingHandler);
     try {
       error('something happened');
-    } finally {
+    }
+    finally {
       removeLogHandler(failingHandler);
     }
 

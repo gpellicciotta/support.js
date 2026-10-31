@@ -280,7 +280,8 @@ export default class Component {
           this.log.error(`Operation '${longRunningOperation}' failed:`, err);
         },
       };
-    } else if (typeof longRunningOperation === 'function') {
+    }
+    else if (typeof longRunningOperation === 'function') {
       op = {
         title: 'Operation',
         description: 'Operation in progress',

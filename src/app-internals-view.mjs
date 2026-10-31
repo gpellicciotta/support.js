@@ -120,7 +120,7 @@ export default class AppInternalsView extends AppView {
   }
 
   registerEventListeners() {
-    if (typeof this.app?.addEventListener !== 'function') return;
+    if (typeof this.app?.addEventListener !== 'function') { return; }
     this.registerEventListener(this.app, 'refresh', this.refreshComponentUI.bind(this));
     this.registerEventListener(this.app, SIGN_IN_STATE_CHANGED_EVENT, this.updateLoginState.bind(this));
     this.registerEventListener(this.app, APP_INSTALL_STATE_CHANGED_EVENT, this.updateInstallState.bind(this));
@@ -435,13 +435,13 @@ export default class AppInternalsView extends AppView {
   }
 
   doAddRandomNotification(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') { e.preventDefault(); }
     this.addRandomNotification();
     this.updateNotifications();
   }
 
   doClearAllNotifications(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') { e.preventDefault(); }
     if (typeof this.app?.clearNotifications === 'function') {
       this.app.clearNotifications();
     }
@@ -457,13 +457,13 @@ export default class AppInternalsView extends AppView {
   }
 
   doAddRandomLogMessage(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') { e.preventDefault(); }
     this.addRandomLogMessage();
     this.updateLogs();
   }
 
   doClearAllLogs(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') { e.preventDefault(); }
     this.logEvents = [];
     this.updateLogs();
   }
@@ -475,7 +475,7 @@ export default class AppInternalsView extends AppView {
   }
 
   doFilterLogs() {
-    if (!this.logFilterInputEl || !this.logTableBodyElement) return;
+    if (!this.logFilterInputEl || !this.logTableBodyElement) { return; }
     const filterVal = this.logFilterInputEl.value.toLowerCase();
     if (
       this.logTableBodyElement.dataset.lastFilterVal &&
@@ -488,7 +488,8 @@ export default class AppInternalsView extends AppView {
       const eventText = itemEl.innerText.toLowerCase();
       if (!filterVal || eventText.indexOf(filterVal.toLowerCase()) >= 0) {
         enable(itemEl);
-      } else {
+      }
+      else {
         disable(itemEl);
       }
     });
@@ -508,7 +509,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateLoginState() {
-    if (!this.loginStateElement) return;
+    if (!this.loginStateElement) { return; }
     if (!this.app?.signedInUser || !this.app.signedInUser.id) {
       this.loginStateElement.innerHTML = `<p>App. is being used anonymously.</p>
                                           <p>Sign in via:</p>
@@ -522,7 +523,8 @@ export default class AppInternalsView extends AppView {
           }
         });
       }
-    } else {
+    }
+    else {
       this.loginStateElement.innerHTML = `<p>${this.app.signedInUser.name} is <b>signed-in</b>.</p>
                                           <p>Sign-out via:</p>
                                           <button id="sign-out-button">Sign Out</button>`;
@@ -540,18 +542,20 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateInstallState() {
-    if (!this.appInstallStateElement || !this.swInstallStateElement) return;
+    if (!this.appInstallStateElement || !this.swInstallStateElement) { return; }
     // App install state:
     let appInstallState = 'App. install state is being determined...';
     if (this.app?.isAppInstalled && this.app.isAppInstalled()) {
       appInstallState = 'App. has been installed';
-      if (this.installAppButton) disable(this.installAppButton);
-    } else if (this.app?.isAppInstallable && this.app.isAppInstallable()) {
+      if (this.installAppButton) { disable(this.installAppButton); }
+    }
+    else if (this.app?.isAppInstallable && this.app.isAppInstallable()) {
       appInstallState = 'App. has been not been installed yet';
-      if (this.installAppButton) enable(this.installAppButton);
-    } else {
+      if (this.installAppButton) { enable(this.installAppButton); }
+    }
+    else {
       appInstallState = 'App. install state cannot currently be determined';
-      if (this.installAppButton) disable(this.installAppButton);
+      if (this.installAppButton) { disable(this.installAppButton); }
     }
     this.appInstallStateElement.innerHTML = appInstallState;
 
@@ -561,23 +565,25 @@ export default class AppInternalsView extends AppView {
       typeof this.app?.getServiceWorkerRegistration === 'function' ? this.app.getServiceWorkerRegistration() : null;
     if (!sw) {
       swInstallState = 'No service worker has been registered yet';
-      if (this.checkForSwUpdateButton) disable(this.checkForSwUpdateButton);
-      if (this.installSwUpdateButton) disable(this.installSwUpdateButton);
-    } else if (sw.waiting) {
+      if (this.checkForSwUpdateButton) { disable(this.checkForSwUpdateButton); }
+      if (this.installSwUpdateButton) { disable(this.installSwUpdateButton); }
+    }
+    else if (sw.waiting) {
       swInstallState = 'SW is ready for install';
-      if (this.checkForSwUpdateButton) disable(this.checkForSwUpdateButton);
-      if (this.installSwUpdateButton) enable(this.installSwUpdateButton);
-    } else if (sw.active) {
+      if (this.checkForSwUpdateButton) { disable(this.checkForSwUpdateButton); }
+      if (this.installSwUpdateButton) { enable(this.installSwUpdateButton); }
+    }
+    else if (sw.active) {
       swInstallState = 'SW has been installed and is active';
-      if (this.checkForSwUpdateButton) enable(this.checkForSwUpdateButton);
-      if (this.installSwUpdateButton) disable(this.installSwUpdateButton);
+      if (this.checkForSwUpdateButton) { enable(this.checkForSwUpdateButton); }
+      if (this.installSwUpdateButton) { disable(this.installSwUpdateButton); }
     }
     this.swInstallStateElement.innerHTML = swInstallState;
   }
 
   doAppInstall(event) {
     this.log.trace('Installing as app...');
-    if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    if (event && typeof event.preventDefault === 'function') { event.preventDefault(); }
     if (typeof this.app?.installApp === 'function') {
       this.app.installApp();
     }
@@ -585,7 +591,7 @@ export default class AppInternalsView extends AppView {
 
   doCheckForServiceWorkerUpdate(event) {
     this.log.trace('Checking for service worker update...');
-    if (event && typeof event.preventDefault === 'function') event.preventDefault();
+    if (event && typeof event.preventDefault === 'function') { event.preventDefault(); }
     if (typeof this.app?.runAction === 'function') {
       this.app.runAction('check-app-update');
     }
@@ -596,8 +602,8 @@ export default class AppInternalsView extends AppView {
 
   doInstallServiceWorkerUpdate(event) {
     this.log.trace('Installing service worker update...');
-    if (event && typeof event.preventDefault === 'function') event.preventDefault();
-    if (this.installSwUpdateButton) disable(this.installSwUpdateButton);
+    if (event && typeof event.preventDefault === 'function') { event.preventDefault(); }
+    if (this.installSwUpdateButton) { disable(this.installSwUpdateButton); }
     if (typeof this.app?.runAction === 'function') {
       this.app.runAction('install-app-update');
     }
@@ -607,7 +613,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateActions() {
-    if (!this.actionsTableBodyElement) return;
+    if (!this.actionsTableBodyElement) { return; }
     let actionsTableRows = '<tr><td colspan="5">No actions yet</td></tr>';
     if (this.app?.actions && this.app.actions.size > 0) {
       actionsTableRows = '';
@@ -674,7 +680,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateViews() {
-    if (!this.viewsTableBodyElement) return;
+    if (!this.viewsTableBodyElement) { return; }
     let viewsTableRows = '<tr><td colspan="4">No views yet</td></tr>';
     if (this.app?.views && this.app.views.length) {
       viewsTableRows = '';
@@ -687,7 +693,8 @@ export default class AppInternalsView extends AppView {
             <td>`;
         if (Object.prototype.hasOwnProperty.call(view, 'defaultRoute') && view.defaultRoute) {
           viewsTableRows += `<button class="go-to-view-action action" data-view-route="${view.defaultRoute}"><i class="icon far fa-play-circle"></i><i class="text">Activate</i></button>`;
-        } else {
+        }
+        else {
           viewsTableRows += `&nbsp;`;
         }
         viewsTableRows += `
@@ -710,7 +717,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateNotifications() {
-    if (!this.notificationsTableBodyElement) return;
+    if (!this.notificationsTableBodyElement) { return; }
     let notificationsTableRows = '<tr><td colspan="5">No notifications yet</td></tr>';
     if (this.app?.notifications && this.app.notifications.length > 0) {
       notificationsTableRows = '';
@@ -740,7 +747,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async updateLogs() {
-    if (!this.logTableBodyElement) return;
+    if (!this.logTableBodyElement) { return; }
     let logTableRows = '<li><span>No logs yet</li>';
     if (this.logEvents.length > 0) {
       logTableRows = '';
@@ -784,7 +791,7 @@ export default class AppInternalsView extends AppView {
   }
 
   async doApiTest(e) {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (e && typeof e.preventDefault === 'function') { e.preventDefault(); }
     this.log.trace('Performing API test');
     // URI + data
     let uri = this.uriElement ? this.uriElement.value : '';
@@ -792,7 +799,8 @@ export default class AppInternalsView extends AppView {
     if (!uri.startsWith('http')) {
       if (uri.startsWith('/api')) {
         uri = baseUrl + uri.substring(4);
-      } else {
+      }
+      else {
         uri = baseUrl + uri;
       }
     }
@@ -822,7 +830,7 @@ export default class AppInternalsView extends AppView {
     }
     const respCode = this.responseCodeElement;
     const respData = this.responseDataElement;
-    if (respData) respData.innerText = 'Waiting...';
+    if (respData) { respData.innerText = 'Waiting...'; }
     const logInstance = this.log;
     let fetchSuccess = function (resp) {
       let respType = resp.headers?.get?.('content-type') || 'text/html';
@@ -832,12 +840,13 @@ export default class AppInternalsView extends AppView {
       if (respType === 'text/html' || respType === 'text/csv') {
         resp.text().then((txt) => {
           logInstance.trace('getting text or csv data');
-          if (respData) respData.innerText = txt;
+          if (respData) { respData.innerText = txt; }
         });
-      } else {
+      }
+      else {
         resp.json().then((jsonData) => {
           logInstance.trace('getting json data');
-          if (respData) respData.innerText = JSON.stringify(jsonData, null, 2);
+          if (respData) { respData.innerText = JSON.stringify(jsonData, null, 2); }
         });
       }
       logInstance.trace('response received');
@@ -845,8 +854,8 @@ export default class AppInternalsView extends AppView {
     };
     let fetchError = function (err) {
       logInstance.error(`error received: ${err}`);
-      if (respCode) respCode.innerHTML = '<h1>Error: ' + err.name + '</h1>';
-      if (respData) respData.innerText = err.message;
+      if (respCode) { respCode.innerHTML = '<h1>Error: ' + err.name + '</h1>'; }
+      if (respData) { respData.innerText = err.message; }
     };
     if (typeof fetch === 'function') {
       fetch(fetchUrl, fetchOptions).then(fetchSuccess).catch(fetchError);

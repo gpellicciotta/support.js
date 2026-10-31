@@ -15,7 +15,7 @@ export function isValidEmailAddress(email) {
   if (email.indexOf('@') <= 0) {
     return false;
   }
-  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
 }
 
 /**
@@ -166,7 +166,8 @@ export function validateInputField(inputEl) {
     if (inputEl.hasAttribute('required')) {
       markInvalid(inputEl, 'An email address is mandatory');
       return false;
-    } else {
+    }
+    else {
       removeValidityMarks(inputEl);
       return true;
     }
@@ -174,7 +175,8 @@ export function validateInputField(inputEl) {
   if (!isValidEmailAddress(valueAvailable)) {
     markInvalid(inputEl, 'This is not a valid email address');
     return false;
-  } else {
+  }
+  else {
     markValid(inputEl);
     return true;
   }
@@ -192,7 +194,8 @@ export function validateEmailField(emailInputEl) {
     if (emailInputEl.hasAttribute('required')) {
       markInvalid(emailInputEl, 'An email address is mandatory');
       return false;
-    } else {
+    }
+    else {
       removeValidityMarks(emailInputEl);
       return true;
     }
@@ -200,7 +203,8 @@ export function validateEmailField(emailInputEl) {
   if (!isValidEmailAddress(valueAvailable)) {
     markInvalid(emailInputEl, 'This is not a valid email address');
     return false;
-  } else {
+  }
+  else {
     markValid(emailInputEl);
     return true;
   }
@@ -218,7 +222,8 @@ export function validatePasswordField(passwordInputEl) {
     if (passwordInputEl.hasAttribute('required')) {
       markInvalid(passwordInputEl, 'A password is mandatory');
       return false;
-    } else {
+    }
+    else {
       removeValidityMarks(passwordInputEl);
       return true;
     }
@@ -226,7 +231,8 @@ export function validatePasswordField(passwordInputEl) {
   if (!isValidPassword(valueAvailable)) {
     markInvalid(passwordInputEl, 'A valid password needs: ' + validPasswordDescription());
     return false;
-  } else {
+  }
+  else {
     markValid(passwordInputEl);
     return true;
   }
@@ -259,7 +265,8 @@ export function handlePasswordDisclosure(el) {
       passwordEl.setAttribute('type', 'text');
       iconButtonEl.classList.remove('fa-eye');
       iconButtonEl.classList.add('fa-eye-slash');
-    } else {
+    }
+    else {
       passwordEl.setAttribute('type', 'password');
       iconButtonEl.classList.remove('fa-eye-slash');
       iconButtonEl.classList.add('fa-eye');
@@ -275,7 +282,7 @@ export function handlePasswordDisclosure(el) {
  * @param {string|null} [loadingText=null] Optional label text to display while loading.
  */
 export function setButtonLoading(buttonEl, isLoading = true, loadingText = null) {
-  if (!buttonEl) return;
+  if (!buttonEl) { return; }
   if (isLoading) {
     if (!buttonEl.dataset) {
       buttonEl.dataset = {};
@@ -290,7 +297,8 @@ export function setButtonLoading(buttonEl, isLoading = true, loadingText = null)
     const textSpan = typeof buttonEl.querySelector === 'function' ? buttonEl.querySelector('.text') : null;
     const label = loadingText || (textSpan ? textSpan.textContent : buttonEl.textContent?.trim() || 'Processing...');
     buttonEl.innerHTML = `<i class="icon fa-solid fa-circle-notch fa-spin"></i> <span class="text">${label}</span>`;
-  } else {
+  }
+  else {
     buttonEl.disabled = false;
     if (buttonEl.classList && typeof buttonEl.classList.remove === 'function') {
       buttonEl.classList.remove('is-loading');

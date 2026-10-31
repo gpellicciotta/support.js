@@ -14,7 +14,8 @@ function createTempDir(prefix = 'test-') {
 function removeDir(dirPath) {
   try {
     fs.rmSync(dirPath, { recursive: true, force: true });
-  } catch {
+  }
+  catch {
     // Ignore cleanup errors
   }
 }
@@ -54,7 +55,8 @@ test('static-server: server lifecycle and ephemeral port binding', async () => {
       },
       { name: 'TypeError' },
     );
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });
@@ -111,7 +113,8 @@ test('static-server: fetches files, directory index, and handles HEAD requests',
     // Disallowed method
     const postRes = await fetch(`${handle.url}/index.html`, { method: 'POST' });
     assert.equal(postRes.status, 405);
-  } finally {
+  }
+  finally {
     await handle.stop();
     removeDir(tmpDir);
   }
@@ -163,7 +166,8 @@ test('static-server: custom route prefixes, path aliases, and function routes', 
     const rootRes = await fetch(`${handle.url}/index.html`);
     assert.equal(rootRes.status, 200);
     assert.equal(await rootRes.text(), '<h1>Root</h1>');
-  } finally {
+  }
+  finally {
     await handle.stop();
     removeDir(rootDir);
     removeDir(clientDir);
@@ -184,7 +188,8 @@ test('static-server: 404 handling, fallbackToIndex, and path traversal protectio
 
     const traversalRes = await fetch(`${server404.url}/../../../etc/passwd`);
     assert.ok(traversalRes.status === 403 || traversalRes.status === 404);
-  } finally {
+  }
+  finally {
     await server404.stop();
   }
 
@@ -193,7 +198,8 @@ test('static-server: 404 handling, fallbackToIndex, and path traversal protectio
     const spaRes = await fetch(`${serverSpa.url}/dashboard/settings`);
     assert.equal(spaRes.status, 200);
     assert.equal(await spaRes.text(), '<h1>SPA Shell</h1>');
-  } finally {
+  }
+  finally {
     await serverSpa.stop();
     removeDir(tmpDir);
   }
@@ -284,7 +290,8 @@ test('TourRecorder: capture lifecycle, file creation, and metadata tracking', as
     assert.equal(verified.length, 1);
     assert.ok(verified[0].sha256);
     assert.equal(verified[0].sha256, crypto.createHash('sha256').update(fakeImageBuffer).digest('hex'));
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });
@@ -303,7 +310,8 @@ test('TourRecorder: guards against blank frame (<5KB screenshot)', async () => {
     assert.throws(() => {
       recorder.validateIntegrity();
     }, /Screenshot 01-blank\.png is suspiciously small \(4500 bytes\), possible blank frame!/);
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });
@@ -323,7 +331,8 @@ test('TourRecorder: detects visual regression from duplicate screenshot hash', a
     assert.throws(() => {
       recorder.validateIntegrity();
     }, /Visual regression detected: Screenshot #2 \(02-second-step\.png\) is byte-for-byte identical to #1 \(01-first-step\.png\)/);
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });
@@ -346,7 +355,8 @@ test('TourRecorder: allows configured duplicate screenshot pairs', async () => {
     const validated = recorder.validateIntegrity();
     assert.equal(validated.length, 2);
     assert.equal(validated[0].sha256, validated[1].sha256);
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });
@@ -408,7 +418,8 @@ test('TourRecorder: generates walkthrough markdown, summary table, and reports o
     const historyIndex = fs.readFileSync(reports.historyIndexPath, 'utf8');
     assert.ok(historyIndex.includes('# Visual Tour History Archive'));
     assert.ok(historyIndex.includes('2026-09-19-v1.2.3/ui-tour-report.md'));
-  } finally {
+  }
+  finally {
     removeDir(tmpDir);
   }
 });

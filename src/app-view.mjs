@@ -107,7 +107,8 @@ export default class AppView extends Component {
       if (!viewAction) {
         // Null means separator
         contextMenuActions.push(null);
-      } else if (!('context-bar' in viewAction) || viewAction['context-bar']) {
+      }
+      else if (!('context-bar' in viewAction) || viewAction['context-bar']) {
         // Don't include if viewAction['context-bar'] === false
         contextMenuActions.push(viewAction.id);
       }

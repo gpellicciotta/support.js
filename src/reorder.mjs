@@ -38,7 +38,8 @@ function moveDragOver(overElem) {
   if (order === -1) {
     // Move before:
     moveBefore(dragState.item.parentElement, dragState.item, overElem);
-  } else {
+  }
+  else {
     // Move after:
     moveAfter(dragState.item.parentElement, dragState.item, overElem);
   }
@@ -225,7 +226,7 @@ function addItemTouchEventListeners(elem, dropCallBack) {
       if (!draggablePart.classList.contains('dragging')) {
         return;
       }
-      //ev.preventDefault(); Not preventing since then no 'click' event will get generated
+      // ev.preventDefault(); Not preventing since then no 'click' event will get generated
       endDrag(false, dropCallBack);
     },
     { passive: true },
@@ -238,7 +239,7 @@ function compareOrder(elem1, elem2) {
   if (elem1.parentElement !== elem2.parentElement) {
     return null;
   }
-  if (elem1 === elem2) return 0;
+  if (elem1 === elem2) { return 0; }
   if (elem1.compareDocumentPosition(elem2) & Node.DOCUMENT_POSITION_FOLLOWING) {
     return -1;
   }
@@ -248,7 +249,8 @@ function compareOrder(elem1, elem2) {
 function moveBefore(parent, elToMove, elToMoveBefore) {
   if (elToMoveBefore) {
     parent.insertBefore(elToMove, elToMoveBefore);
-  } else {
+  }
+  else {
     parent.appendChild(elToMove);
   }
 }
@@ -257,7 +259,8 @@ function moveAfter(parent, elToMove, elToMoveAfter) {
   const nextEl = elToMoveAfter.nextElementSibling;
   if (nextEl) {
     parent.insertBefore(elToMove, nextEl);
-  } else {
+  }
+  else {
     parent.appendChild(elToMove);
   }
 }

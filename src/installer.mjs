@@ -74,7 +74,8 @@ export default class Installer {
     // Show the prompt from within an event triggered by a user gesture
     try {
       this._deferredPrompt.prompt();
-    } catch (error) {
+    }
+    catch (error) {
       this.log.error('Failed to show install prompt: %O', error);
       return false;
     }
@@ -87,7 +88,8 @@ export default class Installer {
         if (installedCallback) {
           installedCallback();
         }
-      } else {
+      }
+      else {
         this.log.warn('User dismissed the "install" app prompt');
       }
       return this._installed;

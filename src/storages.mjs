@@ -181,7 +181,8 @@ export class MemoryStorageAdapter extends StorageAdapter {
       if (value && typeof value === 'object') {
         if ('key' in value && value.key !== undefined && value.key !== null) {
           finalKey = value.key;
-        } else if ('id' in value && value.id !== undefined && value.id !== null) {
+        }
+        else if ('id' in value && value.id !== undefined && value.id !== null) {
           finalKey = value.id;
         }
       }
@@ -238,7 +239,7 @@ export class MemoryStorageAdapter extends StorageAdapter {
    * @returns {string}
    */
   _serializeKey(key) {
-    if (Array.isArray(key)) return JSON.stringify(key);
+    if (Array.isArray(key)) { return JSON.stringify(key); }
     return String(key);
   }
 }
@@ -261,7 +262,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
     if (typeof dbPrefixOrOptions === 'object' && dbPrefixOrOptions !== null) {
       opts = dbPrefixOrOptions;
       prefix = opts.dbPrefix || 'counters_user_';
-    } else if (typeof dbPrefixOrOptions === 'string') {
+    }
+    else if (typeof dbPrefixOrOptions === 'string') {
       prefix = dbPrefixOrOptions;
     }
     this.dbPrefix = prefix;
@@ -399,7 +401,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = store.get(key);
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -421,7 +424,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = store.getAll();
         req.onsuccess = () => resolve(req.result || []);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -445,7 +449,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = key !== null && key !== undefined ? store.put(value, key) : store.put(value);
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -468,7 +473,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = store.delete(key);
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -490,7 +496,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = store.clear();
         req.onsuccess = () => resolve(req.result);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -512,7 +519,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
         const req = store.count();
         req.onsuccess = () => resolve(req.result || 0);
         req.onerror = () => reject(req.error);
-      } catch (err) {
+      }
+      catch (err) {
         reject(err);
       }
     });
@@ -530,7 +538,8 @@ function getStorage() {
     if (typeof localStorage !== 'undefined' && localStorage !== null) {
       return localStorage;
     }
-  } catch (e) {
+  }
+  catch (e) {
     // Access denied or not available
   }
   return null;
@@ -539,10 +548,11 @@ function getStorage() {
 function readStore(storageKey) {
   try {
     const storage = getStorage();
-    if (!storage) return {};
+    if (!storage) { return {}; }
     const raw = storage.getItem(storageKey);
     return raw ? JSON.parse(raw) : {};
-  } catch (e) {
+  }
+  catch (e) {
     return {};
   }
 }
@@ -550,9 +560,10 @@ function readStore(storageKey) {
 function writeStore(storageKey, store) {
   try {
     const storage = getStorage();
-    if (!storage) return;
+    if (!storage) { return; }
     storage.setItem(storageKey, JSON.stringify(store));
-  } catch (e) {
+  }
+  catch (e) {
     // Non-fatal: storage full or quota exceeded
   }
 }
@@ -587,7 +598,7 @@ function pruneIfNeeded(store) {
  * @returns {void}
  */
 export function recordUsage(storageKey, key) {
-  if (!key) return;
+  if (!key) { return; }
   const store = readStore(storageKey);
   const entry = store[key] || { count: 0, lastUsed: 0, pinned: false };
   entry.count += 1;
@@ -623,7 +634,7 @@ export const getTopKeys = getSuggestions;
  * @returns {void}
  */
 export function setPinned(storageKey, key, pinned) {
-  if (!key) return;
+  if (!key) { return; }
   const store = readStore(storageKey);
   const entry = store[key] || { count: 0, lastUsed: 0 };
   entry.pinned = !!pinned;
