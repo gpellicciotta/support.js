@@ -61,7 +61,7 @@ All non-trivial task work follows the protocol in
 
 ## Release Process
 Ongoing work accumulates under the top `CHANGELOG.md` heading while carrying a `-pre` SemVer suffix.
-The version in `CHANGELOG.md` must match `version` in `package.json` exactly.
+The version in `CHANGELOG.md` must match `version` in `package.json` and [package.json](../packages/words/package.json) exactly (lockstep).
 Escalate the heading and version together whenever landing breaking, feature, or patch changes.
 
 ### Step 1: Verify Prerequisites
@@ -81,7 +81,7 @@ git status
 ### Step 2: Freeze Release Version
 Update `CHANGELOG.md` and `package.json` in a dedicated freeze commit.
 Replace the `-pre` suffix in `CHANGELOG.md` with `[{{date}}]`.
-Drop `-pre` from `package.json`'s `version` field.
+Drop `-pre` from the `version` field of `package.json` and [package.json](../packages/words/package.json).
 Do not reopen `-pre` in this commit.
 
 ```bash
@@ -97,7 +97,7 @@ git rev-parse HEAD
 
 ### Step 3: Reopen Next Development Version
 Add the next patch pre-release heading in `CHANGELOG.md` above the frozen version.
-Bump `package.json` to the corresponding `-pre` version.
+Bump both `package.json` files to the corresponding `-pre` version.
 
 ```bash
 git add CHANGELOG.md package.json

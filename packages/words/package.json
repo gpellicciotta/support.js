@@ -1,0 +1,31 @@
+{
+  "name": "@gpellicciotta/support-words.js",
+  "version": "3.0.0-pre",
+  "description": "Dutch and English word lists for word-based games and utilities",
+  "type": "module",
+  "exports": {
+    "./*.mjs": "./src/*.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpellicciotta/support.js.git",
+    "directory": "packages/words"
+  },
+  "author": "Giovanni Pellicciotta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gpellicciotta/support.js/issues"
+  },
+  "homepage": "https://github.com/gpellicciotta/support.js/tree/main/packages/words#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

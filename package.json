@@ -9,6 +9,9 @@
     "./css/*.css": "./css/*.css",
     "./package.json": "./package.json"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=22"
   },

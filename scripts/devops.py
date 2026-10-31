@@ -63,7 +63,7 @@ def main() -> int:
         "lint": [[npm, "run", "lint"]],
         "format": [[npm, "run", "format"]],
         "test": [[npm, "test"]],
-        "pack": [[npm, "pack", "--dry-run"]],
+        "pack": [[npm, "pack", "--dry-run", "--workspaces", "--include-workspace-root"]],
     }
     commands["check"] = commands["lint"] + commands["test"] + commands["pack"]
     return 0 if all(run(command) for command in commands[args.action]) else 1

@@ -3,7 +3,7 @@ import stylistic from '@stylistic/eslint-plugin';
 import globals from 'globals';
 
 export default [
-  { ignores: ['node_modules/', 'src/dutchwords.mjs', 'src/englishwords.mjs'] },
+  { ignores: ['node_modules/', 'packages/words/src/'] },
   js.configs.recommended,
   {
     files: ['**/*.mjs'],

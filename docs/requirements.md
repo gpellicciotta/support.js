@@ -40,8 +40,8 @@ Functional and technical requirements for the `support.js` project.
 - Provide decorative canvas effects: fireworks (`src/fireworks.mjs`) and snowflakes (`src/snowflakes.mjs`).
 
 ### Word Lists
-- Provide Dutch and English word lists for word-based games or utilities (`src/dutchwords.mjs`,
-  `src/englishwords.mjs`).
+- Provide Dutch and English word lists for word-based games or utilities (`@gpellicciotta/support-words.js`,
+  in `packages/words/`).
 
 ### REST Client Transport and Errors
 - Provide a typed error hierarchy (`ApiError`, `AuthenticationError`, `ValidationError`, `NotFoundError`, `ConflictError`, `mapError`) and HTTP transport (`buildUrl`, `basicAuthHeader`, `bearerAuthHeader`, `sendRequest`, `redirectToAuth`) for fetch-based API clients (`src/net.mjs`).

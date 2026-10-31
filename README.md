@@ -22,6 +22,8 @@ Then install:
 npm install @gpellicciotta/support.js
 ```
 
+The Dutch and English word lists live in the separate [`@gpellicciotta/support-words.js`](packages/words/README.md) package.
+
 Each module is importable as a subpath, e.g.:
 
 ```js
