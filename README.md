@@ -1,4 +1,4 @@
-# Support.js
+# Javascript Support Library
 General-purpose Javascript support code, both for client and server-side use.
 
 Published as an npm package on [GitHub Packages](https://github.com/gpellicciotta/support.js/packages/),
