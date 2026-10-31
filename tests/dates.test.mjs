@@ -27,7 +27,7 @@ import {
   toWireDate,
   fromWireDate,
   parseDate,
-} from '../js/dates.mjs';
+} from '../src/dates.mjs';
 
 describe('dates', () => {
   describe('MONTH_NAMES and human formatters', () => {

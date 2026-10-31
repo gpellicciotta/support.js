@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import Installer from '../js/installer.mjs';
+import Installer from '../src/installer.mjs';
 
 describe('Installer', () => {
   test('constructor initializes installed to false', () => {

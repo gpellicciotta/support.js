@@ -50,18 +50,18 @@ Both `auth` and `counters` maintain independent CSS directories. Diffing normali
   - `wait-panel.css` (19 lines): Full-page and card-level loading spinner overlays.
 
 - **Near-Identical Overlap (<20 diff lines)**:
-  - `dialog.css` (126–128 lines, 18 diff lines): Modal dialog overlay and button layout. Notice `support.js` exports `js/dialog.mjs` but lacked the companion stylesheet `css/dialog.css`.
+  - `dialog.css` (126–128 lines, 18 diff lines): Modal dialog overlay and button layout. Notice `support.js` exports `src/dialog.mjs` but lacked the companion stylesheet `css/dialog.css`.
   - `main-layout.css` (211–215 lines, 8 diff lines): Header, sticky top navigation, main content, and footer grid.
   - `error-view.css` (58 lines, 2 diff lines): Standardized error banners and detail blocks.
   - `create-account-view.css` (45 lines, 4 diff lines): Account creation form layout.
 
-### Testing Utilities: Headless Mock DOM (`js/mock-dom.mjs`)
+### Testing Utilities: Headless Mock DOM (`src/mock-dom.mjs`)
 Currently:
 - `auth/webapp/js/test/mock-dom.mjs` (230 lines) provides `MockElement`, `MockDocument`, and `installMockDom()`.
 - `counters/clients/js/test/` reimplements `MockElement` independently across 5 test suites (`about-view.test.mjs`, `dashboard-visibility.test.mjs`, `context-action-bar-dom-lifecycle.test.mjs`, `help-view.test.mjs`, and `sign-in-view.test.mjs`), totaling over 500 lines of duplicated mock code.
 - `support.js/tests/` maintains private `FakeElement` helpers in `component.test.mjs`, `app-view.test.mjs`, and `app-internals-view.test.mjs`.
 
-A shared `js/mock-dom.mjs` (and package export `./mock-dom.mjs`) eliminates these duplicates with zero third-party dependencies.
+A shared `src/mock-dom.mjs` (and package export `./mock-dom.mjs`) eliminates these duplicates with zero third-party dependencies.
 
 ### REST Client Transport & Pagination Helpers (`clients/js/`)
 Both `auth` and `counters` have identical client transport mechanisms:
@@ -86,9 +86,9 @@ Both `auth` and `counters` have identical client transport mechanisms:
 ## Phased Implementation Roadmap
 1. **Phase 1 (Immediate Extraction & Packaging)**:
    - Export shared CSS stylesheets in `css/`.
-   - Implement `js/mock-dom.mjs` with full test coverage.
-   - Implement client wire date formatters and pagination helper `js/page.mjs`.
-   - Implement zero-dependency offline storage adapters in `js/offline-storage.mjs`.
+   - Implement `src/mock-dom.mjs` with full test coverage.
+   - Implement client wire date formatters and pagination helper `src/page.mjs`.
+   - Implement zero-dependency offline storage adapters in `src/offline-storage.mjs`.
    - Implement script automation helpers in `scripts/lib/`.
    - Cut release `v0.83.1`.
 

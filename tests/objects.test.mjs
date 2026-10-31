@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { areEqual, areArraysEqual, deepClone } from '../js/objects.mjs';
+import { areEqual, areArraysEqual, deepClone } from '../src/objects.mjs';
 
 describe('objects', () => {
   describe('areEqual', () => {

@@ -1,7 +1,7 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
 import * as fs from 'node:fs';
-import { parseChangelog } from '../js/changelog-parser.mjs';
+import { parseChangelog } from '../src/changelog-parser.mjs';
 
 describe('Changelog Parser Suite', () => {
   const sampleMarkdown = `

@@ -16,7 +16,7 @@ In v2.0.0, `@gpellicciotta/support.js` consolidates these into:
 
 ## Shared Modules Architecture
 
-### `js/net.mjs`
+### `src/net.mjs`
 Exports:
 - `sendRequest(baseUrl, method, path, options)`: executes request via `fetch`, preserving auth's `options.headers` merging over default `Accept: application/json`, handling optional `redirect: 'manual'`, and returning `{ status, data, headers }`.
 - `buildUrl(baseUrl, path, query)`: constructs query string handling scalar values and arrays.
@@ -31,7 +31,7 @@ Exports:
 - `NOT_FOUND_PATTERNS`: regex patterns matching missing resource identifiers.
 - `mapError(status, message, body)`: factory function mapping status code and message to the appropriate class.
 
-### `js/dates.mjs`
+### `src/dates.mjs`
 Exports wire date helpers:
 - `toWireDate(value)`: serializes Date objects to UTC ISO strings without milliseconds (`yyyy-MM-ddTHH:mm:ssZ`).
 - `fromWireDate(value)`: deserializes server date strings into `Date` instances.

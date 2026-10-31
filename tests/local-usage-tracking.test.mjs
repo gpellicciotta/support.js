@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { recordUsage, getSuggestions, getTopKeys, setPinned, pinKey, isPinned, sortByUsage } from '../js/storages.mjs';
+import { recordUsage, getSuggestions, getTopKeys, setPinned, pinKey, isPinned, sortByUsage } from '../src/storages.mjs';
 
 class MockLocalStorage {
   constructor() {

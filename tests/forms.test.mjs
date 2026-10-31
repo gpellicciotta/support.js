@@ -17,7 +17,7 @@ import {
   validatePasswordField,
   handlePasswordDisclosure,
   setButtonLoading,
-} from '../js/forms.mjs';
+} from '../src/forms.mjs';
 
 // Minimal fake DOM element, just enough to exercise formutils.mjs without a jsdom dependency.
 class FakeElement {

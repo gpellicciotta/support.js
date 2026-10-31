@@ -8,7 +8,7 @@ import {
   ConflictError,
   NOT_FOUND_PATTERNS,
   mapError,
-} from '../js/net.mjs';
+} from '../src/net.mjs';
 
 test('ApiError sets properties and stack trace', () => {
   const err = new ApiError('Something broke', 500, { detail: 'db down' });

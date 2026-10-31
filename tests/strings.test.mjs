@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { escapeHtml, capitalize, uncapitalize, escapeRegex } from '../js/strings.mjs';
+import { escapeHtml, capitalize, uncapitalize, escapeRegex } from '../src/strings.mjs';
 
 describe('strings', () => {
   describe('escapeHtml', () => {

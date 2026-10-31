@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { singlePage, pagedResult, bookmarkedPage } from '../js/paging.mjs';
+import { singlePage, pagedResult, bookmarkedPage } from '../src/paging.mjs';
 
 test('singlePage creates a non-navigable single page shape', async () => {
   const page = singlePage(['alpha', 'beta', 'gamma']);

@@ -8,7 +8,7 @@ import {
   rgbaToString,
   textContrastColor,
   randomRgbColor,
-} from '../js/colors.mjs';
+} from '../src/colors.mjs';
 
 describe('colors', () => {
   test('hslToRgb converts HSL to RGB', () => {

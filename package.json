@@ -4,7 +4,7 @@
   "description": "General-purpose Javascript support code, both for client and server-side use",
   "type": "module",
   "exports": {
-    "./*.mjs": "./js/*.mjs",
+    "./*.mjs": "./src/*.mjs",
     "./*.css": "./css/*.css",
     "./css/*.css": "./css/*.css",
     "./package.json": "./package.json"
@@ -13,7 +13,7 @@
     "node": ">=22"
   },
   "files": [
-    "js",
+    "src",
     "css",
     "README.md",
     "CHANGELOG.md",

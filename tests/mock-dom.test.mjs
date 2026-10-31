@@ -7,7 +7,7 @@ import {
   MockTextNode,
   installMockDom,
   uninstallMockDom,
-} from '../js/mock-dom.mjs';
+} from '../src/mock-dom.mjs';
 
 describe('MockElement Core Properties & Attributes', () => {
   test('initializes default tagName as DIV and uppercase', () => {

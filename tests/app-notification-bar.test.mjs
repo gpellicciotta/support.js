@@ -4,7 +4,7 @@ import AppNotificationBar, {
   NOTIFICATION_ADDED_EVENT,
   NOTIFICATION_DELETED_EVENT,
   NOTIFICATIONS_CLEARED_EVENT,
-} from '../js/app-notification-bar.mjs';
+} from '../src/app-notification-bar.mjs';
 
 class MockElement {
   constructor(tag = 'div') {

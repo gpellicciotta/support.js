@@ -10,8 +10,8 @@ import AppInternalsView, {
   NOTIFICATION_ADDED_EVENT,
   NOTIFICATION_DELETED_EVENT,
   NOTIFICATIONS_CLEARED_EVENT,
-} from '../js/app-internals-view.mjs';
-import * as log from '../js/logs.mjs';
+} from '../src/app-internals-view.mjs';
+import * as log from '../src/logs.mjs';
 
 class MockElement {
   constructor(tag = 'div') {

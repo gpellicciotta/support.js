@@ -189,7 +189,7 @@ Forms communicate validation state dynamically through classes applied to `.inpu
 ---
 
 ### Sub-List / Collection Item Management Pattern
-Managing embedded lists of sub-items inside parent entity forms (e.g. portion units, webhook subscriptions, user settings, application grants) is standardized via the reusable `CollectionEditor` component ([`js/collection-editor.mjs`](../../js/collection-editor.mjs)) and stylesheet ([`css/collection-editor.css`](../../css/collection-editor.css)):
+Managing embedded lists of sub-items inside parent entity forms (e.g. portion units, webhook subscriptions, user settings, application grants) is standardized via the reusable `CollectionEditor` component ([`src/collection-editor.mjs`](../../src/collection-editor.mjs)) and stylesheet ([`css/collection-editor.css`](../../css/collection-editor.css)):
 
 #### The Header Input Strip (`.collection-editor-header`)
 A visually distinct dark banner (`background-color: var(--dark-grey-hex)`) that bundles creation controls in a single compact row:
@@ -229,7 +229,7 @@ applications implement a multi-tier safety architecture for destructive operatio
    - Deleting entities moves them to a recycle bin with recorded deletion timestamps.
    - Restorable at any time with a single tap on `[Restore]`.
 2. **Modal Confirmation Dialogs**:
-   - Irreversible operations trigger a centered modal dialog (`Dialog` class from [`js/dialog.mjs`](../../js/dialog.mjs)).
+   - Irreversible operations trigger a centered modal dialog (`Dialog` class from [`src/dialog.mjs`](../../src/dialog.mjs)).
    - Semi-transparent backdrop scrim (`rgba(0, 0, 0, 0.9)`).
    - High-contrast affirmative button (`"Yes, delete"`) alongside an explicit cancel button (`"No, cancel"`).
 3. **Transient Feedback & Undo SnackBar**:

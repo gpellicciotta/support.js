@@ -17,7 +17,7 @@ import {
   isNumeric,
   formatNumber,
   matrixMultiply,
-} from '../js/math.mjs';
+} from '../src/math.mjs';
 
 describe('math', () => {
   test('random generates numbers in range', () => {

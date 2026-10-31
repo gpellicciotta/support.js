@@ -212,9 +212,8 @@ npm install
 Import JavaScript modules using subpath exports:
 
 ```javascript
-import { CliLogger } from '@gpellicciotta/support.js/cli-log.mjs';
-import { sendRequest, buildUrl } from '@gpellicciotta/support.js/http.mjs';
-import { ApiError, mapError } from '@gpellicciotta/support.js/errors.mjs';
+import { CliLogger } from '@gpellicciotta/support.js/logs.mjs';
+import { sendRequest, buildUrl, ApiError, mapError } from '@gpellicciotta/support.js/net.mjs';
 import { parseChangelog } from '@gpellicciotta/support.js/changelog-parser.mjs';
 ```
 

@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { redirectToAuth } from '../js/net.mjs';
+import { redirectToAuth } from '../src/net.mjs';
 
 class MockStorage {
   constructor() {

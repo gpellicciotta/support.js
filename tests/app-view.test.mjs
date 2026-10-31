@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import AppView from '../js/app-view.mjs';
+import AppView from '../src/app-view.mjs';
 
 class MockElement {
   constructor(tag = 'div') {

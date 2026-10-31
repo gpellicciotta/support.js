@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import AppActionBar, { ACTION_STATE_CHANGED_EVENT } from '../js/app-action-bar.mjs';
+import AppActionBar, { ACTION_STATE_CHANGED_EVENT } from '../src/app-action-bar.mjs';
 
 class MockElement {
   constructor(tag = 'div') {

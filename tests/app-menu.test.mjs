@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import AppMenu, { ACTION_STATE_CHANGED_EVENT } from '../js/app-menu.mjs';
+import AppMenu, { ACTION_STATE_CHANGED_EVENT } from '../src/app-menu.mjs';
 
 class MockElement {
   constructor(tag = 'div') {

@@ -11,8 +11,8 @@ import {
   ValidationError,
   NotFoundError,
   ConflictError,
-} from '../js/net.mjs';
-import { toWireDate, fromWireDate, parseDate } from '../js/dates.mjs';
+} from '../src/net.mjs';
+import { toWireDate, fromWireDate, parseDate } from '../src/dates.mjs';
 
 test('buildUrl handles baseUrl slashes and query parameter variants', () => {
   assert.equal(buildUrl('https://api.example.com', '/users'), 'https://api.example.com/users');
