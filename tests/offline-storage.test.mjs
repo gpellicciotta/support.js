@@ -192,7 +192,7 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
 test('IndexedDbStorageAdapter - Contract & Configuration without Browser IndexedDB', async (t) => {
   await t.test('constructor defaults and options parsing', () => {
     const defaultAdapter = new IndexedDbStorageAdapter();
-    assert.equal(defaultAdapter.dbPrefix, 'hinolugi_counters_user_');
+    assert.equal(defaultAdapter.dbPrefix, 'counters_user_');
     assert.equal(defaultAdapter.version, 2);
     assert.equal(defaultAdapter.userId, null);
     assert.equal(defaultAdapter.db, null);
@@ -381,7 +381,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     const adapter = new IndexedDbStorageAdapter();
     await adapter.open('user_test_id');
 
-    assert.equal(openedDbName, 'hinolugi_counters_user_user_test_id');
+    assert.equal(openedDbName, 'counters_user_user_test_id');
     assert.equal(openedVersion, 2);
     assert.equal(adapter.userId, 'user_test_id');
     assert.ok(adapter.db);

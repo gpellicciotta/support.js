@@ -239,7 +239,7 @@ global.document = {
 
 const CollectionEditor = (await import('../js/collection-editor.mjs')).default;
 
-test('CollectionEditor Unit Suite in hinolugi-support.js', async (t) => {
+test('CollectionEditor Unit Suite in support.js', async (t) => {
   await t.test('1. CollectionEditor.createItemRow builds standard list item markup and attributes', () => {
     const row = CollectionEditor.createItemRow({
       id: 'webhook-42',

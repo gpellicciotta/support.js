@@ -192,23 +192,17 @@ export async function sendRequest(baseUrl, method, path, options = {}) {
 }
 
 /**
- * Redirects the browser to hinolugi-auth SSO sign-in.
+ * Redirects the browser to auth SSO sign-in.
  *
  * @param {object} options
  * @param {string} options.authServiceBaseUrl Base URL of the auth service
  * @param {string} options.appName Application name registered with auth service
  * @param {string} options.redirectUrl Return callback URL for auth token exchange
  * @param {string} [options.appLogoUrl] Optional URL pointing to application logo
- * @param {string} [options.signInMethod='hinolugi-auth'] Session storage identifier for sign-in method
+ * @param {string} [options.signInMethod='auth'] Session storage identifier for sign-in method
  * @returns {string} The fully constructed target URL
  */
-export function redirectToHinolugiAuth({
-  authServiceBaseUrl,
-  appName,
-  redirectUrl,
-  appLogoUrl,
-  signInMethod = 'hinolugi-auth',
-} = {}) {
+export function redirectToAuth({ authServiceBaseUrl, appName, redirectUrl, appLogoUrl, signInMethod = 'auth' } = {}) {
   if (!authServiceBaseUrl || !appName || !redirectUrl) {
     throw new Error('authServiceBaseUrl, appName, and redirectUrl are mandatory');
   }

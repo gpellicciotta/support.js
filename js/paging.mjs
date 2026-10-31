@@ -118,7 +118,7 @@ export function pagedResult(envelope, fetchPageOrPaging, maybeFetchPage) {
 }
 
 /**
- * Builds a Page<T> matching the hinolugi-counters client signature.
+ * Builds a Page<T> matching the counters client signature.
  *
  * @template T
  * @param {T[]} items Array of page items.

@@ -1,6 +1,6 @@
 import { test, describe, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
-import { redirectToHinolugiAuth } from '../js/net.mjs';
+import { redirectToAuth } from '../js/net.mjs';
 
 class MockStorage {
   constructor() {
@@ -14,7 +14,7 @@ class MockStorage {
   }
 }
 
-describe('redirectToHinolugiAuth', () => {
+describe('redirectToAuth', () => {
   let originalWindow;
   let originalSessionStorage;
 
@@ -29,16 +29,16 @@ describe('redirectToHinolugiAuth', () => {
   });
 
   test('throws when mandatory parameters are missing', () => {
-    assert.throws(() => redirectToHinolugiAuth(), /mandatory/);
-    assert.throws(() => redirectToHinolugiAuth({ authServiceBaseUrl: 'https://auth.example.com' }), /mandatory/);
+    assert.throws(() => redirectToAuth(), /mandatory/);
+    assert.throws(() => redirectToAuth({ authServiceBaseUrl: 'https://auth.example.com' }), /mandatory/);
     assert.throws(
-      () => redirectToHinolugiAuth({ authServiceBaseUrl: 'https://auth.example.com', appName: 'Counters' }),
+      () => redirectToAuth({ authServiceBaseUrl: 'https://auth.example.com', appName: 'Counters' }),
       /mandatory/,
     );
   });
 
   test('constructs valid SSO sign-in URL with encoded parameters', () => {
-    const targetUrl = redirectToHinolugiAuth({
+    const targetUrl = redirectToAuth({
       authServiceBaseUrl: 'https://auth.example.com/',
       appName: 'My App & Co',
       redirectUrl: 'https://myapp.example.com/callback?foo=1&bar=2',
@@ -51,7 +51,7 @@ describe('redirectToHinolugiAuth', () => {
   });
 
   test('includes appLogoUrl when provided', () => {
-    const targetUrl = redirectToHinolugiAuth({
+    const targetUrl = redirectToAuth({
       authServiceBaseUrl: 'https://auth.example.com',
       appName: 'Counters',
       redirectUrl: 'https://counters.example.com/callback',
@@ -67,7 +67,7 @@ describe('redirectToHinolugiAuth', () => {
     const mockWindow = { location: { href: '' } };
     globalThis.window = mockWindow;
 
-    const targetUrl = redirectToHinolugiAuth({
+    const targetUrl = redirectToAuth({
       authServiceBaseUrl: 'https://auth.example.com',
       appName: 'Test',
       redirectUrl: 'https://test.example.com/cb',

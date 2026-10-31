@@ -1,15 +1,15 @@
 # REST Client Upgrade Guide
 
-Guide for migrating downstream JavaScript REST client libraries (`hinolugi-auth` and `hinolugi-counters`)
-to the shared transport and error hierarchy modules in `@gpellicciotta/hinolugi-support.js`.
+Guide for migrating downstream JavaScript REST client libraries (`auth` and `counters`)
+to the shared transport and error hierarchy modules in `@gpellicciotta/support.js`.
 
 ---
 
 ## Overview
 
-The `hinolugi-auth` and `hinolugi-counters` client packages previously maintained independent,
+The `auth` and `counters` client packages previously maintained independent,
 near-identical copies of transport and error handling.
-In v2.0.0, `@gpellicciotta/hinolugi-support.js` consolidates these into:
+In v2.0.0, `@gpellicciotta/support.js` consolidates these into:
 - `net.mjs`: URL construction, authorization header generation, `fetch`-based request execution, and the complete `ApiError` hierarchy.
 - `dates.mjs`: wire date serialization (`toWireDate`, `fromWireDate`, `parseDate`) and relative/human formatting.
 
@@ -24,7 +24,7 @@ Exports:
 - `buildUrl(baseUrl, path, query)`: constructs query string handling scalar values and arrays.
 - `basicAuthHeader(userName, password)`: generates standard `Basic <base64>` header value.
 - `bearerAuthHeader(token)`: generates standard `Bearer <token>` header value.
-- `redirectToHinolugiAuth(loginUrl, returnUrl)`: redirects browser to centralized auth.
+- `redirectToAuth(loginUrl, returnUrl)`: redirects browser to centralized auth.
 - `ApiError`: base class carrying `message`, `status`, and parsed `body`.
 - `AuthenticationError`: status 401.
 - `ValidationError`: status 400.
@@ -42,16 +42,16 @@ Exports wire date helpers:
 
 ---
 
-## Upgrading `hinolugi-auth`
+## Upgrading `auth`
 
 ### Update Dependencies
 
-In `clients/js/package.json`, add `@gpellicciotta/hinolugi-support.js` under `dependencies`:
+In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencies`:
 
 ```json
 {
   "dependencies": {
-    "@gpellicciotta/hinolugi-support.js": "^0.83.0"
+    "@gpellicciotta/support.js": "^2.0.0"
   }
 }
 ```
@@ -61,7 +61,7 @@ In `clients/js/package.json`, add `@gpellicciotta/hinolugi-support.js` under `de
 Replace local implementation with re-exports from the shared library:
 
 ```javascript
-export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
+export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Re-export HTTP Transport
@@ -69,7 +69,7 @@ export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
 Replace local implementation with re-exports from the shared library:
 
 ```javascript
-export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
+export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Verify Auth Client
@@ -84,16 +84,16 @@ All authentication, model conversion, and client request tests must pass without
 
 ---
 
-## Upgrading `hinolugi-counters`
+## Upgrading `counters`
 
 ### Update Dependencies
 
-In `clients/js/package.json`, add `@gpellicciotta/hinolugi-support.js` under `dependencies`:
+In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencies`:
 
 ```json
 {
   "dependencies": {
-    "@gpellicciotta/hinolugi-support.js": "^0.83.0"
+    "@gpellicciotta/support.js": "^2.0.0"
   }
 }
 ```
@@ -103,7 +103,7 @@ In `clients/js/package.json`, add `@gpellicciotta/hinolugi-support.js` under `de
 Re-export from the shared library:
 
 ```javascript
-export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
+export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Re-export HTTP Transport
@@ -111,7 +111,7 @@ export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
 Re-export from the shared library:
 
 ```javascript
-export * from '@gpellicciotta/hinolugi-support.js/net.mjs';
+export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 Note: `parseDate` is exported as an alias to `fromWireDate`, ensuring full compatibility with existing counters client code.

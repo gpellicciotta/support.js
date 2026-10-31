@@ -1,6 +1,6 @@
 # Requirements
 
-Functional and technical requirements for the `hinolugi-support.js` project.
+Functional and technical requirements for the `support.js` project.
 
 ---
 
@@ -8,9 +8,9 @@ Functional and technical requirements for the `hinolugi-support.js` project.
 
 - Provide general-purpose JavaScript support code, for both client-side (browser) and server-side (Node.js)
   use, with as few third-party dependencies as possible.
-- Serve as a shared library for other HiNoLuGi web projects (`hinolugi-auth`, `hinolugi-counters`), reducing
+- Serve as a shared library for other web projects (`auth`, `counters`), reducing
   hand-duplicated utility code between their web apps and JS REST clients.
-- Publish releases as an npm package (`@gpellicciotta/hinolugi-support.js`) on GitHub Packages.
+- Publish releases as an npm package (`@gpellicciotta/support.js`) on GitHub Packages.
 
 ---
 
@@ -45,7 +45,7 @@ Functional and technical requirements for the `hinolugi-support.js` project.
   `js/englishwords.mjs`).
 
 ### REST Client Transport and Errors
-- Provide a typed error hierarchy (`ApiError`, `AuthenticationError`, `ValidationError`, `NotFoundError`, `ConflictError`, `mapError`) and HTTP transport (`buildUrl`, `basicAuthHeader`, `bearerAuthHeader`, `sendRequest`, `redirectToHinolugiAuth`) for fetch-based API clients (`js/net.mjs`).
+- Provide a typed error hierarchy (`ApiError`, `AuthenticationError`, `ValidationError`, `NotFoundError`, `ConflictError`, `mapError`) and HTTP transport (`buildUrl`, `basicAuthHeader`, `bearerAuthHeader`, `sendRequest`, `redirectToAuth`) for fetch-based API clients (`js/net.mjs`).
 - See [REST Client Upgrade Guide](specs/client-upgrade-guide.md) for downstream migration details.
 
 ### Styling
@@ -56,7 +56,7 @@ Functional and technical requirements for the `hinolugi-support.js` project.
 ## Technical Requirements
 
 - **Module Format**: ECMAScript modules (`.mjs`), consumed via subpath imports (e.g.
-  `@gpellicciotta/hinolugi-support.js/cli-log.mjs`).
+  `@gpellicciotta/support.js/cli-log.mjs`).
 - **Runtime**: Browser-safe modules avoid Node-only APIs; Node-only modules (e.g. `cli-log.mjs`) are the
   exception, documented as such.
 - **Testing**: Node's built-in `node:test` and `node:assert` (no third-party test framework dependency).

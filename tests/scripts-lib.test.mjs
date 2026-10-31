@@ -7,7 +7,7 @@ import * as crypto from 'node:crypto';
 import { MIME_TYPES, createStaticServer, startStaticServer } from '../scripts/lib/static-server.mjs';
 import { TourRecorder } from '../scripts/lib/tour-recorder.mjs';
 
-function createTempDir(prefix = 'hinolugi-test-') {
+function createTempDir(prefix = 'test-') {
   return fs.mkdtempSync(path.join(os.tmpdir(), prefix));
 }
 
@@ -118,9 +118,9 @@ test('static-server: fetches files, directory index, and handles HEAD requests',
 });
 
 test('static-server: custom route prefixes, path aliases, and function routes', async () => {
-  const rootDir = createTempDir('hinolugi-root-');
-  const clientDir = createTempDir('hinolugi-clients-');
-  const sharedDir = createTempDir('hinolugi-shared-');
+  const rootDir = createTempDir('root-');
+  const clientDir = createTempDir('clients-');
+  const sharedDir = createTempDir('shared-');
 
   fs.writeFileSync(path.join(rootDir, 'index.html'), '<h1>Root</h1>');
   fs.writeFileSync(path.join(clientDir, 'client.js'), 'console.log("client");');
@@ -243,13 +243,13 @@ test('TourRecorder: disabled recorder bypasses capture and integrity checks', as
 });
 
 test('TourRecorder: capture lifecycle, file creation, and metadata tracking', async () => {
-  const tmpDir = createTempDir('hinolugi-tour-');
+  const tmpDir = createTempDir('tour-');
 
   try {
     const recorder = new TourRecorder({
       repoRoot: tmpDir,
-      targetUrl: 'https://test.hinolugi.com',
-      testUser: 'qa@hinolugi.com',
+      targetUrl: 'https://test.example.com',
+      testUser: 'qa@example.com',
       targetVersion: '2.0.0',
     });
 
@@ -290,7 +290,7 @@ test('TourRecorder: capture lifecycle, file creation, and metadata tracking', as
 });
 
 test('TourRecorder: guards against blank frame (<5KB screenshot)', async () => {
-  const tmpDir = createTempDir('hinolugi-tour-blank-');
+  const tmpDir = createTempDir('tour-blank-');
 
   try {
     const recorder = new TourRecorder({ repoRoot: tmpDir, minByteSize: 5000 });
@@ -309,7 +309,7 @@ test('TourRecorder: guards against blank frame (<5KB screenshot)', async () => {
 });
 
 test('TourRecorder: detects visual regression from duplicate screenshot hash', async () => {
-  const tmpDir = createTempDir('hinolugi-tour-dup-');
+  const tmpDir = createTempDir('tour-dup-');
 
   try {
     const recorder = new TourRecorder({ repoRoot: tmpDir });
@@ -329,7 +329,7 @@ test('TourRecorder: detects visual regression from duplicate screenshot hash', a
 });
 
 test('TourRecorder: allows configured duplicate screenshot pairs', async () => {
-  const tmpDir = createTempDir('hinolugi-tour-allowed-');
+  const tmpDir = createTempDir('tour-allowed-');
 
   try {
     const recorder = new TourRecorder({
@@ -352,16 +352,16 @@ test('TourRecorder: allows configured duplicate screenshot pairs', async () => {
 });
 
 test('TourRecorder: generates walkthrough markdown, summary table, and reports on disk', async () => {
-  const tmpDir = createTempDir('hinolugi-tour-reports-');
+  const tmpDir = createTempDir('tour-reports-');
 
   try {
     const recorder = new TourRecorder({
       repoRoot: tmpDir,
-      targetUrl: 'https://app.hinolugi.com',
-      testUser: 'test@hinolugi.com',
+      targetUrl: 'https://app.example.com',
+      testUser: 'test@example.com',
       targetVersion: '1.2.3',
       nowIso: '2026-09-19T10:00:00.000Z',
-      title: 'HiNoLuGi Test - Visual Tour',
+      title: 'Test - Visual Tour',
       description: 'Tour description for verification.',
     });
 
@@ -388,8 +388,8 @@ test('TourRecorder: generates walkthrough markdown, summary table, and reports o
     assert.ok(table.includes('| 2 | Main Dashboard | `02-dashboard.png` | 7.8 KB |'));
 
     const markdown = recorder.generateWalkthroughMarkdown();
-    assert.ok(markdown.includes('# HiNoLuGi Test - Visual Tour'));
-    assert.ok(markdown.includes('**Target Environment**: `https://app.hinolugi.com`'));
+    assert.ok(markdown.includes('# Test - Visual Tour'));
+    assert.ok(markdown.includes('**Target Environment**: `https://app.example.com`'));
     assert.ok(markdown.includes('**Version**: `v1.2.3`'));
     assert.ok(markdown.includes('### Welcome Screen'));
     assert.ok(markdown.includes('* **Action / Navigation**: Navigate to base URL'));

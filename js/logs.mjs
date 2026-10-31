@@ -347,9 +347,9 @@ export function log(logLevel, logMsgFormat, ...logMsgArgs) {
 
 // CLI logging utilities compliant with dev-guidelines.md's Logging section.
 //
-// Method and level naming is kept API-similar to `com.hinolugi.support.logging` (`LogLevel`, `Log`) in
-// hinolugi-support.java and to `hinolugi_support.logging` (`LogLevel`, `CliLogger`) in
-// hinolugi-support.python; the SPI-backed multi-backend/span/context-data machinery of the Java package is
+// Method and level naming is kept API-similar to `com.pellicciotta.support.logging` (`LogLevel`, `Log`) in
+// support.java and to `support_python.logging` (`LogLevel`, `CliLogger`) in
+// support.python; the SPI-backed multi-backend/span/context-data machinery of the Java package is
 // not mirrored here, since this module targets simple CLI tools rather than long-running services (same
 // scoping decision as the Python sibling). This is a Node-only module (uses `node:fs`); the DOM-independent,
 // browser-safe event logger in `log.mjs` is a separate, unrelated module.

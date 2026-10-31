@@ -1,12 +1,12 @@
-# HiNoLuGi Visual Style Guide and UI Design System
+# Visual Style Guide and UI Design System
 
-This specification defines the visual design system, styling architecture, and standardized interaction patterns used across the HiNoLuGi family of web applications (such as Auth, Counters, Tasks, and Todos). It establishes a coherent look and feel, shared UI widgets, and uniform usage conventions.
+This specification defines the visual design system, styling architecture, and standardized interaction patterns used across the family of web applications (such as Auth, Counters, Tasks, and Todos). It establishes a coherent look and feel, shared UI widgets, and uniform usage conventions.
 
 ---
 
 ## Visual Design Foundations
 
-HiNoLuGi web clients are constructed with native web standards (HTML5, CSS3, ECMAScript Modules) without heavyweight UI framework dependencies. The design language emphasizes functional clarity, responsive adaptability, high information density, and tactile feedback.
+web clients are constructed with native web standards (HTML5, CSS3, ECMAScript Modules) without heavyweight UI framework dependencies. The design language emphasizes functional clarity, responsive adaptability, high information density, and tactile feedback.
 
 ### Color System & Design Tokens
 
@@ -254,7 +254,7 @@ Empty states across catalogues, dashboards, and collections are styled using the
 
 ### Destructive Action Protection & Reversibility
 
-HiNoLuGi applications implement a multi-tier safety architecture for destructive operations:
+applications implement a multi-tier safety architecture for destructive operations:
 
 1. **Soft Deletion & The Recycle Bin**:
    - Deleting entities moves them to a recycle bin with recorded deletion timestamps.
@@ -316,7 +316,7 @@ Catalogue views implement a standardized list header based on [`css/catalogue-vi
 
 ## Shared Stylesheet Inventory
 
-`@gpellicciotta/hinolugi-support.js` exports a comprehensive library of responsive, framework-free CSS stylesheets under `css/`:
+`@gpellicciotta/support.js` exports a comprehensive library of responsive, framework-free CSS stylesheets under `css/`:
 
 | Stylesheet | Description | Key Custom Properties / Tokens Used |
 |:---|:---|:---|

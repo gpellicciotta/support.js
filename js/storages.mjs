@@ -248,19 +248,19 @@ export class MemoryStorageAdapter extends StorageAdapter {
  */
 export class IndexedDbStorageAdapter extends StorageAdapter {
   /**
-   * @param {string|Object} [dbPrefixOrOptions='hinolugi_counters_user_'] Database name prefix or options configuration object.
+   * @param {string|Object} [dbPrefixOrOptions='counters_user_'] Database name prefix or options configuration object.
    * @param {Object} [options={}] Optional adapter settings when string prefix was provided.
    * @param {number} [options.version=2] Target IndexedDB schema version.
    * @param {Array<string|{name: string, keyPath?: string|null, autoIncrement?: boolean, indexes?: Array<{name: string, keyPath?: string, unique?: boolean}>}>} [options.stores] Custom store declarations.
    * @param {function(IDBDatabase, IDBVersionChangeEvent): void} [options.onUpgrade] Custom database upgrade callback.
    */
-  constructor(dbPrefixOrOptions = 'hinolugi_counters_user_', options = {}) {
+  constructor(dbPrefixOrOptions = 'counters_user_', options = {}) {
     super();
     let opts = options;
-    let prefix = 'hinolugi_counters_user_';
+    let prefix = 'counters_user_';
     if (typeof dbPrefixOrOptions === 'object' && dbPrefixOrOptions !== null) {
       opts = dbPrefixOrOptions;
-      prefix = opts.dbPrefix || 'hinolugi_counters_user_';
+      prefix = opts.dbPrefix || 'counters_user_';
     } else if (typeof dbPrefixOrOptions === 'string') {
       prefix = dbPrefixOrOptions;
     }

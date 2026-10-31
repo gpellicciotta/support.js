@@ -203,7 +203,7 @@ test('pagedResult supports 3-argument signature (items, paging, fetchPage)', asy
   assert.deepEqual(calls[0], { dir: 'next', bm: 'bm-b' });
 });
 
-test('bookmarkedPage creates compatible Page matching hinolugi-counters client contract', async () => {
+test('bookmarkedPage creates compatible Page matching counters client contract', async () => {
   const single = singlePage(['a', 'b', 'c']);
   assert.deepEqual(single.items, ['a', 'b', 'c']);
   assert.equal(single.hasNextPage, false);
