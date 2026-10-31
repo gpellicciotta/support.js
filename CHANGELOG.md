@@ -2,7 +2,7 @@
 
 All notable changes to this project are documented here.
 
-> See [coordinating work guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/coordinating-work-guidelines.md)
+> See [change management guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/change-management-guidelines.md)
 > for the versioning and changelog conventions used across projects.
 
 ## v2.0.1-pre
@@ -10,6 +10,7 @@ All notable changes to this project are documented here.
 - BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `counters_user_`; pass `dbPrefix` to keep existing data.
 - Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
 - Build: Renamed default branch to `main` and repository to `support.js`.
+- Docs: Fixed markdown lint issues and the dead guidelines link in documentation.
 - DevEx: Added [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) and [devops.py](scripts/devops.py) for setup and routine operations.
 - Build: Declared Node.js 22 engine, synced `package-lock.json` version, and made Prettier tolerate platform line endings.
 - BackEnd: Fixed `Matrix` fill-value error message to report the offending row's column count.
@@ -28,7 +29,6 @@ All notable changes to this project are documented here.
 - Docs: Documented downstream REST client migration instructions in docs/specs/client-upgrade-guide.md.
 
 ### Migration Guide
-
 - Update client imports from removed utils.mjs to objects.mjs, strings.mjs, math.mjs, colors.mjs, dates.mjs, or forms.mjs.
 - Update client imports from http.mjs, errors.mjs, and hinolugi-auth-redirect.mjs to net.mjs and dates.mjs.
 - Update client imports from formutils.mjs, domutils.mjs, and page.mjs to forms.mjs, dom.mjs, and paging.mjs.

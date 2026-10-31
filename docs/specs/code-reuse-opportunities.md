@@ -5,7 +5,6 @@ Comprehensive inventory and specification of code-reuse opportunities between `a
 ---
 
 ## Executive Summary
-
 An audit of the JavaScript, HTML, and CSS assets across `auth` and `counters` identified over **16,000 lines of duplicate code** and **15+ distinct scripts and modules** that can be extracted into `@gpellicciotta/support.js`.
 
 Adopting these shared modules will:
@@ -16,35 +15,32 @@ Adopting these shared modules will:
 ---
 
 ## Code-Reuse & Line Savings Matrix
-
-| Category | Reusable Component / Module | Consumer File Locations | Est. Lines Spared | Replaced Scripts / Modules |
-|:---|:---|:---|:---:|:---|
-| **Stylesheets** | Identical Core CSS Stylesheets (`menu.css`, `collapsible.css`, `demo-view.css`, `mail-layout.css`, `tooltips.css`, `wait-panel.css`) | `webapp/css/*.css` in both repos | ~1,628 lines | 6 complete stylesheets per consumer |
-| **Stylesheets** | Near-Identical CSS Stylesheets (`dialog.css`, `main-layout.css`, `error-view.css`, `create-account-view.css`) | `webapp/css/*.css` in both repos | ~884 lines | 4 stylesheets unified via design tokens |
-| **Testing** | Lightweight Mock DOM (`mock-dom.mjs`) | `auth/webapp/js/test/mock-dom.mjs`, 5 test suites in `counters` | ~730 lines | 5 duplicate `MockElement` test classes |
-| **Client** | Wire Date Formatters (`toWireDate`, `fromWireDate`, `parseDate`) | `clients/js/src/http.mjs` in both repos | ~30 lines | Redundant date wire conversions |
-| **Client** | Uniform Pagination Shape (`page.mjs`) | `counters/clients/js/src/page.mjs` | ~70 lines | Replaces local `page.mjs` |
-| **Client** | Offline Storage Adapters (`offline-storage.mjs`) | `counters/clients/js/src/offline-storage.mjs` | ~267 lines | Replaces local storage adapters |
-| **Scripts** | Reusable Static Test/Dev Server (`test-static-server.mjs`) | 4 verification scripts in `counters/scripts` | ~234 lines | Replaces server boilerplate in 4 scripts |
-| **Scripts** | Playwright Tour & Visual Integrity Recorder (`tour-recorder.mjs`) | `counters/scripts/lib/tour-recorder.mjs` | ~120 lines | Replaces `tour-recorder.mjs` |
-| **Scripts** | REST Coverage Tracker & Auth Relays | `counters/scripts/lib/*.mjs` | ~154 lines | Replaces `test-scenario-lib` & `auth-helper` |
-| **Webapp** | Existing Ported Utilities | `webapp/js/utils/*` in both repos | ~6,565 lines | Deletes local copies of utilities in consumers |
-| **Webapp** | Core SPA Base Application (`AppBase` in `app.mjs`) | `webapp/js/app.mjs` in both repos | ~2,300 lines | Replaces ~80% of `app.mjs` in each app |
-| **Webapp** | Delegated SSO Views (`sign-in-view.mjs`, `create-account-view.mjs`) | `webapp/js/view/sign-in-view.mjs` & `create-account-view.mjs` | ~240 lines | Replaces local SSO adapter views |
-| **Webapp** | Service Worker Engine | `webapp/service-worker.mjs` in both repos | ~390 lines | Unifies service worker lifecycle & caching |
-| **Webapp** | Unified Help & About View Subsystem | `help-view.mjs`, `about-view.mjs` | ~520 lines | Unifies changelog and status presentation |
-| **HTML** | Email Template Preview Harness | `demo/mail-template-preview.html` in both repos | ~1,070 lines | Replaces local preview harnesses |
-| **HTML** | View Demo Harness Scaffolding | `webapp/demo/*-harness.html` in both repos | ~500 lines | Standardizes harness runner setup |
-| **Total** | | | **~16,712 lines** | **15+ distinct scripts/modules** |
+| Category        | Reusable Component / Module                                                                                                          | Consumer File Locations                                         | Est. Lines Spared | Replaced Scripts / Modules                     |
+| :-------------- | :----------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------- | :---------------: | :--------------------------------------------- |
+| **Stylesheets** | Identical Core CSS Stylesheets (`menu.css`, `collapsible.css`, `demo-view.css`, `mail-layout.css`, `tooltips.css`, `wait-panel.css`) | `webapp/css/*.css` in both repos                                |    ~1,628 lines   | 6 complete stylesheets per consumer            |
+| **Stylesheets** | Near-Identical CSS Stylesheets (`dialog.css`, `main-layout.css`, `error-view.css`, `create-account-view.css`)                        | `webapp/css/*.css` in both repos                                |     ~884 lines    | 4 stylesheets unified via design tokens        |
+| **Testing**     | Lightweight Mock DOM (`mock-dom.mjs`)                                                                                                | `auth/webapp/js/test/mock-dom.mjs`, 5 test suites in `counters` |     ~730 lines    | 5 duplicate `MockElement` test classes         |
+| **Client**      | Wire Date Formatters (`toWireDate`, `fromWireDate`, `parseDate`)                                                                     | `clients/js/src/http.mjs` in both repos                         |     ~30 lines     | Redundant date wire conversions                |
+| **Client**      | Uniform Pagination Shape (`page.mjs`)                                                                                                | `counters/clients/js/src/page.mjs`                              |     ~70 lines     | Replaces local `page.mjs`                      |
+| **Client**      | Offline Storage Adapters (`offline-storage.mjs`)                                                                                     | `counters/clients/js/src/offline-storage.mjs`                   |     ~267 lines    | Replaces local storage adapters                |
+| **Scripts**     | Reusable Static Test/Dev Server (`test-static-server.mjs`)                                                                           | 4 verification scripts in `counters/scripts`                    |     ~234 lines    | Replaces server boilerplate in 4 scripts       |
+| **Scripts**     | Playwright Tour & Visual Integrity Recorder (`tour-recorder.mjs`)                                                                    | `counters/scripts/lib/tour-recorder.mjs`                        |     ~120 lines    | Replaces `tour-recorder.mjs`                   |
+| **Scripts**     | REST Coverage Tracker & Auth Relays                                                                                                  | `counters/scripts/lib/*.mjs`                                    |     ~154 lines    | Replaces `test-scenario-lib` & `auth-helper`   |
+| **Webapp**      | Existing Ported Utilities                                                                                                            | `webapp/js/utils/*` in both repos                               |    ~6,565 lines   | Deletes local copies of utilities in consumers |
+| **Webapp**      | Core SPA Base Application (`AppBase` in `app.mjs`)                                                                                   | `webapp/js/app.mjs` in both repos                               |    ~2,300 lines   | Replaces ~80% of `app.mjs` in each app         |
+| **Webapp**      | Delegated SSO Views (`sign-in-view.mjs`, `create-account-view.mjs`)                                                                  | `webapp/js/view/sign-in-view.mjs` & `create-account-view.mjs`   |     ~240 lines    | Replaces local SSO adapter views               |
+| **Webapp**      | Service Worker Engine                                                                                                                | `webapp/service-worker.mjs` in both repos                       |     ~390 lines    | Unifies service worker lifecycle & caching     |
+| **Webapp**      | Unified Help & About View Subsystem                                                                                                  | `help-view.mjs`, `about-view.mjs`                               |     ~520 lines    | Unifies changelog and status presentation      |
+| **HTML**        | Email Template Preview Harness                                                                                                       | `demo/mail-template-preview.html` in both repos                 |    ~1,070 lines   | Replaces local preview harnesses               |
+| **HTML**        | View Demo Harness Scaffolding                                                                                                        | `webapp/demo/*-harness.html` in both repos                      |     ~500 lines    | Standardizes harness runner setup              |
+| **Total**       |                                                                                                                                      |                                                                 | **~16,712 lines** | **15+ distinct scripts/modules**               |
 
 ---
 
 ## Detailed Component Analysis
 
-### 1. Shared CSS Stylesheets (`css/`)
-
+### Shared CSS Stylesheets (`css/`)
 Both `auth` and `counters` maintain independent CSS directories. Diffing normalized line endings reveals substantial byte-for-byte identity:
-
 - **Exact Overlap (0 diff lines)**:
   - `collapsible.css` (95 lines): Expandable accordion and details styling.
   - `demo-view.css` (270 lines): Styling for demo badges, scenario runners, and status panels.
@@ -59,8 +55,7 @@ Both `auth` and `counters` maintain independent CSS directories. Diffing normali
   - `error-view.css` (58 lines, 2 diff lines): Standardized error banners and detail blocks.
   - `create-account-view.css` (45 lines, 4 diff lines): Account creation form layout.
 
-### 2. Testing Utilities: Headless Mock DOM (`js/mock-dom.mjs`)
-
+### Testing Utilities: Headless Mock DOM (`js/mock-dom.mjs`)
 Currently:
 - `auth/webapp/js/test/mock-dom.mjs` (230 lines) provides `MockElement`, `MockDocument`, and `installMockDom()`.
 - `counters/clients/js/test/` reimplements `MockElement` independently across 5 test suites (`about-view.test.mjs`, `dashboard-visibility.test.mjs`, `context-action-bar-dom-lifecycle.test.mjs`, `help-view.test.mjs`, and `sign-in-view.test.mjs`), totaling over 500 lines of duplicated mock code.
@@ -68,23 +63,20 @@ Currently:
 
 A shared `js/mock-dom.mjs` (and package export `./mock-dom.mjs`) eliminates these duplicates with zero third-party dependencies.
 
-### 3. REST Client Transport & Pagination Helpers (`clients/js/`)
-
+### REST Client Transport & Pagination Helpers (`clients/js/`)
 Both `auth` and `counters` have identical client transport mechanisms:
 - **Wire Date Conversion**: `toWireDate(date)` (UTC ISO without milliseconds) and `fromWireDate(string)` / `parseDate(string)` exist in both client `http.mjs` modules.
 - **Pagination Shape**: `counters/clients/js/src/page.mjs` defines `Page<T>`, `singlePage(items)`, and `pagedResult()`. This envelope structure is general-purpose and ready for shared consumption.
 - **Offline Storage**: `counters/clients/js/src/offline-storage.mjs` provides `StorageAdapter`, `MemoryStorageAdapter`, and `IndexedDbStorageAdapter`. It has zero dependencies and can be used across any offline-capable JavaScript client or SPA.
 
-### 4. Test Automation & Script Utilities (`scripts/lib/`)
-
+### Test Automation & Script Utilities (`scripts/lib/`)
 `counters/scripts/` has accumulated mature automation modules:
 - **Static Test Server**: `verify-harnesses.mjs`, `verify-interactive-flows.mjs`, `test-admin-view-playwright.mjs`, and `verify-counter-migration-ui.mjs` duplicate 50–60 lines each of Node `http.createServer` handling MIME types and static routing. Providing `scripts/lib/test-static-server.mjs` unifies these into a reusable module.
 - **Playwright Tour & Visual Integrity Recorder**: `scripts/lib/tour-recorder.mjs` captures viewport screenshots, checks for blank frames (<5KB), checks SHA-256 collision regressions, and writes structured Markdown walkthrough tables.
 - **REST Coverage Tracker**: `scripts/lib/test-scenario-lib.mjs` intercepts Playwright network traffic, collapses route patterns (`/{id}`, `/{interval}`), and asserts 100% endpoint coverage.
 - **Headless Auth Helper**: `scripts/lib/auth-helper.mjs` handles basic authentication against `auth`, captures one-time passcodes, and mints session tokens for test harnesses.
 
-### 5. Webapp Architecture & Views (`webapp/js/`)
-
+### Webapp Architecture & Views (`webapp/js/`)
 - **Core Application Framework (`AppBase`)**: Over 1,000 lines in `app.mjs` are common between auth and counters: event bus, router, navigation stack, action bar registry, notification banner management, and wait/error panel lifecycle. Extracting `AppBase` into `support.js` allows downstream apps to subclass `AppBase` and provide only app-specific views and branding.
 - **SSO Authentication Views**: `counters` contains `SignInView` (handling SSO redirection to `auth`, one-time passcode relay, and error parameters) and `CreateAccountView` (redirecting to SSO sign-in). These views can be extracted as turnkey components for any client application.
 - **Service Worker Engine**: Both applications run near-identical service worker scripts (`service-worker.mjs`, ~250 lines) managing versioned cache lifecycle, stale cache pruning, and offline fetch fallbacks.
@@ -92,7 +84,6 @@ Both `auth` and `counters` have identical client transport mechanisms:
 ---
 
 ## Phased Implementation Roadmap
-
 1. **Phase 1 (Immediate Extraction & Packaging)**:
    - Export shared CSS stylesheets in `css/`.
    - Implement `js/mock-dom.mjs` with full test coverage.

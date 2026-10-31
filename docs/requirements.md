@@ -5,7 +5,6 @@ Functional and technical requirements for the `support.js` project.
 ---
 
 ## High-Level Goals
-
 - Provide general-purpose JavaScript support code, for both client-side (browser) and server-side (Node.js)
   use, with as few third-party dependencies as possible.
 - Serve as a shared library for other web projects (`auth`, `counters`), reducing
@@ -54,7 +53,6 @@ Functional and technical requirements for the `support.js` project.
 ---
 
 ## Technical Requirements
-
 - **Module Format**: ECMAScript modules (`.mjs`), consumed via subpath imports (e.g.
   `@gpellicciotta/support.js/cli-log.mjs`).
 - **Runtime**: Browser-safe modules avoid Node-only APIs; Node-only modules (e.g. `cli-log.mjs`) are the

@@ -6,7 +6,6 @@ to the shared transport and error hierarchy modules in `@gpellicciotta/support.j
 ---
 
 ## Overview
-
 The `auth` and `counters` client packages previously maintained independent,
 near-identical copies of transport and error handling.
 In v2.0.0, `@gpellicciotta/support.js` consolidates these into:
@@ -18,7 +17,6 @@ In v2.0.0, `@gpellicciotta/support.js` consolidates these into:
 ## Shared Modules Architecture
 
 ### `js/net.mjs`
-
 Exports:
 - `sendRequest(baseUrl, method, path, options)`: executes request via `fetch`, preserving auth's `options.headers` merging over default `Accept: application/json`, handling optional `redirect: 'manual'`, and returning `{ status, data, headers }`.
 - `buildUrl(baseUrl, path, query)`: constructs query string handling scalar values and arrays.
@@ -34,7 +32,6 @@ Exports:
 - `mapError(status, message, body)`: factory function mapping status code and message to the appropriate class.
 
 ### `js/dates.mjs`
-
 Exports wire date helpers:
 - `toWireDate(value)`: serializes Date objects to UTC ISO strings without milliseconds (`yyyy-MM-ddTHH:mm:ssZ`).
 - `fromWireDate(value)`: deserializes server date strings into `Date` instances.
@@ -45,7 +42,6 @@ Exports wire date helpers:
 ## Upgrading `auth`
 
 ### Update Dependencies
-
 In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencies`:
 
 ```json
@@ -57,7 +53,6 @@ In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencie
 ```
 
 ### Re-export Errors
-
 Replace local implementation with re-exports from the shared library:
 
 ```javascript
@@ -65,7 +60,6 @@ export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Re-export HTTP Transport
-
 Replace local implementation with re-exports from the shared library:
 
 ```javascript
@@ -73,7 +67,6 @@ export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Verify Auth Client
-
 Run the test suite in `clients/js/`:
 
 ```bash
@@ -87,7 +80,6 @@ All authentication, model conversion, and client request tests must pass without
 ## Upgrading `counters`
 
 ### Update Dependencies
-
 In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencies`:
 
 ```json
@@ -99,7 +91,6 @@ In `clients/js/package.json`, add `@gpellicciotta/support.js` under `dependencie
 ```
 
 ### Re-export Errors
-
 Re-export from the shared library:
 
 ```javascript
@@ -107,7 +98,6 @@ export * from '@gpellicciotta/support.js/net.mjs';
 ```
 
 ### Re-export HTTP Transport
-
 Re-export from the shared library:
 
 ```javascript
@@ -117,7 +107,6 @@ export * from '@gpellicciotta/support.js/net.mjs';
 Note: `parseDate` is exported as an alias to `fromWireDate`, ensuring full compatibility with existing counters client code.
 
 ### Synchronize Client Files to Webapp
-
 Run the synchronization script to update webapp client copies:
 
 ```bash
@@ -125,7 +114,6 @@ node clients/js/scripts/sync-client.mjs
 ```
 
 ### Verify Counters Client
-
 Run the client test suite:
 
 ```bash

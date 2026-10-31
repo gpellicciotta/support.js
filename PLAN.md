@@ -4,7 +4,7 @@ An overview of all tasks and their planning.
 ---
 
 ## Next Milestone
-*(Currently no tasks)*
+- [x] T0027 [owner: @claude-code] [protocol: adhoc] Fix markdown lint issues across all project documentation.
 
 ---
 

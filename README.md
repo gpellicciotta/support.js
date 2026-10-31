@@ -9,7 +9,6 @@ See also:
 - [Documentation Index](docs/index.md)
 
 ## Installing
-
 Add a `.npmrc` in the consuming project (or in the user's npm config) pointing the `@gpellicciotta` scope at
 GitHub Packages:
 
@@ -34,8 +33,7 @@ import { pagedResult, singlePage } from '@gpellicciotta/support.js/paging.mjs';
 ```
 
 ## Publishing
-
-`.github/workflows/publish.yml` publishes a build of this package to
+[publish.yml](.github/workflows/publish.yml) publishes a build of this package to
 [GitHub Packages](https://github.com/gpellicciotta/support.js/packages/) whenever a GitHub Release
 is published, authenticating with the workflow's own `GITHUB_TOKEN` — no stored secret needs to be configured
 in this repo. See `docs/devops.md` for the manual fallback steps and the full release process.
