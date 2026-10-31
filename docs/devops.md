@@ -55,7 +55,7 @@ All non-trivial task work follows the protocol in
 3. **Execute**: Work within the isolated worktree (or, for adhoc `Annnn` tasks, directly in the primary
    checkout) and maintain `tasks/Tnnnn-slug.md` for full tasks.
 4. **Finalize**: Pass all tests, update documentation and `CHANGELOG.md`, integrate into mainline, remove the
-   worktree and branch, and clear the entry from `TODO.md`.
+   worktree and branch, and clear the entry from `PLAN.md`.
 
 ---
 
@@ -107,7 +107,7 @@ git commit -m "Reopen v0.83.1-pre development version."
 Push both commits to mainline:
 
 ```bash
-git push origin master
+git push origin main
 ```
 
 ### Step 4: Publish GitHub Release
@@ -151,7 +151,7 @@ Commit and push this documentation update:
 
 ```bash
 git commit -m "Mark v0.83.0 released in changelog." CHANGELOG.md
-git push origin master
+git push origin main
 ```
 
 ### Manual Publishing Fallback

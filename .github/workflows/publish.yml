@@ -3,6 +3,12 @@ name: Publish package
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Publish with --dry-run
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -36,6 +42,6 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           scope: "@gpellicciotta"
       - name: Publish to GitHub Packages
-        run: npm publish --workspaces --include-workspace-root
+        run: npm publish --workspaces --include-workspace-root ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && '--dry-run' || '' }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,9 +4,9 @@ owner: "@worker-1"
 needs: []
 branch: task/T0021-add-mock-dom-test-utility
 worktree: ./work/T0021-add-mock-dom-test-utility
-status: active
+status: completed
 started: 2026-09-19
-ended: —
+ended: 2026-10-31
 ---
 
 # T0021: Add Lightweight Mock DOM Test Utility
@@ -45,3 +45,6 @@ Cover all functionality with comprehensive unit tests in tests/mock-dom.test.mjs
 
 - [2026-09-19] **[Doc]**
   Updated CHANGELOG.md under v0.83.1-pre and updated task checklist.
+
+- [2026-10-31] **[Complete]**
+  Work was delivered in the 2026-09-19 commits; closed by hand because the task was missing from PLAN.md.
