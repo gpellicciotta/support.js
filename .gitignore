@@ -19,3 +19,6 @@ logs/
 # Ignore task worktrees
 work/
 
+
+# Python bytecode
+__pycache__/

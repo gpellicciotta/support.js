@@ -127,9 +127,8 @@ export class Matrix {
       }
       for (let r = 0; r < array.length; r++) {
         if (array[r].length !== this._cols) {
-          // TODO: also check all other rows?
           throw new Error(
-            'Fill-value matrix has ' + array[0].length + ' columns in row ' + r + ' while expecting ' + this._cols,
+            'Fill-value matrix has ' + array[r].length + ' columns in row ' + r + ' while expecting ' + this._cols,
           );
         }
       }

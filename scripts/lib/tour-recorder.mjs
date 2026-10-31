@@ -17,8 +17,8 @@ export class TourRecorder {
       : path.join(this.tourDir, 'screenshots');
     this.historyDir = options.historyDir ? path.resolve(options.historyDir) : path.join(this.tourDir, 'history');
     this.screenshots = [];
-    this.targetUrl = options.targetUrl || 'https://counters.hinolugi.com';
-    this.testUser = options.testUser || 'tester@hinolugi.com';
+    this.targetUrl = options.targetUrl || 'https://counters.example.com';
+    this.testUser = options.testUser || 'tester@example.com';
     this.targetVersion = options.targetVersion || '1.0.0';
     this.nowIso = options.nowIso || new Date().toISOString();
     this.todayStamp = this.nowIso.slice(0, 10);
@@ -26,7 +26,7 @@ export class TourRecorder {
     this.archiveDir = options.archiveDir
       ? path.resolve(options.archiveDir)
       : path.join(this.historyDir, this.archiveDirName);
-    this.title = options.title || 'HiNoLuGi - Visual Tour & Interactive User Tutorial';
+    this.title = options.title || 'Tour - Visual Tour & Interactive User Tutorial';
     this.description =
       options.description || 'This document serves as an end-to-end visual walkthrough and mini-tutorial.';
     this.minByteSize = options.minByteSize !== undefined ? options.minByteSize : 5000;

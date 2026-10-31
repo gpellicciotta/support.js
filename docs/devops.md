@@ -1,14 +1,15 @@
 # DevOps and Operations
 
-Practical guidance on building, testing, developing, and releasing `hinolugi-support.js`.
+Practical guidance on building, testing, developing, and releasing `support.js`.
 
 ---
 
 ## Prerequisites and Environment
 
-- **Node.js**: a current LTS release, providing `node:test`/`node:assert` and native ESM (`.mjs`) support.
+- **Node.js**: 22 or newer (LTS), providing `node:test`/`node:assert` and native ESM (`.mjs`) support.
 - **npm**: bundled with Node.js; used for dependency installs and running scripts.
 - **Git**: Git 2.30+ supporting worktrees (`git worktree`).
+- **Python**: 3.10+ for the `scripts/*.py` helpers.
 
 ---
 
@@ -16,8 +17,13 @@ Practical guidance on building, testing, developing, and releasing `hinolugi-sup
 
 ### Initial Bootstrap
 ```bash
-npm install
-npm test
+python scripts/bootstrap-dev-environment.py
+```
+
+Day-to-day operations (`lint`, `format`, `test`, `pack`, `check`):
+
+```bash
+python scripts/devops.py check
 ```
 
 ### Testing
@@ -139,7 +145,7 @@ gh run watch <run-id>
 Verify the package version is visible in GitHub Packages:
 
 ```bash
-npm view @gpellicciotta/hinolugi-support.js versions --registry https://npm.pkg.github.com
+npm view @gpellicciotta/support.js versions --registry https://npm.pkg.github.com
 ```
 
 Once verified, update `CHANGELOG.md` to mark the release finalized:
@@ -158,7 +164,7 @@ git push origin master
 ### Manual Publishing Fallback
 
 Use this fallback if the Actions pipeline is unavailable:
-1. Ensure `package.json`'s `name` is formatted as `@gpellicciotta/hinolugi-support.js`.
+1. Ensure `package.json`'s `name` is formatted as `@gpellicciotta/support.js`.
 2. Ensure there is an `.npmrc` file (ignored by git, never committed) containing:
    ```ini
    @gpellicciotta:registry=https://npm.pkg.github.com
@@ -180,7 +186,7 @@ git push origin v0.83.0
 
 ## Consuming in Downstream Projects
 
-Downstream projects (`hinolugi-counters`, `hinolugi-auth`, etc.) consume packages from GitHub Packages.
+Downstream projects (`counters`, `auth`, etc.) consume packages from GitHub Packages.
 
 ### Registry Configuration
 
@@ -203,7 +209,7 @@ Add the package under `dependencies` in consumer's `package.json`:
 ```json
 {
   "dependencies": {
-    "@gpellicciotta/hinolugi-support.js": "^0.83.0"
+    "@gpellicciotta/support.js": "^2.0.0"
   }
 }
 ```
@@ -219,17 +225,17 @@ npm install
 Import JavaScript modules using subpath exports:
 
 ```javascript
-import { CliLogger } from '@gpellicciotta/hinolugi-support.js/cli-log.mjs';
-import { sendRequest, buildUrl } from '@gpellicciotta/hinolugi-support.js/http.mjs';
-import { ApiError, mapError } from '@gpellicciotta/hinolugi-support.js/errors.mjs';
-import { parseChangelog } from '@gpellicciotta/hinolugi-support.js/changelog-parser.mjs';
+import { CliLogger } from '@gpellicciotta/support.js/cli-log.mjs';
+import { sendRequest, buildUrl } from '@gpellicciotta/support.js/http.mjs';
+import { ApiError, mapError } from '@gpellicciotta/support.js/errors.mjs';
+import { parseChangelog } from '@gpellicciotta/support.js/changelog-parser.mjs';
 ```
 
 Import CSS stylesheets directly:
 
 ```css
-@import '@gpellicciotta/hinolugi-support.js/css/reset.css';
-@import '@gpellicciotta/hinolugi-support.js/css/colors.css';
+@import '@gpellicciotta/support.js/css/reset.css';
+@import '@gpellicciotta/support.js/css/colors.css';
 ```
 
 ---

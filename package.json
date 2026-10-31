@@ -1,5 +1,5 @@
 {
-  "name": "@gpellicciotta/hinolugi-support.js",
+  "name": "@gpellicciotta/support.js",
   "version": "2.0.1-pre",
   "description": "General-purpose Javascript support code, both for client and server-side use",
   "type": "module",
@@ -8,6 +8,9 @@
     "./*.css": "./css/*.css",
     "./css/*.css": "./css/*.css",
     "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "files": [
     "js",
@@ -27,14 +30,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gpellicciotta/hinolugi-support.js.git"
+    "url": "git+https://github.com/gpellicciotta/support.js.git"
   },
   "author": "Giovanni Pellicciotta",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gpellicciotta/hinolugi-support.js/issues"
+    "url": "https://github.com/gpellicciotta/support.js/issues"
   },
-  "homepage": "https://github.com/gpellicciotta/hinolugi-support.js#readme",
+  "homepage": "https://github.com/gpellicciotta/support.js#readme",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },

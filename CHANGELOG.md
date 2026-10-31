@@ -3,9 +3,16 @@
 All notable changes to this project are documented here.
 
 > See [coordinating work guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/coordinating-work-guidelines.md)
-> for the versioning and changelog conventions used across the HiNoLuGi projects.
+> for the versioning and changelog conventions used across projects.
 
 ## v2.0.1-pre
+- BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.
+- BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `counters_user_`; pass `dbPrefix` to keep existing data.
+- Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
+- Build: Renamed default branch to `main` and repository to `support.js`.
+- DevEx: Added [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) and [devops.py](scripts/devops.py) for setup and routine operations.
+- Build: Declared Node.js 22 engine, synced `package-lock.json` version, and made Prettier tolerate platform line endings.
+- BackEnd: Fixed `Matrix` fill-value error message to report the offending row's column count.
 - FrontEnd: Refined catalogue item title contrast, action button dark theme styling, and search input layout.
 
 ## v2.0.0 [released: 2026-09-19]
