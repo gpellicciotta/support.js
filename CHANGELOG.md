@@ -5,6 +5,8 @@ All notable changes to this project are documented here.
 > See [change management guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/change-management-guidelines.md)
 > for the versioning and changelog conventions used across projects.
 
+## v3.0.1-pre
+
 ## v3.0.0 [2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.
 - BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `user_`; pass `dbPrefix` to keep existing data.
