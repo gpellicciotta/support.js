@@ -7,7 +7,7 @@ All notable changes to this project are documented here.
 
 ## v3.0.1-pre
 
-## v3.0.0 [2026-10-31]
+## v3.0.0 [released: 2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.
 - BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `user_`; pass `dbPrefix` to keep existing data.
 - Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
