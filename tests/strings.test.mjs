@@ -1,4 +1,4 @@
-import { test, describe } from 'node:test';
+import { test, describe } from 'vitest';
 import assert from 'node:assert/strict';
 import { escapeHtml, capitalize, uncapitalize, escapeRegex } from '../src/strings.mjs';
 

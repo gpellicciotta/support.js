@@ -1,4 +1,4 @@
-import { test, describe } from 'node:test';
+import { test, describe } from 'vitest';
 import assert from 'node:assert/strict';
 import { areEqual, areArraysEqual, deepClone } from '../src/objects.mjs';
 

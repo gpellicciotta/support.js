@@ -11,6 +11,7 @@ All notable changes to this project are documented here.
 - Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
 - Build: Renamed default branch to `main` and repository to `support.js`.
 - Docs: Fixed markdown lint issues and the dead guidelines link in documentation.
+- DevEx: Migrated unit tests from `node:test` to Vitest, run with `npm test`.
 - Build: Moved JavaScript sources from `js/` to `src/`; public import paths are unchanged.
 - DevEx: Added [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) and [devops.py](scripts/devops.py) for setup and routine operations.
 - Build: Declared Node.js 22 engine, synced `package-lock.json` version, and made Prettier tolerate platform line endings.

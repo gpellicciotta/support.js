@@ -1,4 +1,4 @@
-import { test, describe, mock } from 'node:test';
+import { test, describe, vi } from 'vitest';
 import assert from 'node:assert/strict';
 import { addLogHandler, removeLogHandler, error, ERROR_LEVEL } from '../src/logs.mjs';
 
@@ -7,20 +7,20 @@ describe('fireLogEvent', () => {
     const failingHandler = () => {
       throw new Error('boom');
     };
-    const errorMock = mock.method(console, 'error', () => {});
-    const logMock = mock.method(console, 'log', () => {});
+    const errorMock = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const logMock = vi.spyOn(console, 'log').mockImplementation(() => {});
     addLogHandler(failingHandler);
     try {
       error('something happened');
     } finally {
       removeLogHandler(failingHandler);
-      errorMock.mock.restore();
-      logMock.mock.restore();
     }
 
-    assert.equal(logMock.mock.callCount(), 0);
-    assert.equal(errorMock.mock.callCount(), 1);
-    const [message, loggedEvent, loggedErr] = errorMock.mock.calls[0].arguments;
+    assert.equal(logMock.mock.calls.length, 0);
+    assert.equal(errorMock.mock.calls.length, 1);
+    const [message, loggedEvent, loggedErr] = errorMock.mock.calls[0];
+    errorMock.mockRestore();
+    logMock.mockRestore();
     assert.match(message, /^\[error\] Log event handler failed for event/);
     assert.equal(loggedEvent.level, ERROR_LEVEL);
     assert.equal(loggedErr.message, 'boom');

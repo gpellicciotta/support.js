@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { describe, it, test } from 'vitest';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,8 +43,8 @@ const ALL_EXPECTED_STYLESHEETS = [
   'wait-panel.css',
 ];
 
-test('CSS Stylesheet Inventory', async (t) => {
-  await t.test('all 9 extracted stylesheets exist and are non-empty', () => {
+describe('CSS Stylesheet Inventory', () => {
+  it('all 9 extracted stylesheets exist and are non-empty', () => {
     for (const file of EXTRACTED_STYLESHEETS) {
       const fullPath = path.join(cssDir, file);
       assert.ok(fs.existsSync(fullPath), `Stylesheet ${file} should exist in css/`);
@@ -53,7 +53,7 @@ test('CSS Stylesheet Inventory', async (t) => {
     }
   });
 
-  await t.test('all expected stylesheets are present in css directory', () => {
+  it('all expected stylesheets are present in css directory', () => {
     const presentFiles = fs.readdirSync(cssDir).filter((f) => f.endsWith('.css'));
     for (const file of ALL_EXPECTED_STYLESHEETS) {
       assert.ok(presentFiles.includes(file), `Expected ${file} to be in css/`);
@@ -61,7 +61,7 @@ test('CSS Stylesheet Inventory', async (t) => {
     assert.equal(presentFiles.length, ALL_EXPECTED_STYLESHEETS.length);
   });
 
-  await t.test('package.json exports cover all stylesheets', () => {
+  it('package.json exports cover all stylesheets', () => {
     const pkgPath = path.join(rootDir, 'package.json');
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
     assert.ok(pkg.exports, 'package.json should have exports field');
@@ -70,7 +70,7 @@ test('CSS Stylesheet Inventory', async (t) => {
     assert.ok(pkg.files.includes('css'), 'package.json files should include css');
   });
 
-  await t.test('all @import statements in css files reference existing files', () => {
+  it('all @import statements in css files reference existing files', () => {
     const presentFiles = fs.readdirSync(cssDir).filter((f) => f.endsWith('.css'));
     const importRegex = /@import\s+["']([^"']+)["'];/g;
 

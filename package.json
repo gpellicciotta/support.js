@@ -23,7 +23,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "node --test",
+    "test": "vitest run",
     "format": "prettier --write \"js/**/*.mjs\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "format:check": "prettier --check \"js/**/*.mjs\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "release-notes": "node scripts/extract-release-notes.mjs"
@@ -42,6 +42,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
-    "prettier": "3.9.6"
+    "prettier": "3.9.6",
+    "vitest": "^5.0.5"
   }
 }

@@ -1,11 +1,11 @@
-import test from 'node:test';
+import { beforeAll, afterAll, describe, it, test } from 'vitest';
 import assert from 'node:assert/strict';
 import { StorageAdapter, MemoryStorageAdapter, IndexedDbStorageAdapter } from '../src/storages.mjs';
 
-test('StorageAdapter base interface contract', async (t) => {
+describe('StorageAdapter base interface contract', () => {
   const adapter = new StorageAdapter();
 
-  await t.test('all abstract methods throw Not implemented', async () => {
+  it('all abstract methods throw Not implemented', async () => {
     await assert.rejects(() => adapter.open('user1'), /Not implemented/);
     await assert.rejects(() => adapter.close(), /Not implemented/);
     await assert.rejects(() => adapter.get('store', 'key'), /Not implemented/);
@@ -17,8 +17,8 @@ test('StorageAdapter base interface contract', async (t) => {
   });
 });
 
-test('MemoryStorageAdapter - Lifecycle & User Namespacing', async (t) => {
-  await t.test('operations before open throw error', async () => {
+describe('MemoryStorageAdapter - Lifecycle & User Namespacing', () => {
+  it('operations before open throw error', async () => {
     const storage = new MemoryStorageAdapter();
     await assert.rejects(() => storage.get('items', 'k1'), /Storage adapter is not opened with a userId/);
     await assert.rejects(() => storage.getAll('items'), /Storage adapter is not opened with a userId/);
@@ -28,7 +28,7 @@ test('MemoryStorageAdapter - Lifecycle & User Namespacing', async (t) => {
     await assert.rejects(() => storage.count('items'), /Storage adapter is not opened with a userId/);
   });
 
-  await t.test('open defaults to anonymous and close resets user', async () => {
+  it('open defaults to anonymous and close resets user', async () => {
     const storage = new MemoryStorageAdapter();
     assert.equal(storage.userId, null);
     await storage.open();
@@ -42,7 +42,7 @@ test('MemoryStorageAdapter - Lifecycle & User Namespacing', async (t) => {
     await assert.rejects(() => storage.get('data', 'key1'), /Storage adapter is not opened with a userId/);
   });
 
-  await t.test('open coerces numeric userId to string', async () => {
+  it('open coerces numeric userId to string', async () => {
     const storage = new MemoryStorageAdapter();
     await storage.open(12345);
     assert.equal(storage.userId, '12345');
@@ -51,7 +51,7 @@ test('MemoryStorageAdapter - Lifecycle & User Namespacing', async (t) => {
     await storage.close();
   });
 
-  await t.test('multi-user data isolation and re-opening', async () => {
+  it('multi-user data isolation and re-opening', async () => {
     const storage = new MemoryStorageAdapter();
 
     // User A data
@@ -86,11 +86,13 @@ test('MemoryStorageAdapter - Lifecycle & User Namespacing', async (t) => {
   });
 });
 
-test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t) => {
+describe('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', () => {
   const storage = new MemoryStorageAdapter();
-  await storage.open('crud_user');
+  beforeAll(async () => {
+    await storage.open('crud_user');
+  });
 
-  await t.test('key resolution from explicit key, value.key, and value.id', async () => {
+  it('key resolution from explicit key, value.key, and value.id', async () => {
     // Explicit key overrides value properties
     const k1 = await storage.put('counters', { id: 99, name: 'Explicit' }, 'custom_key');
     assert.equal(k1, 'custom_key');
@@ -115,7 +117,7 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
     assert.deepEqual(await storage.get('counters', ['scope', 1]), { val: 'array-key' });
   });
 
-  await t.test('auto-increment key generation for objects without key/id', async () => {
+  it('auto-increment key generation for objects without key/id', async () => {
     const rawObj1 = { title: 'First Task' };
     const generatedKey1 = await storage.put('tasks', rawObj1);
     assert.equal(generatedKey1, 1);
@@ -133,7 +135,7 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
     assert.equal(await storage.count('tasks'), 2);
   });
 
-  await t.test('put supports primitive values with explicit key', async () => {
+  it('put supports primitive values with explicit key', async () => {
     await storage.put('scalars', 42, 'num');
     await storage.put('scalars', 'hello', 'str');
     await storage.put('scalars', true, 'bool');
@@ -143,7 +145,7 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
     assert.equal(await storage.get('scalars', 'bool'), true);
   });
 
-  await t.test('deep cloning prevents unintended mutation', async () => {
+  it('deep cloning prevents unintended mutation', async () => {
     const original = { details: { nested: 'initial' } };
     await storage.put('immutable', original, 'key1');
 
@@ -164,7 +166,7 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
     assert.equal(finalFetched.details.nested, 'initial');
   });
 
-  await t.test('delete, clear, and count behavior', async () => {
+  it('delete, clear, and count behavior', async () => {
     await storage.clear('temp_store');
     assert.equal(await storage.count('temp_store'), 0);
 
@@ -186,11 +188,13 @@ test('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', async (t)
     assert.deepEqual(await storage.getAll('temp_store'), []);
   });
 
-  await storage.close();
+  afterAll(async () => {
+    await storage.close();
+  });
 });
 
-test('IndexedDbStorageAdapter - Contract & Configuration without Browser IndexedDB', async (t) => {
-  await t.test('constructor defaults and options parsing', () => {
+describe('IndexedDbStorageAdapter - Contract & Configuration without Browser IndexedDB', () => {
+  it('constructor defaults and options parsing', () => {
     const defaultAdapter = new IndexedDbStorageAdapter();
     assert.equal(defaultAdapter.dbPrefix, 'counters_user_');
     assert.equal(defaultAdapter.version, 2);
@@ -208,7 +212,7 @@ test('IndexedDbStorageAdapter - Contract & Configuration without Browser Indexed
     assert.equal(optionsAdapter.version, 4);
   });
 
-  await t.test('open throws in environment without indexedDB', async () => {
+  it('open throws in environment without indexedDB', async () => {
     const originalIndexedDB = globalThis.indexedDB;
     try {
       delete globalThis.indexedDB;
@@ -224,7 +228,7 @@ test('IndexedDbStorageAdapter - Contract & Configuration without Browser Indexed
     }
   });
 
-  await t.test('CRUD operations before open reject with IndexedDB is not open', async () => {
+  it('CRUD operations before open reject with IndexedDB is not open', async () => {
     const adapter = new IndexedDbStorageAdapter();
     await assert.rejects(() => adapter.get('counters', 1), /IndexedDB is not open/);
     await assert.rejects(() => adapter.getAll('counters'), /IndexedDB is not open/);
@@ -234,7 +238,7 @@ test('IndexedDbStorageAdapter - Contract & Configuration without Browser Indexed
     await assert.rejects(() => adapter.count('counters'), /IndexedDB is not open/);
   });
 
-  await t.test('close when not open resolves cleanly', async () => {
+  it('close when not open resolves cleanly', async () => {
     const adapter = new IndexedDbStorageAdapter();
     await adapter.close();
     assert.equal(adapter.userId, null);
@@ -242,7 +246,7 @@ test('IndexedDbStorageAdapter - Contract & Configuration without Browser Indexed
   });
 });
 
-test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB', async (t) => {
+describe('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB', () => {
   const originalIndexedDB = globalThis.indexedDB;
 
   class MockIDBObjectStore {
@@ -347,7 +351,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     }
   }
 
-  t.after(() => {
+  afterAll(() => {
     if (originalIndexedDB !== undefined) {
       globalThis.indexedDB = originalIndexedDB;
     } else {
@@ -355,7 +359,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     }
   });
 
-  await t.test('open initializes default stores and indexes on upgrade', async () => {
+  it('open initializes default stores and indexes on upgrade', async () => {
     let openedDbName = null;
     let openedVersion = null;
 
@@ -434,7 +438,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     assert.equal(adapter.db, null);
   });
 
-  await t.test('custom stores and custom onUpgrade callback', async () => {
+  it('custom stores and custom onUpgrade callback', async () => {
     let customUpgradeRan = false;
 
     globalThis.indexedDB = {
@@ -480,7 +484,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     await adapterWithStores.close();
   });
 
-  await t.test('open rejection on indexedDB error', async () => {
+  it('open rejection on indexedDB error', async () => {
     globalThis.indexedDB = {
       open: () => {
         const req = { result: null, error: new Error('Simulated QuotaExceededError'), onerror: null };
@@ -495,7 +499,7 @@ test('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB',
     await assert.rejects(() => adapter.open('error_user'), /Failed to open IndexedDB.*Simulated QuotaExceededError/);
   });
 
-  await t.test('CRUD methods reject when underlying IDB request fails', async () => {
+  it('CRUD methods reject when underlying IDB request fails', async () => {
     const mockDb = new MockIDBDatabase('db', 1);
     const store = mockDb.createObjectStore('faulty', { keyPath: 'id' });
 

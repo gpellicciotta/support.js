@@ -5,7 +5,7 @@ Practical guidance on building, testing, developing, and releasing `support.js`.
 ---
 
 ## Prerequisites and Environment
-- **Node.js**: 22 or newer (LTS), providing `node:test`/`node:assert` and native ESM (`.mjs`) support.
+- **Node.js**: 22 or newer (LTS), providing Vitest and native ESM (`.mjs`) support.
 - **npm**: bundled with Node.js; used for dependency installs and running scripts.
 - **Git**: Git 2.30+ supporting worktrees (`git worktree`).
 - **Python**: 3.10+ for the `scripts/*.py` helpers.
@@ -31,7 +31,7 @@ python scripts/devops.py check
 npm test
 
 # Equivalent, direct invocation
-node --test tests/
+npx vitest run
 ```
 
 ### Formatting

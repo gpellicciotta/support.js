@@ -1,4 +1,4 @@
-import test from 'node:test';
+import { describe, it, test } from 'vitest';
 import assert from 'node:assert/strict';
 
 // Set up minimal browser DOM globals for Node test environment before importing webapp modules
@@ -239,8 +239,8 @@ global.document = {
 
 const CollectionEditor = (await import('../src/collection-editor.mjs')).default;
 
-test('CollectionEditor Unit Suite in support.js', async (t) => {
-  await t.test('1. CollectionEditor.createItemRow builds standard list item markup and attributes', () => {
+describe('CollectionEditor Unit Suite in support.js', () => {
+  it('1. CollectionEditor.createItemRow builds standard list item markup and attributes', () => {
     const row = CollectionEditor.createItemRow({
       id: 'webhook-42',
       className: 'webhook',
@@ -260,7 +260,7 @@ test('CollectionEditor Unit Suite in support.js', async (t) => {
     assert.equal(checkbox.id, 'mark-for-deletion-webhook-42');
   });
 
-  await t.test('2. CollectionEditor sets and renders items with empty state management', () => {
+  it('2. CollectionEditor sets and renders items with empty state management', () => {
     const headerEl = new MockDOMElement('div');
     const listEl = new MockDOMElement('ul');
     const emptyStateEl = new MockDOMElement('div');
@@ -305,7 +305,7 @@ test('CollectionEditor Unit Suite in support.js', async (t) => {
     assert.ok(!listEl.classList.contains('disabled'));
   });
 
-  await t.test('3. updateSelectionState and getSelectedElements track checked items and update delete button', () => {
+  it('3. updateSelectionState and getSelectedElements track checked items and update delete button', () => {
     const listEl = new MockDOMElement('ul');
     const deleteButtonEl = new MockDOMElement('button');
     let notifiedCount = -1;
@@ -361,7 +361,7 @@ test('CollectionEditor Unit Suite in support.js', async (t) => {
     assert.ok(deleteButtonEl.classList.contains('disabled'));
   });
 
-  await t.test('4. clearInputs resets all configured input values', () => {
+  it('4. clearInputs resets all configured input values', () => {
     const input1 = new MockDOMElement('input');
     input1.value = '100';
     const input2 = new MockDOMElement('input');
@@ -376,7 +376,7 @@ test('CollectionEditor Unit Suite in support.js', async (t) => {
     assert.equal(input2.value, '');
   });
 
-  await t.test('5. Enter key on creation inputs and button clicks trigger configured callbacks', () => {
+  it('5. Enter key on creation inputs and button clicks trigger configured callbacks', () => {
     const input = new MockDOMElement('input');
     const addButton = new MockDOMElement('button');
     let addTriggered = 0;

@@ -1,4 +1,4 @@
-import { test, describe, beforeEach, afterEach } from 'node:test';
+import { test, describe, beforeEach, afterEach } from 'vitest';
 import assert from 'node:assert/strict';
 import AppActionBar, { ACTION_STATE_CHANGED_EVENT } from '../src/app-action-bar.mjs';
 
