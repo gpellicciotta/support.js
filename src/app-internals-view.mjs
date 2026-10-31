@@ -85,9 +85,6 @@ export const DEFAULT_API_ROUTES = [
   '/api/sessions',
   '/api/users',
   '/api/users/me',
-  '/api/counters',
-  '/api/food-items',
-  '/api/lists',
 ];
 
 /**

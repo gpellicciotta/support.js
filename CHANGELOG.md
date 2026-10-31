@@ -5,13 +5,15 @@ All notable changes to this project are documented here.
 > See [change management guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/change-management-guidelines.md)
 > for the versioning and changelog conventions used across projects.
 
-## v3.0.1-pre
-
-## v3.0.0 [released: 2026-10-31]
+## v3.0.0-pre
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.
 - BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `user_`; pass `dbPrefix` to keep existing data.
 - Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
 - BackEnd: [breaking] Moved Dutch and English word lists to `@gpellicciotta/support-words.js` in `packages/words`; update imports and add the dependency.
+- BackEnd: [breaking] Removed the default `IndexedDbStorageAdapter` schema; `open()` now requires the `stores` option or an `onUpgrade` callback.
+- BackEnd: [breaking] Removed app-specific entries from `DEFAULT_API_ROUTES` in `app-internals-view.mjs`.
+- FrontEnd: [breaking] Removed app-specific selectors from [catalogue-view.css](css/catalogue-view.css) and [collection-editor.css](css/collection-editor.css); use `.catalogue-*` and `.collection-editor-*` classes.
+- Docs: Removed brand images and replaced the stale task workflow in [devops.md](docs/devops.md) with the `plan` CLI.
 - Build: Renamed default branch to `main` and repository to `support.js`.
 - Docs: Fixed markdown lint issues and the dead guidelines link in documentation.
 - DevEx: [breaking] Replaced Prettier with ESLint Stylistic enforcing Stroustrup braces; `npm run lint` replaces `format:check`.

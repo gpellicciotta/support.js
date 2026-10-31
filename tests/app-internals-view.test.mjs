@@ -140,7 +140,7 @@ describe('AppInternalsView', () => {
     assert.equal(NOTIFICATION_DELETED_EVENT, 'notification-deleted');
     assert.equal(NOTIFICATIONS_CLEARED_EVENT, 'notifications-cleared');
     assert.ok(DEFAULT_API_ROUTES.includes('/api/status'));
-    assert.ok(DEFAULT_API_ROUTES.includes('/api/counters'));
+    assert.ok(DEFAULT_API_ROUTES.includes('/api/users'));
     assert.ok(DEFAULT_API_ROUTES.includes('/api/credentials'));
   });
 

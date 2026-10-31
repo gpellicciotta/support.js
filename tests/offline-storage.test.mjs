@@ -2,6 +2,8 @@ import { beforeAll, afterAll, describe, it } from 'vitest';
 import assert from 'node:assert/strict';
 import { StorageAdapter, MemoryStorageAdapter, IndexedDbStorageAdapter } from '../src/storages.mjs';
 
+const TEST_STORES = ['items', { name: 'item_values', keyPath: 'key', indexes: [{ name: 'itemId' }] }, 'queue'];
+
 describe('StorageAdapter base interface contract', () => {
   const adapter = new StorageAdapter();
 
@@ -248,6 +250,20 @@ describe('IndexedDbStorageAdapter - Contract & Configuration without Browser Ind
 });
 
 describe('IndexedDbStorageAdapter - Contract & Operations with Simulated IndexedDB', () => {
+  it('open requires either stores or onUpgrade', async () => {
+    const saved = globalThis.indexedDB;
+    globalThis.indexedDB = { open: () => assert.fail('must not open without a schema') };
+    try {
+      await assert.rejects(
+        () => new IndexedDbStorageAdapter().open('u'),
+        /requires either the stores option or an onUpgrade callback/,
+      );
+    }
+    finally {
+      globalThis.indexedDB = saved;
+    }
+  });
+
   const originalIndexedDB = globalThis.indexedDB;
 
   class MockIDBObjectStore {
@@ -384,7 +400,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       },
     };
 
-    const adapter = new IndexedDbStorageAdapter();
+    const adapter = new IndexedDbStorageAdapter({ stores: TEST_STORES });
     await adapter.open('user_test_id');
 
     assert.equal(openedDbName, 'user_user_test_id');
@@ -392,40 +408,31 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
     assert.equal(adapter.userId, 'user_test_id');
     assert.ok(adapter.db);
 
-    // Verify all standard stores were created
-    const expectedStores = [
-      'counters',
-      'counter_values',
-      'food_items',
-      'mutation_queue',
-      'failed_mutations',
-      'user_data',
-      'notifications',
-    ];
-    for (const s of expectedStores) {
+    // Verify all declared stores were created
+    for (const s of ['items', 'item_values', 'queue']) {
       assert.ok(adapter.db.objectStoreNames.contains(s), `Expected store "${s}" to exist`);
     }
 
     // Verify CRUD methods
-    const putRes = await adapter.put('counters', { id: 101, name: 'Steps' });
+    const putRes = await adapter.put('items', { id: 101, name: 'Steps' });
     assert.equal(putRes, 101);
 
-    const getRes = await adapter.get('counters', 101);
+    const getRes = await adapter.get('items', 101);
     assert.deepEqual(getRes, { id: 101, name: 'Steps' });
 
-    const countRes = await adapter.count('counters');
+    const countRes = await adapter.count('items');
     assert.equal(countRes, 1);
 
-    const allRes = await adapter.getAll('counters');
+    const allRes = await adapter.getAll('items');
     assert.deepEqual(allRes, [{ id: 101, name: 'Steps' }]);
 
-    await adapter.delete('counters', 101);
-    assert.equal(await adapter.count('counters'), 0);
-    assert.equal(await adapter.get('counters', 101), undefined);
+    await adapter.delete('items', 101);
+    assert.equal(await adapter.count('items'), 0);
+    assert.equal(await adapter.get('items', 101), undefined);
 
-    await adapter.put('counters', { id: 102, name: 'Water' });
-    await adapter.clear('counters');
-    assert.equal(await adapter.count('counters'), 0);
+    await adapter.put('items', { id: 102, name: 'Water' });
+    await adapter.clear('items');
+    assert.equal(await adapter.count('items'), 0);
 
     // Fallbacks for non-existent store
     assert.equal(await adapter.get('non_existent_store', 'k1'), undefined);
@@ -497,7 +504,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       },
     };
 
-    const adapter = new IndexedDbStorageAdapter();
+    const adapter = new IndexedDbStorageAdapter({ stores: TEST_STORES });
     await assert.rejects(() => adapter.open('error_user'), /Failed to open IndexedDB.*Simulated QuotaExceededError/);
   });
 
@@ -524,7 +531,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
       },
     };
 
-    const adapter = new IndexedDbStorageAdapter();
+    const adapter = new IndexedDbStorageAdapter({ stores: TEST_STORES });
     await adapter.open('faulty_user');
 
     await assert.rejects(() => adapter.get('faulty', 'k1'), /Disk read error/);

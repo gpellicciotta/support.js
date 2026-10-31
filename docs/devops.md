@@ -44,18 +44,16 @@ npm run format
 ```
 
 ### Task Coordination Protocol
-All non-trivial task work follows the protocol in
-[Change Management Guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/change-management-guidelines.md):
-1. **Claim**: Update the task line in `TODO.md` on `master` from `[ ]` to `[~] @owner`, commit, push.
-2. **Worktree** (full tasks only): Create an isolated worktree at `./work/Tnnnn-slug` on branch
-   `task/Tnnnn-slug`:
-   ```bash
-   git worktree add ./work/T0001-task-slug -b task/T0001-task-slug
-   ```
-3. **Execute**: Work within the isolated worktree (or, for adhoc `Annnn` tasks, directly in the primary
-   checkout) and maintain `tasks/Tnnnn-slug.md` for full tasks.
-4. **Finalize**: Pass all tests, update documentation and `CHANGELOG.md`, integrate into mainline, remove the
-   worktree and branch, and clear the entry from `PLAN.md`.
+Tasks are tracked in [PLAN.md](../PLAN.md) and managed only through the `plan` CLI:
+1. **Create**: `plan tasks create "{{description}}"` (add `--protocol adhoc` for small changes).
+2. **Start**: `plan tasks start {{task-id}} --owner @{{agent}}` provisions a branch and worktree for standard tasks.
+3. **Execute**: Work in the resolved workspace, keeping the companion task file in `.plan/tasks/` current.
+4. **Finalize**: Pass all tests, update `CHANGELOG.md` and documentation, then run
+   `plan tasks stop {{task-id}} --status completed`.
+
+The rules follow the
+[Change Management Guidelines](https://github.com/gpellicciotta/dev-guidelines/blob/main/guidelines/change-management-guidelines.md).
+
 
 ---
 

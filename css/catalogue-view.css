@@ -10,13 +10,7 @@
 @import "style.css";
 
 /* 1. Root Container Layout */
-.catalogue-view,
-.counters-list-view,
-.food-items-list-view,
-.recycle-bin-view,
-.applications-list-view,
-.users-list-view,
-.sessions-list-view {
+.catalogue-view {
   width: 100%;
   max-width: var(--view-max-width-form, 42rem);
   display: grid;
@@ -30,13 +24,7 @@
 }
 
 /* 2. Catalogue Header & Search Toolbar */
-.catalogue-view > header,
-.counters-list-view > header,
-.food-items-list-view > header,
-.recycle-bin-view > header,
-.applications-list-view > header,
-.users-list-view > header,
-.sessions-list-view > header {
+.catalogue-view > header {
   grid-area: header;
   width: 100%;
   display: grid;
@@ -46,33 +34,15 @@
   align-items: center;
 }
 
-.catalogue-view > header.disabled,
-.counters-list-view > header.disabled,
-.food-items-list-view > header.disabled,
-.recycle-bin-view > header.disabled,
-.applications-list-view > header.disabled,
-.users-list-view > header.disabled,
-.sessions-list-view > header.disabled {
+.catalogue-view > header.disabled {
   display: none;
 }
 
-.catalogue-view > header > .icon-input,
-.counters-list-view > header > .icon-input,
-.food-items-list-view > header > .icon-input,
-.recycle-bin-view > header > .icon-input,
-.applications-list-view > header > .icon-input,
-.users-list-view > header > .icon-input,
-.sessions-list-view > header > .icon-input {
+.catalogue-view > header > .icon-input {
   margin: 0;
 }
 
-.catalogue-view > header > .action-button,
-.counters-list-view > header > .action-button,
-.food-items-list-view > header > .action-button,
-.recycle-bin-view > header > .action-button,
-.applications-list-view > header > .action-button,
-.users-list-view > header > .action-button,
-.sessions-list-view > header > .action-button {
+.catalogue-view > header > .action-button {
   height: 2.75em;
   width: 2.75em;
   max-width: 3rem;
@@ -87,32 +57,14 @@
 }
 
 @media (hover: hover) {
-  .catalogue-view > header > .action-button:hover,
-  .counters-list-view > header > .action-button:hover,
-  .food-items-list-view > header > .action-button:hover,
-  .recycle-bin-view > header > .action-button:hover,
-  .applications-list-view > header > .action-button:hover,
-  .users-list-view > header > .action-button:hover,
-  .sessions-list-view > header > .action-button:hover {
+  .catalogue-view > header > .action-button:hover {
     background-color: var(--secondary-background-color);
     color: var(--secondary-text-color);
   }
 }
 
 .catalogue-view > header > .action-button svg,
-.catalogue-view > header > .action-button i,
-.counters-list-view > header > .action-button svg,
-.counters-list-view > header > .action-button i,
-.food-items-list-view > header > .action-button svg,
-.food-items-list-view > header > .action-button i,
-.recycle-bin-view > header > .action-button svg,
-.recycle-bin-view > header > .action-button i,
-.applications-list-view > header > .action-button svg,
-.applications-list-view > header > .action-button i,
-.users-list-view > header > .action-button svg,
-.users-list-view > header > .action-button i,
-.sessions-list-view > header > .action-button svg,
-.sessions-list-view > header > .action-button i {
+.catalogue-view > header > .action-button i {
   width: 100%;
   height: 100%;
   font-size: inherit;
@@ -122,13 +74,7 @@
 }
 
 /* 3. Catalogue Items List Container */
-.catalogue-view > .catalogue-list,
-.counters-list-view > .counters-list,
-.food-items-list-view > .food-items-list,
-.recycle-bin-view > .items-list,
-.applications-list-view > .applications-list,
-.users-list-view > .users-list,
-.sessions-list-view > .sessions-list {
+.catalogue-view > .catalogue-list {
   grid-area: list;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
@@ -141,24 +87,12 @@
   align-content: start;
 }
 
-.catalogue-view > .catalogue-list.disabled,
-.counters-list-view > .counters-list.disabled,
-.food-items-list-view > .food-items-list.disabled,
-.recycle-bin-view > .items-list.disabled,
-.applications-list-view > .applications-list.disabled,
-.users-list-view > .users-list.disabled,
-.sessions-list-view > .sessions-list.disabled {
+.catalogue-view > .catalogue-list.disabled {
   display: none;
 }
 
 /* 4. Catalogue List Item Card Base Styles */
-.catalogue-view .catalogue-list > .catalogue-item,
-.counters-list-view .counters-list > .counter,
-.food-items-list-view .food-items-list > .food-item,
-.recycle-bin-view .items-list > .item,
-.applications-list-view .applications-list > .application,
-.users-list-view .users-list > .user,
-.sessions-list-view .sessions-list > .session {
+.catalogue-view .catalogue-list > .catalogue-item {
   padding: 0.75rem 1rem;
   background-color: var(--form-element-bg-color);
   color: var(--form-element-color, var(--primary-text-color));
@@ -167,66 +101,39 @@
   box-shadow: var(--card-shadow, 0 1px 3px rgba(0, 0, 0, 0.06));
 }
 
-.catalogue-view .catalogue-list > .catalogue-item.dragging,
-.counters-list-view .counters-list > .counter.dragging,
-.food-items-list-view .food-items-list > .food-item.dragging,
-.recycle-bin-view .items-list > .item.dragging {
+.catalogue-view .catalogue-list > .catalogue-item.dragging {
   background-color: rgba(var(--ternary-background-color-components), 80%);
   color: var(--ternary-text-color);
 }
 
-.catalogue-view .catalogue-list > .catalogue-item.disabled,
-.counters-list-view .counters-list > .counter.disabled,
-.food-items-list-view .food-items-list > .food-item.disabled,
-.recycle-bin-view .items-list > .item.disabled,
-.applications-list-view .applications-list > .application.disabled,
-.users-list-view .users-list > .user.disabled,
-.sessions-list-view .sessions-list > .session.disabled {
+.catalogue-view .catalogue-list > .catalogue-item.disabled {
   display: none;
 }
 
 /* 5. Common Item Sub-elements */
-.catalogue-view .catalogue-list > .catalogue-item > .name,
-.counters-list-view .counters-list > .counter > .name,
-.food-items-list-view .food-items-list > .food-item > .name,
-.recycle-bin-view .items-list > .item > .name,
-.applications-list-view .applications-list > .application > .name,
-.users-list-view .users-list > .user > .name {
+.catalogue-view .catalogue-list > .catalogue-item > .name {
   grid-area: name;
   font-size: 125%;
   font-weight: 500;
   color: var(--secondary-background-color);
 }
 
-.catalogue-view .catalogue-list > .catalogue-item > .description,
-.counters-list-view .counters-list > .counter > .description,
-.food-items-list-view .food-items-list > .food-item > .description,
-.recycle-bin-view .items-list > .item > .description,
-.applications-list-view .applications-list > .application > .description,
-.users-list-view .users-list > .user > .description {
+.catalogue-view .catalogue-list > .catalogue-item > .description {
   grid-area: descr;
   font-weight: lighter;
   font-size: 90%;
 }
 
-.catalogue-view .catalogue-list > .catalogue-item > .handle,
-.counters-list-view .counters-list > .counter > .handle {
+.catalogue-view .catalogue-list > .catalogue-item > .handle {
   grid-area: handle;
 }
 
-.catalogue-view .catalogue-list > .catalogue-item > .handle[draggable=true],
-.counters-list-view .counters-list > .counter > .handle[draggable=true] {
+.catalogue-view .catalogue-list > .catalogue-item > .handle[draggable=true] {
   cursor: grab;
 }
 
 /* 6. Action Bar and Action Buttons */
-.catalogue-view .catalogue-list > .catalogue-item > .action-bar,
-.counters-list-view .counters-list > .counter > .action-bar,
-.food-items-list-view .food-items-list > .food-item > .action-bar,
-.recycle-bin-view .items-list > .item > .action-bar,
-.applications-list-view .applications-list > .application > .action-bar,
-.users-list-view .users-list > .user > .action-bar,
-.sessions-list-view .sessions-list > .session > .action-bar {
+.catalogue-view .catalogue-list > .catalogue-item > .action-bar {
   grid-area: actions;
   justify-self: end;
   align-self: start;
@@ -235,13 +142,7 @@
   color: inherit;
 }
 
-.catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button,
-.counters-list-view .counters-list > .counter > .action-bar > .action-button,
-.food-items-list-view .food-items-list > .food-item > .action-bar > .action-button,
-.recycle-bin-view .items-list > .item > .action-bar > .action-button,
-.applications-list-view .applications-list > .application > .action-bar > .action-button,
-.users-list-view .users-list > .user > .action-bar > .action-button,
-.sessions-list-view .sessions-list > .session > .action-bar > .action-button {
+.catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button {
   background-color: var(--primary-background-color, var(--white-hex));
   color: var(--secondary-background-color);
   border-radius: var(--control-border-radius, 4px);
@@ -252,25 +153,14 @@
 }
 
 @media (hover: hover) {
-  .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover,
-  .counters-list-view .counters-list > .counter > .action-bar > .action-button:hover,
-  .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button:hover,
-  .recycle-bin-view .items-list > .item > .action-bar > .action-button:hover,
-  .applications-list-view .applications-list > .application > .action-bar > .action-button:hover,
-  .users-list-view .users-list > .user > .action-bar > .action-button:hover,
-  .sessions-list-view .sessions-list > .session > .action-bar > .action-button:hover {
+  .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover {
     background-color: var(--secondary-background-color);
     color: var(--secondary-text-color);
   }
 }
 
 /* 7. Metadata Tags (Pills) */
-.catalogue-view .catalogue-list > .catalogue-item > .tags > *,
-.counters-list-view .counters-list > .counter > .tags > *,
-.food-items-list-view .food-items-list > .food-item > .tags > *,
-.recycle-bin-view .items-list > .item > .tags > *,
-.applications-list-view .applications-list > .application > .tags > *,
-.users-list-view .users-list > .user > .tags > * {
+.catalogue-view .catalogue-list > .catalogue-item > .tags > * {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -286,29 +176,12 @@
 
 /* 8. Dark Theme Adaptations */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .name,
-  :root:not([data-theme="light"]) .counters-list-view .counters-list > .counter > .name,
-  :root:not([data-theme="light"]) .food-items-list-view .food-items-list > .food-item > .name,
-  :root:not([data-theme="light"]) .recycle-bin-view .items-list > .item > .name,
-  :root:not([data-theme="light"]) .applications-list-view .applications-list > .application > .name,
-  :root:not([data-theme="light"]) .users-list-view .users-list > .user > .name {
+  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .name {
     color: var(--primary-text-color);
   }
 
   :root:not([data-theme="light"]) .catalogue-view > header > .action-button,
-  :root:not([data-theme="light"]) .counters-list-view > header > .action-button,
-  :root:not([data-theme="light"]) .food-items-list-view > header > .action-button,
-  :root:not([data-theme="light"]) .recycle-bin-view > header > .action-button,
-  :root:not([data-theme="light"]) .applications-list-view > header > .action-button,
-  :root:not([data-theme="light"]) .users-list-view > header > .action-button,
-  :root:not([data-theme="light"]) .sessions-list-view > header > .action-button,
-  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .counters-list-view .counters-list > .counter > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .recycle-bin-view .items-list > .item > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .applications-list-view .applications-list > .application > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .users-list-view .users-list > .user > .action-bar > .action-button,
-  :root:not([data-theme="light"]) .sessions-list-view .sessions-list > .session > .action-bar > .action-button {
+  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button {
     background-color: var(--field-background-color, rgba(255, 255, 255, 0.06));
     color: var(--primary-text-color, #e4e6eb);
     border: 1px solid var(--card-border-color, rgba(255, 255, 255, 0.15));
@@ -316,31 +189,14 @@
 
   @media (hover: hover) {
     :root:not([data-theme="light"]) .catalogue-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .counters-list-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .food-items-list-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .recycle-bin-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .applications-list-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .users-list-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .sessions-list-view > header > .action-button:hover,
-    :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .counters-list-view .counters-list > .counter > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .recycle-bin-view .items-list > .item > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .applications-list-view .applications-list > .application > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .users-list-view .users-list > .user > .action-bar > .action-button:hover,
-    :root:not([data-theme="light"]) .sessions-list-view .sessions-list > .session > .action-bar > .action-button:hover {
+    :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover {
       background-color: rgba(59, 130, 246, 0.2);
       color: #ffffff;
       border-color: #3b82f6;
     }
   }
 
-  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .tags > *,
-  :root:not([data-theme="light"]) .counters-list-view .counters-list > .counter > .tags > *,
-  :root:not([data-theme="light"]) .food-items-list-view .food-items-list > .food-item > .tags > *,
-  :root:not([data-theme="light"]) .recycle-bin-view .items-list > .item > .tags > *,
-  :root:not([data-theme="light"]) .applications-list-view .applications-list > .application > .tags > *,
-  :root:not([data-theme="light"]) .users-list-view .users-list > .user > .tags > * {
+  :root:not([data-theme="light"]) .catalogue-view .catalogue-list > .catalogue-item > .tags > * {
     background-color: rgba(59, 130, 246, 0.18);
     color: #93c5fd;
     border: 1px solid rgba(59, 130, 246, 0.35);
@@ -348,48 +204,14 @@
 }
 
 :root[data-theme="dark"] .catalogue-view .catalogue-list > .catalogue-item > .name,
-:root[data-theme="dark"] .counters-list-view .counters-list > .counter > .name,
-:root[data-theme="dark"] .food-items-list-view .food-items-list > .food-item > .name,
-:root[data-theme="dark"] .recycle-bin-view .items-list > .item > .name,
-:root[data-theme="dark"] .applications-list-view .applications-list > .application > .name,
-:root[data-theme="dark"] .users-list-view .users-list > .user > .name,
-body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .name,
-body.dark-theme .counters-list-view .counters-list > .counter > .name,
-body.dark-theme .food-items-list-view .food-items-list > .food-item > .name,
-body.dark-theme .recycle-bin-view .items-list > .item > .name,
-body.dark-theme .applications-list-view .applications-list > .application > .name,
-body.dark-theme .users-list-view .users-list > .user > .name {
+body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .name {
   color: var(--primary-text-color);
 }
 
 :root[data-theme="dark"] .catalogue-view > header > .action-button,
-:root[data-theme="dark"] .counters-list-view > header > .action-button,
-:root[data-theme="dark"] .food-items-list-view > header > .action-button,
-:root[data-theme="dark"] .recycle-bin-view > header > .action-button,
-:root[data-theme="dark"] .applications-list-view > header > .action-button,
-:root[data-theme="dark"] .users-list-view > header > .action-button,
-:root[data-theme="dark"] .sessions-list-view > header > .action-button,
 :root[data-theme="dark"] .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button,
-:root[data-theme="dark"] .counters-list-view .counters-list > .counter > .action-bar > .action-button,
-:root[data-theme="dark"] .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button,
-:root[data-theme="dark"] .recycle-bin-view .items-list > .item > .action-bar > .action-button,
-:root[data-theme="dark"] .applications-list-view .applications-list > .application > .action-bar > .action-button,
-:root[data-theme="dark"] .users-list-view .users-list > .user > .action-bar > .action-button,
-:root[data-theme="dark"] .sessions-list-view .sessions-list > .session > .action-bar > .action-button,
 body.dark-theme .catalogue-view > header > .action-button,
-body.dark-theme .counters-list-view > header > .action-button,
-body.dark-theme .food-items-list-view > header > .action-button,
-body.dark-theme .recycle-bin-view > header > .action-button,
-body.dark-theme .applications-list-view > header > .action-button,
-body.dark-theme .users-list-view > header > .action-button,
-body.dark-theme .sessions-list-view > header > .action-button,
-body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button,
-body.dark-theme .counters-list-view .counters-list > .counter > .action-bar > .action-button,
-body.dark-theme .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button,
-body.dark-theme .recycle-bin-view .items-list > .item > .action-bar > .action-button,
-body.dark-theme .applications-list-view .applications-list > .application > .action-bar > .action-button,
-body.dark-theme .users-list-view .users-list > .user > .action-bar > .action-button,
-body.dark-theme .sessions-list-view .sessions-list > .session > .action-bar > .action-button {
+body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button {
   background-color: var(--field-background-color, rgba(255, 255, 255, 0.06));
   color: var(--primary-text-color, #e4e6eb);
   border: 1px solid var(--card-border-color, rgba(255, 255, 255, 0.15));
@@ -397,33 +219,9 @@ body.dark-theme .sessions-list-view .sessions-list > .session > .action-bar > .a
 
 @media (hover: hover) {
   :root[data-theme="dark"] .catalogue-view > header > .action-button:hover,
-  :root[data-theme="dark"] .counters-list-view > header > .action-button:hover,
-  :root[data-theme="dark"] .food-items-list-view > header > .action-button:hover,
-  :root[data-theme="dark"] .recycle-bin-view > header > .action-button:hover,
-  :root[data-theme="dark"] .applications-list-view > header > .action-button:hover,
-  :root[data-theme="dark"] .users-list-view > header > .action-button:hover,
-  :root[data-theme="dark"] .sessions-list-view > header > .action-button:hover,
   :root[data-theme="dark"] .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .counters-list-view .counters-list > .counter > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .recycle-bin-view .items-list > .item > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .applications-list-view .applications-list > .application > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .users-list-view .users-list > .user > .action-bar > .action-button:hover,
-  :root[data-theme="dark"] .sessions-list-view .sessions-list > .session > .action-bar > .action-button:hover,
   body.dark-theme .catalogue-view > header > .action-button:hover,
-  body.dark-theme .counters-list-view > header > .action-button:hover,
-  body.dark-theme .food-items-list-view > header > .action-button:hover,
-  body.dark-theme .recycle-bin-view > header > .action-button:hover,
-  body.dark-theme .applications-list-view > header > .action-button:hover,
-  body.dark-theme .users-list-view > header > .action-button:hover,
-  body.dark-theme .sessions-list-view > header > .action-button:hover,
-  body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover,
-  body.dark-theme .counters-list-view .counters-list > .counter > .action-bar > .action-button:hover,
-  body.dark-theme .food-items-list-view .food-items-list > .food-item > .action-bar > .action-button:hover,
-  body.dark-theme .recycle-bin-view .items-list > .item > .action-bar > .action-button:hover,
-  body.dark-theme .applications-list-view .applications-list > .application > .action-bar > .action-button:hover,
-  body.dark-theme .users-list-view .users-list > .user > .action-bar > .action-button:hover,
-  body.dark-theme .sessions-list-view .sessions-list > .session > .action-bar > .action-button:hover {
+  body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .action-bar > .action-button:hover {
     background-color: rgba(59, 130, 246, 0.2);
     color: #ffffff;
     border-color: #3b82f6;
@@ -431,17 +229,7 @@ body.dark-theme .sessions-list-view .sessions-list > .session > .action-bar > .a
 }
 
 :root[data-theme="dark"] .catalogue-view .catalogue-list > .catalogue-item > .tags > *,
-:root[data-theme="dark"] .counters-list-view .counters-list > .counter > .tags > *,
-:root[data-theme="dark"] .food-items-list-view .food-items-list > .food-item > .tags > *,
-:root[data-theme="dark"] .recycle-bin-view .items-list > .item > .tags > *,
-:root[data-theme="dark"] .applications-list-view .applications-list > .application > .tags > *,
-:root[data-theme="dark"] .users-list-view .users-list > .user > .tags > *,
-body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .tags > *,
-body.dark-theme .counters-list-view .counters-list > .counter > .tags > *,
-body.dark-theme .food-items-list-view .food-items-list > .food-item > .tags > *,
-body.dark-theme .recycle-bin-view .items-list > .item > .tags > *,
-body.dark-theme .applications-list-view .applications-list > .application > .tags > *,
-body.dark-theme .users-list-view .users-list > .user > .tags > * {
+body.dark-theme .catalogue-view .catalogue-list > .catalogue-item > .tags > * {
   background-color: rgba(59, 130, 246, 0.18);
   color: #93c5fd;
   border: 1px solid rgba(59, 130, 246, 0.35);

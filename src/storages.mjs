@@ -252,8 +252,8 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
    * @param {string|Object} [dbPrefixOrOptions='user_'] Database name prefix or options configuration object.
    * @param {Object} [options={}] Optional adapter settings when string prefix was provided.
    * @param {number} [options.version=2] Target IndexedDB schema version.
-   * @param {Array<string|{name: string, keyPath?: string|null, autoIncrement?: boolean, indexes?: Array<{name: string, keyPath?: string, unique?: boolean}>}>} [options.stores] Custom store declarations.
-   * @param {function(IDBDatabase, IDBVersionChangeEvent): void} [options.onUpgrade] Custom database upgrade callback.
+   * @param {Array<string|{name: string, keyPath?: string|null, autoIncrement?: boolean, indexes?: Array<{name: string, keyPath?: string, unique?: boolean}>}>} [options.stores] Store declarations; required unless onUpgrade is given.
+   * @param {function(IDBDatabase, IDBVersionChangeEvent): void} [options.onUpgrade] Database upgrade callback; required unless stores is given.
    */
   constructor(dbPrefixOrOptions = 'user_', options = {}) {
     super();
@@ -283,6 +283,9 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
   async open(userId = 'anonymous') {
     if (typeof indexedDB === 'undefined') {
       throw new Error('IndexedDB is not supported or available in this environment');
+    }
+    if (!Array.isArray(this.stores) && typeof this.onUpgrade !== 'function') {
+      throw new Error('IndexedDbStorageAdapter requires either the stores option or an onUpgrade callback');
     }
     this.userId = String(userId);
     const dbName = this.dbPrefix + this.userId;
@@ -315,32 +318,6 @@ export class IndexedDbStorageAdapter extends StorageAdapter {
               }
             }
           }
-          return;
-        }
-
-        if (!db.objectStoreNames.contains('counters')) {
-          db.createObjectStore('counters', { keyPath: 'id' });
-        }
-        if (!db.objectStoreNames.contains('counter_values')) {
-          const valStore = db.createObjectStore('counter_values', { keyPath: 'key' });
-          valStore.createIndex('counterId', 'counterId', { unique: false });
-        }
-        if (!db.objectStoreNames.contains('food_items')) {
-          db.createObjectStore('food_items', { keyPath: 'id' });
-        }
-        if (!db.objectStoreNames.contains('mutation_queue')) {
-          const queueStore = db.createObjectStore('mutation_queue', { keyPath: 'id', autoIncrement: true });
-          queueStore.createIndex('status', 'status', { unique: false });
-          queueStore.createIndex('timestamp', 'timestamp', { unique: false });
-        }
-        if (!db.objectStoreNames.contains('failed_mutations')) {
-          db.createObjectStore('failed_mutations', { keyPath: 'id' });
-        }
-        if (!db.objectStoreNames.contains('user_data')) {
-          db.createObjectStore('user_data', { keyPath: 'key' });
-        }
-        if (!db.objectStoreNames.contains('notifications')) {
-          db.createObjectStore('notifications', { keyPath: 'id' });
         }
       };
 
