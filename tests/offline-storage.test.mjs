@@ -196,7 +196,7 @@ describe('MemoryStorageAdapter - CRUD Operations, Keys, and Immutability', () =>
 describe('IndexedDbStorageAdapter - Contract & Configuration without Browser IndexedDB', () => {
   it('constructor defaults and options parsing', () => {
     const defaultAdapter = new IndexedDbStorageAdapter();
-    assert.equal(defaultAdapter.dbPrefix, 'counters_user_');
+    assert.equal(defaultAdapter.dbPrefix, 'user_');
     assert.equal(defaultAdapter.version, 2);
     assert.equal(defaultAdapter.userId, null);
     assert.equal(defaultAdapter.db, null);
@@ -387,7 +387,7 @@ describe('IndexedDbStorageAdapter - Contract & Operations with Simulated Indexed
     const adapter = new IndexedDbStorageAdapter();
     await adapter.open('user_test_id');
 
-    assert.equal(openedDbName, 'counters_user_user_test_id');
+    assert.equal(openedDbName, 'user_user_test_id');
     assert.equal(openedVersion, 2);
     assert.equal(adapter.userId, 'user_test_id');
     assert.ok(adapter.db);

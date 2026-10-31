@@ -7,7 +7,7 @@ All notable changes to this project are documented here.
 
 ## v3.0.0-pre
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.
-- BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `counters_user_`; pass `dbPrefix` to keep existing data.
+- BackEnd: [breaking] Changed default `IndexedDbStorageAdapter` database prefix from `hinolugi_counters_user_` to `user_`; pass `dbPrefix` to keep existing data.
 - Docs: Removed product-specific branding from documentation, stylesheets, and tour recorder defaults.
 - BackEnd: [breaking] Moved Dutch and English word lists to `@gpellicciotta/support-words.js` in `packages/words`; update imports and add the dependency.
 - Build: Renamed default branch to `main` and repository to `support.js`.
