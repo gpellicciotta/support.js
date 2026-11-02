@@ -22,3 +22,6 @@ work/
 
 # Python bytecode
 __pycache__/
+.plan/
+/PLAN.md
+/plan.code-workspace
