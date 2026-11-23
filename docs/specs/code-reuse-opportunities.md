@@ -82,22 +82,20 @@ Both `auth` and `counters` have identical client transport mechanisms:
 - **Service Worker Engine**: Both applications run near-identical service worker scripts (`service-worker.mjs`, ~250 lines) managing versioned cache lifecycle, stale cache pruning, and offline fetch fallbacks.
 
 ### Auth Utility Parity (`webapp/js/utils/`)
-Status as of v3.1.0, checked against Auth's copies on 2026-11-23:
+Status as of v4.0.0, checked against Auth's non-UI utility copies:
 
-| Auth copy              | support.js module      | Status                                                                   |
-| :--------------------- | :--------------------- | :----------------------------------------------------------------------- |
-| `changelog-parser.mjs` | `changelog-parser.mjs` | Equal with `parseChangelog(text, { stripPreSuffix: true })`              |
-| `component.mjs`        | `component.mjs`        | Set `Component.errorIconSprite` and `Component.waitUIDelayTime`          |
-| `events.mjs`           | `events.mjs`           | Equal; style differences only                                            |
-| `log.mjs`              | `logs.mjs`             | Equal for every export Auth uses; `logs.mjs` adds the CLI logger         |
-| `utils.mjs` (dates)    | `dates.mjs`            | Equal for identical inputs                                               |
-| `utils.mjs` (forms)    | `forms.mjs`            | Equal since `isValidEmailAddress` adopted Auth's pattern                 |
-| `utils.mjs` (strings)  | `strings.mjs`          | Equal                                                                    |
-| `utils.mjs` (math)     | `math.mjs`             | Equal for numeric arguments; `random(min, null)` differs, unused by Auth |
-| `domutils.mjs`         | `dom.mjs`              | `htmlToElement` and `onDomReady` equal                                   |
-| `view/app-view.mjs`    | `app-view.mjs`         | Constructor and default `routeRegex` equal                               |
+| Auth copy              | support.js module                                      | Status                                                                   |
+| :--------------------- | :----------------------------------------------------- | :----------------------------------------------------------------------- |
+| `changelog-parser.mjs` | [changelog-parser.mjs](../../src/changelog-parser.mjs) | Equal with `parseChangelog(text, { stripPreSuffix: true })`              |
+| `events.mjs`           | [events.mjs](../../src/events.mjs)                     | Equal; style differences only                                            |
+| `log.mjs`              | [logs.mjs](../../src/logs.mjs)                         | Equal for every export Auth uses; `logs.mjs` adds the CLI logger         |
+| `utils.mjs` (dates)    | [dates.mjs](../../src/dates.mjs)                       | Equal for identical inputs                                               |
+| `utils.mjs` (forms)    | [forms.mjs](../../src/forms.mjs)                       | Pure validators equal; DOM form helpers moved to `support.webapp`        |
+| `utils.mjs` (strings)  | [strings.mjs](../../src/strings.mjs)                   | Equal                                                                    |
+| `utils.mjs` (math)     | [math.mjs](../../src/math.mjs)                         | Equal for numeric arguments; `random(min, null)` differs, unused by Auth |
+| `domutils.mjs`         | [dom.mjs](../../src/dom.mjs)                           | `htmlToElement` and `onDomReady` equal                                   |
 
-Auth's error overlay markup stays Auth-specific: its retry button and dashboard link need an override of `createComponentUIHtml`.
+UI components (`component.mjs`, `app-view.mjs`, dialogs, menus, and stylesheets) moved to [`support.webapp`](https://github.com/gpellicciotta/support.webapp) in v4.0.0.
 
 ---
 

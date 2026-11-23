@@ -1,12 +1,10 @@
 {
   "name": "@gpellicciotta/support.js",
-  "version": "3.1.1-pre",
+  "version": "4.0.0-pre",
   "description": "General-purpose Javascript support code, both for client and server-side use",
   "type": "module",
   "exports": {
     "./*.mjs": "./src/*.mjs",
-    "./*.css": "./css/*.css",
-    "./css/*.css": "./css/*.css",
     "./package.json": "./package.json"
   },
   "workspaces": [
@@ -17,7 +15,6 @@
   },
   "files": [
     "src",
-    "css",
     "README.md",
     "CHANGELOG.md",
     "LICENSE.md"

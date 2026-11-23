@@ -121,3 +121,24 @@ npm test
 ```
 
 Verify unit tests (`unit.test.mjs`), mutations matrix tests (`mutations-matrix.test.mjs`), and offline sync tests (`offline-sync.test.mjs`) all pass.
+
+---
+
+## Migrating UI Components and Stylesheets in v4.0.0
+Starting in v4.0.0, `@gpellicciotta/support.js` ships non-UI JavaScript only.
+Visual tokens, stylesheets, UI components, and the application shell live in [`support.webapp`](https://github.com/gpellicciotta/support.webapp).
+
+| Removed from `support.js`                    | Replacement in `support.webapp`                                                    |
+| :------------------------------------------- | :--------------------------------------------------------------------------------- |
+| `css/*.css` (all 19 stylesheets)             | `src/css/` base, reset, shell, components, and looks                               |
+| `component.mjs`                              | Component CSS plus behavior modules in `src/js/`                                   |
+| `app-view.mjs`                               | App shell (`shell.css`, `app-nav.js`)                                              |
+| `app-menu.mjs`                               | `menu.js`, `account-menu.js`                                                       |
+| `app-action-bar.mjs`                         | Toolbar component and shell action slots                                           |
+| `app-notification-bar.mjs`                   | `toast.js`, banner component                                                       |
+| `app-internals-view.mjs`, `home-view.mjs`    | Shell pages built by each app                                                      |
+| `dialog.mjs`                                 | `dialog.js`, `inline-confirm.js`                                                   |
+| `collection-editor.mjs`                      | List, row, and list-editor shell pattern                                           |
+| [forms.mjs](../../src/forms.mjs) DOM helpers | `form.js`, `field.js` (pure validators remain in [forms.mjs](../../src/forms.mjs)) |
+| `reorder.mjs`, `installer.mjs`, `img/*`      | Retired from `support.js` (stay on v3.1.0 if still needed)                         |
+| `docs/specs/visual-style-guide.md`           | `support.webapp` visual style guide                                                |

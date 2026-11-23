@@ -7,7 +7,12 @@ All notable changes to this project are documented here.
 
 ---
 
-## v3.1.1-pre
+## v4.0.0-pre
+- FrontEnd: **[breaking]** Removed `css/` stylesheets and CSS package exports; migrate visual styling to `support.webapp`.
+- FrontEnd: **[breaking]** Removed `component.mjs`, `app-view.mjs`, `app-menu.mjs`, `app-action-bar.mjs`, `app-notification-bar.mjs`, `app-internals-view.mjs`, and `home-view.mjs`.
+- FrontEnd: **[breaking]** Removed `dialog.mjs`, `collection-editor.mjs`, `reorder.mjs`, `installer.mjs`, and provider logos under `img/`.
+- FrontEnd: **[breaking]** Removed DOM helpers from [forms.mjs](src/forms.mjs), keeping `isValidEmailAddress`, `isValidPassword`, and `validPasswordDescription`.
+- Docs: **[breaking]** Removed `docs/specs/visual-style-guide.md` and added the v4.0.0 `support.webapp` migration table in [client-upgrade-guide.md](docs/specs/client-upgrade-guide.md).
 
 ## v3.1.0 [released: 2026-11-23]
 - Build: Pinned support-python v3.3.0 and moved [devops.py](scripts/devops.py) onto its `DevopsCli`, replacing `pack` with `build`.
@@ -28,7 +33,7 @@ All notable changes to this project are documented here.
 - BackEnd: [breaking] Moved Dutch and English word lists to `@gpellicciotta/support-words.js` in `packages/words`; update imports and add the dependency.
 - BackEnd: [breaking] Removed the default `IndexedDbStorageAdapter` schema; `open()` now requires the `stores` option or an `onUpgrade` callback.
 - BackEnd: [breaking] Removed app-specific entries from `DEFAULT_API_ROUTES` in `app-internals-view.mjs`.
-- FrontEnd: [breaking] Removed app-specific selectors from [catalogue-view.css](css/catalogue-view.css) and [collection-editor.css](css/collection-editor.css); use `.catalogue-*` and `.collection-editor-*` classes.
+- FrontEnd: [breaking] Removed app-specific selectors from `css/catalogue-view.css` and `css/collection-editor.css`; use `.catalogue-*` and `.collection-editor-*` classes.
 - Docs: Removed brand images and replaced the stale task workflow in [devops.md](docs/devops.md) with the `plan` CLI.
 - Build: Renamed default branch to `main` and repository to `support.js`.
 - Docs: Fixed markdown lint issues and the dead guidelines link in documentation.

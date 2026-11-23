@@ -201,7 +201,7 @@ Add the package under `dependencies` in consumer's `package.json`:
 ```json
 {
   "dependencies": {
-    "@gpellicciotta/support.js": "^2.0.0"
+    "@gpellicciotta/support.js": "^4.0.0"
   }
 }
 ```
@@ -212,20 +212,13 @@ Install dependencies:
 npm install
 ```
 
-### Importing Modules and Styles
+### Importing Modules
 Import JavaScript modules using subpath exports:
 
 ```javascript
 import { CliLogger } from '@gpellicciotta/support.js/logs.mjs';
 import { sendRequest, buildUrl, ApiError, mapError } from '@gpellicciotta/support.js/net.mjs';
 import { parseChangelog } from '@gpellicciotta/support.js/changelog-parser.mjs';
-```
-
-Import CSS stylesheets directly:
-
-```css
-@import '@gpellicciotta/support.js/css/reset.css';
-@import '@gpellicciotta/support.js/css/colors.css';
 ```
 
 ---

@@ -1,8 +1,11 @@
 # Javascript Support Library
-General-purpose Javascript support code, both for client and server-side use.
+General-purpose non-UI JavaScript support code, for both client and server-side use.
 
 Published as an npm package on [GitHub Packages](https://github.com/gpellicciotta/support.js/packages/),
 licensed under the [MIT License](LICENSE.md).
+
+Visual design tokens, stylesheets, UI components, and the application shell live in
+[`support.webapp`](https://github.com/gpellicciotta/support.webapp).
 
 See also:
 - [CHANGELOG](CHANGELOG.md)
