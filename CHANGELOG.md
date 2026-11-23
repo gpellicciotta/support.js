@@ -7,6 +7,8 @@ All notable changes to this project are documented here.
 
 ---
 
+## v4.0.1-pre
+
 ## v4.0.0 [2026-11-23]
 - FrontEnd: **[breaking]** Removed `css/` stylesheets and CSS package exports; migrate visual styling to `support.webapp`.
 - FrontEnd: **[breaking]** Removed `component.mjs`, `app-view.mjs`, `app-menu.mjs`, `app-action-bar.mjs`, `app-notification-bar.mjs`, `app-internals-view.mjs`, and `home-view.mjs`.
