@@ -7,6 +7,8 @@ All notable changes to this project are documented here.
 
 ---
 
+## v3.1.1-pre
+
 ## v3.1.0 [2026-11-23]
 - Build: Pinned support-python v3.3.0 and moved [devops.py](scripts/devops.py) onto its `DevopsCli`, replacing `pack` with `build`.
 - Build: Added `devops.py clean` and `versions`, which sets the root and workspace versions and the lock file together.
