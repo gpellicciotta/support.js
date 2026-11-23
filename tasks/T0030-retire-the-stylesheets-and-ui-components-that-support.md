@@ -11,9 +11,9 @@ review: agent
 preview: none
 protocol: standard
 review_status: pending
-review_round: 2
-review_requested_at: "2026-11-23T09:30:00Z"
-review_session: codex-20261123-4661f3
+review_round: 3
+review_requested_at: "2026-11-23T09:31:42Z"
+review_session: codex-20261123-0c5bab
 ---
 # T0030: Retire the stylesheets and UI components that support.webapp provides, keeping support.js non-UI only
 
@@ -76,4 +76,11 @@ Size estimate: 8 files, 300 lines.
 
 - [2026-11-23] **[Review]**
   Round 2 requested (mode: agent).
+
+- [2026-11-23] **[Review]**
+  Round 2 rejected by @codex: [Decided]** Reject pending compliant validation evidence.
+  - Findings: [review-findings-2.md](T0030-retire-the-stylesheets-and-ui-components-that-support/review-findings-2.md).
+
+- [2026-11-23] **[Review]**
+  Round 3 requested (mode: agent).
 

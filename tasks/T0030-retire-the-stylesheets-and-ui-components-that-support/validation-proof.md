@@ -4,44 +4,45 @@
 Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
 
 ```text
- RUN  v5.0.5 C:/Dev-Projects/support.js
-
- ❯ tests/package-exports.test.mjs (5 tests | 4 failed) 19ms
-   ❯ Non-UI Package Surface (5)
-     × package.json exports no CSS and omits css from files 7ms
-     × css/ and img/ directories and visual-style-guide.md are absent 3ms
-     × retired UI modules are absent from src/ 1ms
-     ✓ retained modules remain present in src/ 3ms
-     × src/forms.mjs exports only pure validation functions 3ms
-[... 4 lines omitted ...]
+[... 14 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > package.json exports no CSS and omits css from files
 AssertionError: package.json must not export ./*.css
++ actual - expected
+
 + './css/*.css'
 - undefined
+
  ❯ tests/package-exports.test.mjs:56:12
-[... 15 lines omitted ...]
+[... 10 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > css/ and img/ directories and visual-style-guide.md are absent
 AssertionError: css/ directory should be removed
-- false
-+ true
+
+true !== false
+[... 8 lines omitted ...]
  ❯ tests/package-exports.test.mjs:63:12
-[... 16 lines omitted ...]
+[... 11 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > retired UI modules are absent from src/
 AssertionError: Retired module src/app-action-bar.mjs should not exist
-- false
-+ true
+
+true !== false
+[... 8 lines omitted ...]
  ❯ tests/package-exports.test.mjs:75:14
-[... 16 lines omitted ...]
+[... 10 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > src/forms.mjs exports only pure validation functions
 AssertionError: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
 +   'disable',
 +   'enable',
 +   'handlePasswordDisclosure',
++   'isDisabled',
++   'isEnabled',
     'isValidEmailAddress',
     'isValidPassword',
-    'validPasswordDescription',
+[... 37 lines omitted ...]
  ❯ tests/package-exports.test.mjs:87:12
-[... 43 lines omitted ...]
+[... 9 lines omitted ...]
  Test Files  1 failed (1)
       Tests  4 failed | 1 passed (5)
    Start at  10:24:53
@@ -65,36 +66,12 @@ Command: `npx vitest run tests/package-exports.test.mjs tests/forms.test.mjs` (e
 Command: `python scripts/devops.py check` (exit code 0)
 
 ```text
-Command: "C:\Program Files\nodejs\npm.CMD" run lint
-Process ID: 18608
-> @gpellicciotta/support.js@4.0.0-pre lint
-> eslint .
-C:\Dev-Projects\support.js\src\colors.mjs
-[... 5 lines omitted ...]
-✖ 5 problems (0 errors, 5 warnings)
-Command: "C:\Program Files\nodejs\npm.CMD" test
-Process ID: 25024
-> @gpellicciotta/support.js@4.0.0-pre test
-> vitest run
- RUN  v5.0.5 C:/Dev-Projects/support.js
-[... 20 lines omitted ...]
- Test Files  20 passed (20)
-      Tests  195 passed (195)
-   Start at  10:29:28
-   Duration  1.50s (import 42%, tests 32%, transform 15%, worker 11%)
-[... 2 lines omitted ...]
-Command: C:\Dev-Projects\support.js\.venv\Scripts\python.exe -m pytest -q scripts/tests
-Process ID: 572
-...............                                                          [100%]
-15 passed in 1.94s
-npm script 'test:slow' is not defined in package.json; skipping.
-Removing dist
-Command: "C:\Program Files\nodejs\npm.CMD" pack --workspaces --include-workspace-root --pack-destination dist
-Process ID: 9548
-npm notice
-npm notice package: @gpellicciotta/support.js@4.0.0-pre
-npm notice Tarball Contents
-[... 30 lines omitted ...]
+[... 67 lines omitted ...]
+npm notice 5.2kB src/paging.mjs
+npm notice 5.2kB src/snowflakes.mjs
+npm notice 19.1kB src/storages.mjs
+npm notice 1.5kB src/strings.mjs
+npm notice 5.2kB src/vector.mjs
 npm notice Tarball Details
 npm notice name: @gpellicciotta/support.js
 npm notice version: 4.0.0-pre
@@ -106,16 +83,70 @@ npm notice integrity: sha512-BHsxt2cJJVONc[...]pbVXybBQmrZdw==
 npm notice total files: 30
 npm notice
 gpellicciotta-support.js-4.0.0-pre.tgz
-[... 15 lines omitted ...]
+npm notice
+npm notice package: @gpellicciotta/support-words.js@4.0.0-pre
+npm notice Tarball Contents
+npm notice 696B README.md
+npm notice 795B package.json
+npm notice 2.7MB src/dutchwords.mjs
+npm notice 3.4kB src/englishwords.mjs
+npm notice Tarball Details
+npm notice name: @gpellicciotta/support-words.js
+npm notice version: 4.0.0-pre
+npm notice filename: gpellicciotta-support-words.js-4.0.0-pre.tgz
+npm notice package size: 654.5 kB
+npm notice unpacked size: 2.7 MB
+npm notice shasum: 8810ed313374e55dc9323b9fd5cbe1ec8ef2e897
+npm notice integrity: sha512-62mOe3qhQbqp3[...]de/ys4L/cxo8g==
+npm notice total files: 4
+npm notice
+gpellicciotta-support-words.js-4.0.0-pre.tgz
+```
+
+### Green-Phase Test Suite Run
+Command: `npm test` (exit code 0)
+
+```text
+> @gpellicciotta/support.js@4.0.0-pre test
+> vitest run
+
+ RUN  v5.0.5 C:/Dev-Projects/support.js
+
+ ✓ tests/changelog-parser.test.mjs (13 tests) 19ms
+ ✓ tests/math.test.mjs (13 tests) 39ms
+ ✓ tests/offline-storage.test.mjs (19 tests) 25ms
+ ✓ tests/cli-log.test.mjs (21 tests) 24ms
+ ✓ tests/mock-dom.test.mjs (35 tests) 45ms
+ ✓ tests/http.test.mjs (8 tests) 127ms
+ ✓ tests/scripts-lib.test.mjs (12 tests) 304ms
+ ✓ tests/dates.test.mjs (13 tests) 17ms
+ ✓ tests/local-usage-tracking.test.mjs (7 tests) 19ms
+ ✓ tests/page.test.mjs (11 tests) 14ms
+ ✓ tests/errors.test.mjs (5 tests) 16ms
+ ✓ tests/colors.test.mjs (7 tests) 13ms
+ ✓ tests/package-exports.test.mjs (5 tests) 15ms
+ ✓ tests/auth-redirect.test.mjs (4 tests) 10ms
+ ✓ tests/objects.test.mjs (5 tests) 9ms
+ ✓ tests/extract-release-notes.test.mjs (4 tests) 7ms
+ ✓ tests/log.test.mjs (1 test) 7ms
+ ✓ tests/strings.test.mjs (6 tests) 8ms
+ ✓ tests/forms.test.mjs (4 tests) 5ms
+ ✓ packages/words/tests/words.test.mjs (2 tests) 3ms
+
+ Test Files  20 passed (20)
+      Tests  195 passed (195)
+   Start at  10:29:28
+   Duration  1.50s (import 42%, tests 32%, transform 15%, worker 11%)
+
+    Isolate  20 workers spawned · ~257ms startup each (spawn + environment, per file)
+             at least ~478ms faster with isolate: false — reuses workers across files instead of one per file
 ```
 
 ### Package Contents Verification
 Command: `npm pack --dry-run` (exit code 0)
 
 ```text
-npm notice
-npm notice package: @gpellicciotta/support.js@4.0.0-pre
-npm notice Tarball Contents
+[... 3 lines omitted ...]
 npm notice 11.1kB CHANGELOG.md
 npm notice 1.1kB LICENSE.md
 npm notice 1.8kB README.md
@@ -150,5 +181,11 @@ npm notice Tarball Details
 npm notice name: @gpellicciotta/support.js
 npm notice version: 4.0.0-pre
 npm notice filename: gpellicciotta-support.js-4.0.0-pre.tgz
+npm notice package size: 82.0 kB
+npm notice unpacked size: 317.5 kB
+npm notice shasum: 8793079d84bc1b9223a8e173a2b0612cee512938
+npm notice integrity: sha512-BHsxt2cJJVONc[...]pbVXybBQmrZdw==
 npm notice total files: 30
+npm notice
+gpellicciotta-support.js-4.0.0-pre.tgz
 ```
