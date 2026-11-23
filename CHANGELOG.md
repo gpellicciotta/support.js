@@ -13,12 +13,11 @@ All notable changes to this project are documented here.
 - Build: Removed the duplicated `_cli_common.py`; [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) now creates `.venv` for the pinned library.
 - Build: Ignored `.venv/` and `dist/` in ESLint and Git; `devops.py release` refuses to run for this monorepo.
 - Build: Made `devops.py help` describe the project-specific actions and stop advertising the refused `release`.
-- Fix: `parseChangelog` strips a bold `**[breaking]**` marker, which left `****` in the entry text.
-- Feature: `parseChangelog` marks releases with `isPreRelease`; the `stripPreSuffix` option drops `-pre` from `version`.
-- Fix: `parseChangelog` skips second-level headings without a `v` prefix, such as `## Next Steps`.
+- BackEnd: Made `parseChangelog` strip bold `**[breaking]**` markers and skip `##` headings without a `v` prefix.
+- BackEnd: Added `isPreRelease` to `parseChangelog` releases and a `stripPreSuffix` option that drops `-pre` from `version`.
 - FrontEnd: Added static `errorIconSprite`, `errorIconId`, and `waitUIDelayTime` settings to `Component`; defaults are unchanged.
-- Fix: Closed the `Component` error title with `</h1>` instead of `</h2>`, which nested the description inside it.
-- Fix: `isValidEmailAddress` accepts plus addressing and top-level domains longer than three letters, like Auth.
+- FrontEnd: Closed the `Component` error title with `</h1>` instead of `</h2>`, which nested the description inside it.
+- FrontEnd: Made `isValidEmailAddress` accept plus addressing and top-level domains longer than three letters, like Auth.
 
 ## v3.0.0 [released: 2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.

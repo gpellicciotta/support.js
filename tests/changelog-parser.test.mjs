@@ -120,6 +120,19 @@ All notable changes are documented here.
     assert.deepEqual(parseChangelog(''), []);
   });
 
+  test('8. Parses real repository CHANGELOG.md without throwing', () => {
+    const changelogPath = new URL('../CHANGELOG.md', import.meta.url);
+    if (fs.existsSync(changelogPath)) {
+      const content = fs.readFileSync(changelogPath, 'utf8');
+      const releases = parseChangelog(content);
+      assert.ok(releases.length > 0);
+      assert.ok(releases[0].version);
+      assert.ok(releases[0].tag);
+      assert.strictEqual(releases[0].isLatest, true);
+      assert.ok(releases.some((r) => r.entries.length > 0));
+    }
+  });
+
   test('9. Strips a bold **[breaking]** marker without leaving asterisks behind', () => {
     const releases = parseChangelog(`
 ## v4.0.0 [released: 2026-11-17]
@@ -196,18 +209,5 @@ All notable changes are documented here.
     assert.ok(entries.some((e) => e.isBreaking));
     const withAsterisks = entries.filter((e) => e.text.includes('**'));
     assert.deepEqual(withAsterisks.map((e) => e.text), []);
-  });
-
-  test('8. Parses real repository CHANGELOG.md without throwing', () => {
-    const changelogPath = new URL('../CHANGELOG.md', import.meta.url);
-    if (fs.existsSync(changelogPath)) {
-      const content = fs.readFileSync(changelogPath, 'utf8');
-      const releases = parseChangelog(content);
-      assert.ok(releases.length > 0);
-      assert.ok(releases[0].version);
-      assert.ok(releases[0].tag);
-      assert.strictEqual(releases[0].isLatest, true);
-      assert.ok(releases.some((r) => r.entries.length > 0));
-    }
   });
 });
