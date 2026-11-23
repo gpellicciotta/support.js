@@ -11,8 +11,9 @@ review: agent
 preview: none
 protocol: standard
 review_status: pending
-review_round: 1
-review_requested_at: "2026-11-23T07:09:40Z"
+review_round: 2
+review_requested_at: "2026-11-23T07:17:58Z"
+review_session: antigravity-20261123-290a38
 ---
 # T0029: Upgrade to released support-python v3.3.0 and replace duplicated script code with its shared modules
 
@@ -45,4 +46,15 @@ Size estimate: 4 files, 200 lines
 
 - [2026-11-23] **[Review]**
   Round 1 requested (mode: agent).
+
+- [2026-11-23] **[Review]**
+  Round 1 rejected by @gemini: Reviewed commit `51144c8` on `main` (base `7738fab`, clean working tree).
+  - Findings: [review-findings-1.md](T0029-upgrade-to-released-support-python-v3-3-0/review-findings-1.md).
+
+- [2026-11-23] **[Implement]**
+  Reworked per review: release refused, lockstep versions setter, script tests in check, changelog separator.
+  - Size note: drift check in versions stays root-only.
+
+- [2026-11-23] **[Review]**
+  Round 2 requested (mode: agent).
 
