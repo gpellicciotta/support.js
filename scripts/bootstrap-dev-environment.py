@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Bootstraps a fresh checkout of this project: installs dependencies, checks formatting, and runs tests.
+"""Bootstraps a fresh checkout of this project: creates `.venv` with the pinned support-python,
+installs the npm dependencies, then lints and tests through `devops.py`.
 
-Cross-platform; requires only Python and Node.js with npm on the PATH.
+Standard library only, so it runs on a bare checkout before support-python is installed.
+Cross-platform; requires Python and Node.js with npm on the PATH.
 
 Usage:
   python scripts/bootstrap-dev-environment.py
@@ -16,12 +18,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-from _cli_common import build_action_parser, print_help, print_version
-
 PROG = "bootstrap-dev-environment"
-DESCRIPTION = "Installs npm dependencies, checks formatting, and runs the unit tests."
-EXIT_CODES = [(0, "Success"), (1, "One or more bootstrap steps failed"), (2, "Invalid arguments")]
+APP_AUTHOR = "Giovanni Pellicciotta"
 REPO_ROOT = Path(__file__).resolve().parent.parent
+REQUIREMENTS_FILE = REPO_ROOT / "scripts" / "requirements.txt"
+VENV_DIR = REPO_ROOT / ".venv"
+VENV_PYTHON = VENV_DIR / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
 
 
 def get_project_version() -> str:
@@ -47,23 +49,29 @@ def setup() -> int:
     if npm is None:
         print("[!] npm not found on the PATH; install Node.js LTS first.", file=sys.stderr)
         return 1
-    ok = run_step("Installing dependencies (npm ci)", [npm, "ci"])
-    ok = ok and run_step("Linting", [npm, "run", "lint"])
-    ok = ok and run_step("Running unit tests", [npm, "test"])
+    ok = True
+    if not VENV_PYTHON.is_file():
+        ok = run_step("Creating .venv", [sys.executable, "-m", "venv", str(VENV_DIR)])
+    ok = ok and run_step(
+        "Installing scripts/requirements.txt into .venv",
+        [str(VENV_PYTHON), "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "-r", str(REQUIREMENTS_FILE)],
+    )
+    ok = ok and run_step("Installing dependencies (npm ci)", [npm, "ci"])
+    ok = ok and run_step("Linting and testing", [str(VENV_PYTHON), str(REPO_ROOT / "scripts" / "devops.py"), "check"])
     return 0 if ok else 1
 
 
 def main() -> int:
-    version = get_project_version()
-    parser = build_action_parser(PROG, DESCRIPTION, ["setup", "version", "help"], "setup")
-    args = parser.parse_args()
-
-    if args.version or args.action == "version":
-        print_version(PROG, version)
+    args = sys.argv[1:]
+    if args in (["-v"], ["--version"], ["version"]):
+        print(f"{PROG} v{get_project_version()} - Copyright (c) {APP_AUTHOR}")
         return 0
-    if args.help or args.action == "help":
-        print_help(PROG, version, DESCRIPTION, parser, EXIT_CODES)
+    if args in (["-h"], ["--help"], ["help"]):
+        print(__doc__)
         return 0
+    if args and args != ["setup"]:
+        print(f"[!] Unknown arguments: {' '.join(args)}; see --help.", file=sys.stderr)
+        return 2
     return setup()
 
 

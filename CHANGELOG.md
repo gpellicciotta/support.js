@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 > for the versioning and changelog conventions used across projects.
 
 ## v3.0.1-pre
+- Build: Pinned support-python v3.3.0 in `scripts/requirements.txt` and moved [devops.py](scripts/devops.py) onto its `DevopsCli` and `NodeProject`, adding `build`, `clean`, `versions`, and `release`; `pack` became `build`.
+- Build: Removed the duplicated `scripts/_cli_common.py` and CLI boilerplate; `bootstrap-dev-environment.py` now creates `.venv` for the pinned support-python.
+- Build: Ignored `.venv/` and `dist/` in ESLint and Git.
 
 ## v3.0.0 [released: 2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.

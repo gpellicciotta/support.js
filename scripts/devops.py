@@ -1,72 +1,48 @@
 #!/usr/bin/env python3
-"""Runs the typical operations of this project.
+"""Runs the typical operations of this project on the shared support-python `DevopsCli`.
 
-Run `python scripts/bootstrap-dev-environment.py` first to install the dependencies.
+Run `python scripts/bootstrap-dev-environment.py` first to create `.venv` with the pinned support-python.
 
 Usage:
-  python scripts/devops.py lint
-  python scripts/devops.py format
-  python scripts/devops.py test
-  python scripts/devops.py pack
-  python scripts/devops.py check
-  python scripts/devops.py --version
+  python scripts/devops.py lint | format | test | build | check | clean
+  python scripts/devops.py versions [VERSION] [--dry-run]
+  python scripts/devops.py release [--dry-run] [--skip-checks] [--skip-github-release] [--yes]
+  python scripts/devops.py help [--verbose] | version
 """
 
 from __future__ import annotations
 
-import json
-import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-from _cli_common import build_action_parser, print_help, print_version
-
-PROG = "devops"
-DESCRIPTION = "Runs format, test, and package operations of this project."
-ACTIONS = ["lint", "format", "test", "pack", "check", "version", "help"]
-EXIT_CODES = [(0, "Success"), (1, "An operation failed or dependencies are missing"), (2, "Invalid arguments")]
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
+# Rerun with the project-local .venv (created by bootstrap-dev-environment.py), which holds the pinned support-python.
+VENV_DIR = REPO_ROOT / ".venv"
+VENV_PYTHON = VENV_DIR / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+if __name__ == "__main__" and VENV_PYTHON.is_file() and Path(sys.prefix).resolve() != VENV_DIR.resolve():
+    sys.exit(subprocess.run([str(VENV_PYTHON), str(Path(__file__).resolve()), *sys.argv[1:]], check=False).returncode)
 
-def get_project_version() -> str:
-    """Resolves the current project version from package.json."""
-    try:
-        return json.loads((REPO_ROOT / "package.json").read_text(encoding="utf-8"))["version"]
-    except (OSError, KeyError, ValueError):
-        return "0.0.0+unknown"
+from support_python.devops import DevopsCli, NodeProject, resolve_executable  # noqa: E402
 
 
-def run(args: list) -> bool:
-    """Runs one command in the repository root. Returns whether it succeeded."""
-    print(f"[*] {' '.join(args)}", flush=True)
-    return subprocess.run(args, cwd=str(REPO_ROOT), check=False).returncode == 0
+class SupportJsProject(NodeProject):
+    """The root package and the `packages/*` workspaces, packed together into `dist/` by `build`."""
+
+    def build(self) -> bool:
+        """Packs the root package and every workspace into `dist/`; return whether it succeeded."""
+        npm = resolve_executable("npm")
+        if npm is None:
+            self.logger.error("npm not found on PATH; install Node.js with npm first.")
+            return False
+        self.remove_tree(self.dist_dir)
+        self.dist_dir.mkdir(exist_ok=True)
+        return self.run_command([npm, "pack", "--workspaces", "--include-workspace-root", "--pack-destination", "dist"])
 
 
 def main() -> int:
-    parser = build_action_parser(PROG, DESCRIPTION, ACTIONS, "help")
-    args = parser.parse_args()
-    version = get_project_version()
-
-    if args.version or args.action == "version":
-        print_version(PROG, version)
-        return 0
-    if args.help or args.action == "help":
-        print_help(PROG, version, DESCRIPTION, parser, EXIT_CODES)
-        return 0
-
-    npm = shutil.which("npm")
-    if npm is None or not (REPO_ROOT / "node_modules").exists():
-        print("[!] npm or node_modules missing; run scripts/bootstrap-dev-environment.py first.", file=sys.stderr)
-        return 1
-    commands = {
-        "lint": [[npm, "run", "lint"]],
-        "format": [[npm, "run", "format"]],
-        "test": [[npm, "test"]],
-        "pack": [[npm, "pack", "--dry-run", "--workspaces", "--include-workspace-root"]],
-    }
-    commands["check"] = commands["lint"] + commands["test"] + commands["pack"]
-    return 0 if all(run(command) for command in commands[args.action]) else 1
+    return DevopsCli(SupportJsProject(REPO_ROOT)).run()
 
 
 if __name__ == "__main__":

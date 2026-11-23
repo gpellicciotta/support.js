@@ -1,0 +1,4 @@
+# Libraries imported by scripts/*.py and scripts/tests; bootstrap-dev-environment.py installs them into .venv.
+# Install manually with: .venv/Scripts/python -m pip install -r scripts/requirements.txt (.venv/bin/python outside Windows)
+support-python @ git+https://github.com/gpellicciotta/support.python.git@v3.3.0
+pytest>=7.4

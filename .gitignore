@@ -25,3 +25,9 @@ __pycache__/
 .plan/
 /PLAN.md
 /plan.code-workspace
+
+# Ignore packed archives
+dist/
+
+# Ignore the script virtual environment
+.venv/

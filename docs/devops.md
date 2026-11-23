@@ -8,7 +8,7 @@ Practical guidance on building, testing, developing, and releasing `support.js`.
 - **Node.js**: 22 or newer (LTS), providing Vitest and native ESM (`.mjs`) support.
 - **npm**: bundled with Node.js; used for dependency installs and running scripts.
 - **Git**: Git 2.30+ supporting worktrees (`git worktree`).
-- **Python**: 3.10+ for the `scripts/*.py` helpers.
+- **Python**: 3.10+ for the `scripts/*.py` helpers, which run on the pinned [support-python](https://github.com/gpellicciotta/support.python) v3.3.0 in a project-local `.venv`.
 
 ---
 
@@ -19,11 +19,17 @@ Practical guidance on building, testing, developing, and releasing `support.js`.
 python scripts/bootstrap-dev-environment.py
 ```
 
-Day-to-day operations (`lint`, `format`, `test`, `pack`, `check`):
+Day-to-day operations, provided by support-python's `DevopsCli` on its `NodeProject` adapter:
 
 ```bash
+python scripts/devops.py lint | format | test | build | check | clean
+python scripts/devops.py versions [VERSION] [--dry-run]
+python scripts/devops.py release [--dry-run] [--skip-checks] [--skip-github-release] [--yes]
 python scripts/devops.py check
 ```
+
+`build` packs the root package and the `packages/*` workspaces into `dist/`.
+Test the scripts with `.venv/Scripts/python -m pytest scripts/tests` (`.venv/bin/python` outside Windows).
 
 ### Testing
 ```bash
