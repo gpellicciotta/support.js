@@ -1,6 +1,6 @@
 {
   "name": "@gpellicciotta/support-words.js",
-  "version": "4.0.0-pre",
+  "version": "4.0.0",
   "description": "Dutch and English word lists for word-based games and utilities",
   "type": "module",
   "exports": {
