@@ -11,8 +11,9 @@ review: agent
 preview: none
 protocol: standard
 review_status: pending
-review_round: 1
-review_requested_at: "2026-11-23T09:27:57Z"
+review_round: 2
+review_requested_at: "2026-11-23T09:30:00Z"
+review_session: codex-20261123-4661f3
 ---
 # T0030: Retire the stylesheets and UI components that support.webapp provides, keeping support.js non-UI only
 
@@ -65,4 +66,14 @@ Size estimate: 8 files, 300 lines.
 
 - [2026-11-23] **[Review]**
   Round 1 requested (mode: agent).
+
+- [2026-11-23] **[Review]**
+  Round 1 rejected by @codex: [Decided]** Reject: the published package omits its migration guide.
+  - Findings: [review-findings-1.md](T0030-retire-the-stylesheets-and-ui-components-that-support/review-findings-1.md).
+
+- [2026-11-23] **[Implement]**
+  Included docs/ in published package files, added inline v4.0.0 Migration Guide to CHANGELOG.md, and updated validation-proof.md.
+
+- [2026-11-23] **[Review]**
+  Round 2 requested (mode: agent).
 
