@@ -1,37 +1,94 @@
 ## Walkthrough & Validation
 
-### Red-Phase Test Failure
+### Red-Phase Test Failure (Failure 1 and 2 of 4)
 Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
 
 ```text
-[... 14 lines omitted ...]
+ RUN  v5.0.5 C:/Dev-Projects/support.js
+ ❯ tests/package-exports.test.mjs (5 tests | 4 failed) 19ms
+   ❯ Non-UI Package Surface (5)
+     × package.json exports no CSS and omits css from files 7ms
+     × css/ and img/ directories and visual-style-guide.md are absent 3ms
+     × retired UI modules are absent from src/ 1ms
+     ✓ retained modules remain present in src/ 3ms
+     × src/forms.mjs exports only pure validation functions 3ms
+[... 2 lines omitted ...]
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+[... 1 line omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > package.json exports no CSS and omits css from files
 AssertionError: package.json must not export ./*.css
 + actual - expected
-
+[... 1 line omitted ...]
 + './css/*.css'
 - undefined
-
+[... 1 line omitted ...]
  ❯ tests/package-exports.test.mjs:56:12
-[... 10 lines omitted ...]
+     54|     assert.ok(pkg.exports, 'package.json should have exports field');
+     55|     assert.equal(pkg.exports['./*.mjs'], './src/*.mjs');
+     56|     assert.equal(pkg.exports['./*.css'], undefined, 'package.json must…
+       |            ^
+     57|     assert.equal(pkg.exports['./css/*.css'], undefined, 'package.json …
+     58|     assert.ok(!pkg.files.includes('css'), 'package.json files must not…
+[... 1 line omitted ...]
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+[... 1 line omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > css/ and img/ directories and visual-style-guide.md are absent
 AssertionError: css/ directory should be removed
-
+[... 1 line omitted ...]
 true !== false
-[... 8 lines omitted ...]
+[... 2 lines omitted ...]
+- Expected
++ Received
+[... 1 line omitted ...]
+- false
++ true
+[... 1 line omitted ...]
  ❯ tests/package-exports.test.mjs:63:12
-[... 11 lines omitted ...]
+     61|
+     62|   it('css/ and img/ directories and visual-style-guide.md are absent',…
+     63|     assert.equal(fs.existsSync(path.join(rootDir, 'css')), false, 'css…
+       |            ^
+     64|     assert.equal(fs.existsSync(path.join(rootDir, 'img')), false, 'img…
+     65|     assert.equal(
+[... 1 line omitted ...]
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+[... 67 lines omitted ...]
+ Test Files  1 failed (1)
+      Tests  4 failed | 1 passed (5)
+   Start at  10:24:53
+   Duration  282ms (transform 47%, import 24%, tests 21%, worker 8%)
+```
+
+### Red-Phase Test Failure (Failure 3 and 4 of 4)
+Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
+
+```text
+[... 48 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > retired UI modules are absent from src/
 AssertionError: Retired module src/app-action-bar.mjs should not exist
-
+[... 1 line omitted ...]
 true !== false
-[... 8 lines omitted ...]
+[... 2 lines omitted ...]
+- Expected
++ Received
+[... 1 line omitted ...]
+- false
++ true
+[... 1 line omitted ...]
  ❯ tests/package-exports.test.mjs:75:14
-[... 10 lines omitted ...]
+     73|     for (const mod of RETIRED_MODULES) {
+     74|       const fullPath = path.join(rootDir, 'src', mod);
+     75|       assert.equal(fs.existsSync(fullPath), false, `Retired module src…
+       |              ^
+     76|     }
+     77|   });
+[... 1 line omitted ...]
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+[... 1 line omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > src/forms.mjs exports only pure validation functions
 AssertionError: Expected values to be strictly deep-equal:
 + actual - expected
-
+[... 1 line omitted ...]
   [
 +   'disable',
 +   'enable',
@@ -40,9 +97,27 @@ AssertionError: Expected values to be strictly deep-equal:
 +   'isEnabled',
     'isValidEmailAddress',
     'isValidPassword',
-[... 37 lines omitted ...]
++   'markInvalid',
++   'markValid',
++   'removeValidityMarks',
++   'reset',
++   'setButtonLoading',
+    'validPasswordDescription',
++   'validateEmailField',
++   'validateInputField',
++   'validatePasswordField'
+  ]
+[... 23 lines omitted ...]
  ❯ tests/package-exports.test.mjs:87:12
-[... 9 lines omitted ...]
+     85|
+     86|   it('src/forms.mjs exports only pure validation functions', () => {
+     87|     assert.deepEqual(Object.keys(forms).sort(), [
+       |            ^
+     88|       'isValidEmailAddress',
+     89|       'isValidPassword',
+[... 1 line omitted ...]
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+[... 2 lines omitted ...]
  Test Files  1 failed (1)
       Tests  4 failed | 1 passed (5)
    Start at  10:24:53
@@ -62,45 +137,21 @@ Command: `npx vitest run tests/package-exports.test.mjs tests/forms.test.mjs` (e
       Tests  9 passed (9)
 ```
 
-### Green-Phase Full Check
-Command: `python scripts/devops.py check` (exit code 0)
+### Green-Phase Lint Verification
+Command: `npm run lint` (exit code 0)
 
 ```text
-[... 67 lines omitted ...]
-npm notice 5.2kB src/paging.mjs
-npm notice 5.2kB src/snowflakes.mjs
-npm notice 19.1kB src/storages.mjs
-npm notice 1.5kB src/strings.mjs
-npm notice 5.2kB src/vector.mjs
-npm notice Tarball Details
-npm notice name: @gpellicciotta/support.js
-npm notice version: 4.0.0-pre
-npm notice filename: gpellicciotta-support.js-4.0.0-pre.tgz
-npm notice package size: 82.0 kB
-npm notice unpacked size: 317.5 kB
-npm notice shasum: 8793079d84bc1b9223a8e173a2b0612cee512938
-npm notice integrity: sha512-BHsxt2cJJVONc[...]pbVXybBQmrZdw==
-npm notice total files: 30
-npm notice
-gpellicciotta-support.js-4.0.0-pre.tgz
-npm notice
-npm notice package: @gpellicciotta/support-words.js@4.0.0-pre
-npm notice Tarball Contents
-npm notice 696B README.md
-npm notice 795B package.json
-npm notice 2.7MB src/dutchwords.mjs
-npm notice 3.4kB src/englishwords.mjs
-npm notice Tarball Details
-npm notice name: @gpellicciotta/support-words.js
-npm notice version: 4.0.0-pre
-npm notice filename: gpellicciotta-support-words.js-4.0.0-pre.tgz
-npm notice package size: 654.5 kB
-npm notice unpacked size: 2.7 MB
-npm notice shasum: 8810ed313374e55dc9323b9fd5cbe1ec8ef2e897
-npm notice integrity: sha512-62mOe3qhQbqp3[...]de/ys4L/cxo8g==
-npm notice total files: 4
-npm notice
-gpellicciotta-support-words.js-4.0.0-pre.tgz
+> @gpellicciotta/support.js@4.0.0-pre lint
+> eslint .
+
+C:\Dev-Projects\support.js\src\colors.mjs
+  37:7  warning  The value assigned to 'r' is not used in subsequent statements  no-useless-assignment
+  38:7  warning  The value assigned to 'g' is not used in subsequent statements  no-useless-assignment
+  39:7  warning  The value assigned to 'b' is not used in subsequent statements  no-useless-assignment
+  96:7  warning  The value assigned to 'h' is not used in subsequent statements  no-useless-assignment
+  97:7  warning  The value assigned to 's' is not used in subsequent statements  no-useless-assignment
+
+✖ 5 problems (0 errors, 5 warnings)
 ```
 
 ### Green-Phase Test Suite Run
@@ -140,6 +191,14 @@ Command: `npm test` (exit code 0)
 
     Isolate  20 workers spawned · ~257ms startup each (spawn + environment, per file)
              at least ~478ms faster with isolate: false — reuses workers across files instead of one per file
+```
+
+### Green-Phase Script Tests
+Command: `C:\Dev-Projects\support.js\.venv\Scripts\python.exe -m pytest -q scripts/tests` (exit code 0)
+
+```text
+...............                                                          [100%]
+15 passed in 1.94s
 ```
 
 ### Package Contents Verification
