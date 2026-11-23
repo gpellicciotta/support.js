@@ -1,0 +1,8 @@
+{
+  "plan-version": "3.0.268-pre",
+  "work-agents": [
+    "agy",
+    "claude",
+    "codex"
+  ]
+}
