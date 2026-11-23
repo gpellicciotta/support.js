@@ -40,7 +40,7 @@ AssertionError: package.json must not export ./*.css
 Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
 
 ```text
-[... 29 lines omitted ...]
+[... 30 lines omitted ...]
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > css/ and img/ directories and visual-style-guide.md are absent
 AssertionError: css/ directory should be removed
 
@@ -80,16 +80,17 @@ true !== false
      74|       const fullPath = path.join(rootDir, 'src', mod);
      75|       assert.equal(fs.existsSync(fullPath), false, `Retired module src…
        |              ^
-     76|     }
-     77|   });
-[... 63 lines omitted ...]
+[... 65 lines omitted ...]
 ```
 
 ### Red-Phase Test Failure (Part 3 of 4: Failure 4 Diff Part A)
 Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
 
 ```text
-[... 68 lines omitted ...]
+[... 66 lines omitted ...]
+     76|     }
+     77|   });
+
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
 
  FAIL  tests/package-exports.test.mjs > Non-UI Package Surface > src/forms.mjs exports only pure validation functions
@@ -126,16 +127,16 @@ AssertionError: Expected values to be strictly deep-equal:
 +   "isDisabled",
 +   "isEnabled",
     "isValidEmailAddress",
-    "isValidPassword",
-+   "markInvalid",
-[... 25 lines omitted ...]
+[... 27 lines omitted ...]
 ```
 
 ### Red-Phase Test Failure (Part 4 of 4: Failure 4 Diff Part B and Final Summary)
 Command: `npx vitest run tests/package-exports.test.mjs` (exit code 1)
 
 ```text
-[... 106 lines omitted ...]
+[... 104 lines omitted ...]
+    "isValidPassword",
++   "markInvalid",
 +   "markValid",
 +   "removeValidityMarks",
 +   "reset",

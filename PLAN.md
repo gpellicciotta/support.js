@@ -9,5 +9,5 @@ An overview of all tasks and their planning.
 ---
 
 ### Backlog
-- [ ] T0030 Retire the stylesheets and UI components that support.webapp provides, keeping support.js non-UI only.
+- [x] T0030 Retire the stylesheets and UI components that support.webapp provides, keeping support.js non-UI only.
 
