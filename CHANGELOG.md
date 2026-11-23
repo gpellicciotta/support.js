@@ -12,6 +12,7 @@ All notable changes to this project are documented here.
 - Build: Added `devops.py clean` and `versions`, which sets the root and workspace versions and the lock file together.
 - Build: Removed the duplicated `_cli_common.py`; [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) now creates `.venv` for the pinned library.
 - Build: Ignored `.venv/` and `dist/` in ESLint and Git; `devops.py release` refuses to run for this monorepo.
+- Build: Made `devops.py help` describe the project-specific actions and stop advertising the refused `release`.
 
 ## v3.0.0 [released: 2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.

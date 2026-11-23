@@ -31,6 +31,8 @@ from support_python.devops import DevopsCli, NodeProject, read_version, resolve_
 
 # Manifests that must carry the root version besides the root package.json.
 WORKSPACE_VERSION_FILES = ("packages/words/package.json", "package-lock.json")
+DESCRIPTION = "Runs the lint, format, test, build, check, clean, and versions operations of this project."
+COPYRIGHT = "Copyright (c) Giovanni Pellicciotta"
 
 
 class SupportJsProject(NodeProject):
@@ -41,6 +43,15 @@ class SupportJsProject(NodeProject):
     - `versions VERSION` also sets the workspace manifests and `package-lock.json`.
     - `release` is refused: the shared pipeline would freeze only the root manifest.
     """
+
+    def action_summaries(self) -> dict[str, str]:
+        """Describes the actions this project changes, replacing the generic help summaries."""
+        return {
+            "test": "run npm test and the script tests, or a selection of npm tests",
+            "build": "pack the root package and the workspaces into dist/",
+            "versions": "compare versions, or set them in lockstep across workspaces and the lock file",
+            "release": "refused here; follow the Release Process in docs/devops.md",
+        }
 
     def test(self, selection: Sequence[str] = ()) -> bool:
         """Runs `npm test`, then the script tests when no selection narrows the run."""
@@ -89,7 +100,9 @@ class SupportJsProject(NodeProject):
 
 
 def main() -> int:
-    return DevopsCli(SupportJsProject(REPO_ROOT)).run()
+    cli = DevopsCli(SupportJsProject(REPO_ROOT), description=DESCRIPTION, copyright=COPYRIGHT)
+    cli.harness.set_examples(["devops check", "devops test tests/math.test.mjs", "devops versions"])
+    return cli.run()
 
 
 if __name__ == "__main__":

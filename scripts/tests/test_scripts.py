@@ -139,3 +139,24 @@ def test_bootstrap_help_lists_actions_and_exit_codes() -> None:
     assert result.returncode == 0, result.stderr
     for text in ("setup", "--version", "Exit codes:", "2  Invalid arguments"):
         assert text in result.stdout
+
+
+def test_devops_help_describes_project_specific_actions() -> None:
+    result = run_script("devops.py", "help")
+    assert result.returncode == 0, result.stderr
+    lines = {line.split()[0]: line for line in result.stdout.splitlines() if line.startswith("  ") and line.split()}
+    assert "docs/devops.md" in lines["release"]
+    assert "workspace" in lines["versions"]
+    assert "script tests" in lines["test"]
+    assert "workspaces" in lines["build"]
+
+
+def test_devops_help_does_not_advertise_release() -> None:
+    result = run_script("devops.py", "help", "--verbose")
+    assert result.returncode == 0, result.stderr
+    header, _, rest = result.stdout.partition("Usage:")
+    examples = rest.partition("Examples:")[2]
+    assert "release" not in header
+    assert "release" not in examples
+    assert "tests/math.test.mjs" in examples
+    assert "Copyright (c) Giovanni Pellicciotta" in header
