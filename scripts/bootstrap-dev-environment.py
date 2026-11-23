@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Bootstraps a fresh checkout of this project: creates `.venv` with the pinned support-python,
-installs the npm dependencies, then lints and tests through `devops.py`.
+installs the npm dependencies, then runs `devops.py check`.
 
 Standard library only, so it runs on a bare checkout before support-python is installed.
 Cross-platform; requires Python and Node.js with npm on the PATH.
@@ -24,6 +24,27 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 REQUIREMENTS_FILE = REPO_ROOT / "scripts" / "requirements.txt"
 VENV_DIR = REPO_ROOT / ".venv"
 VENV_PYTHON = VENV_DIR / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
+
+
+HELP = """{prog} v{version} - Copyright (c) {author}
+
+Creates .venv with the pinned support-python, installs the npm dependencies, then runs `devops.py check`.
+
+usage: {prog} [setup | version | help] [-h] [-v]
+
+actions:
+  setup          Bootstrap the checkout (default)
+  version        Show version information and exit
+  help           Show this help message and exit
+
+options:
+  -h, --help     Show this help message and exit
+  -v, --version  Show version information and exit
+
+Exit codes:
+  0  Success
+  1  One or more bootstrap steps failed
+  2  Invalid arguments"""
 
 
 def get_project_version() -> str:
@@ -67,7 +88,7 @@ def main() -> int:
         print(f"{PROG} v{get_project_version()} - Copyright (c) {APP_AUTHOR}")
         return 0
     if args in (["-h"], ["--help"], ["help"]):
-        print(__doc__)
+        print(HELP.format(prog=PROG, version=get_project_version(), author=APP_AUTHOR))
         return 0
     if args and args != ["setup"]:
         print(f"[!] Unknown arguments: {' '.join(args)}; see --help.", file=sys.stderr)

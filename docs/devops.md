@@ -24,12 +24,12 @@ Day-to-day operations, provided by support-python's `DevopsCli` on its `NodeProj
 ```bash
 python scripts/devops.py lint | format | test | build | check | clean
 python scripts/devops.py versions [VERSION] [--dry-run]
-python scripts/devops.py release [--dry-run] [--skip-checks] [--skip-github-release] [--yes]
 python scripts/devops.py check
 ```
 
 `build` packs the root package and the `packages/*` workspaces into `dist/`.
-Test the scripts with `.venv/Scripts/python -m pytest scripts/tests` (`.venv/bin/python` outside Windows).
+`test` runs `npm test` and the script tests; `versions VERSION` sets the root and workspace manifests, the lock file, and `CHANGELOG.md` together.
+`release` refuses to run here, because the shared pipeline freezes only the root manifest; use the manual steps under Release Process.
 
 ### Testing
 ```bash
