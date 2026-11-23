@@ -15,7 +15,7 @@ export function isValidEmailAddress(email) {
   if (email.indexOf('@') <= 0) {
     return false;
   }
-  return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email);
+  return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 }
 
 /**

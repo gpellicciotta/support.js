@@ -7,12 +7,18 @@ All notable changes to this project are documented here.
 
 ---
 
-## v3.0.1-pre
+## v3.1.0-pre
 - Build: Pinned support-python v3.3.0 and moved [devops.py](scripts/devops.py) onto its `DevopsCli`, replacing `pack` with `build`.
 - Build: Added `devops.py clean` and `versions`, which sets the root and workspace versions and the lock file together.
 - Build: Removed the duplicated `_cli_common.py`; [bootstrap-dev-environment.py](scripts/bootstrap-dev-environment.py) now creates `.venv` for the pinned library.
 - Build: Ignored `.venv/` and `dist/` in ESLint and Git; `devops.py release` refuses to run for this monorepo.
 - Build: Made `devops.py help` describe the project-specific actions and stop advertising the refused `release`.
+- Fix: `parseChangelog` strips a bold `**[breaking]**` marker, which left `****` in the entry text.
+- Feature: `parseChangelog` marks releases with `isPreRelease`; the `stripPreSuffix` option drops `-pre` from `version`.
+- Fix: `parseChangelog` skips second-level headings without a `v` prefix, such as `## Next Steps`.
+- FrontEnd: Added static `errorIconSprite`, `errorIconId`, and `waitUIDelayTime` settings to `Component`; defaults are unchanged.
+- Fix: Closed the `Component` error title with `</h1>` instead of `</h2>`, which nested the description inside it.
+- Fix: `isValidEmailAddress` accepts plus addressing and top-level domains longer than three letters, like Auth.
 
 ## v3.0.0 [released: 2026-10-31]
 - BackEnd: [breaking] Renamed package to `@gpellicciotta/support.js` and `redirectToHinolugiAuth` to `redirectToAuth`; default sign-in method is now `auth`.

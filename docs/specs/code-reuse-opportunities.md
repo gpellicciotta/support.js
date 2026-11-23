@@ -81,6 +81,24 @@ Both `auth` and `counters` have identical client transport mechanisms:
 - **SSO Authentication Views**: `counters` contains `SignInView` (handling SSO redirection to `auth`, one-time passcode relay, and error parameters) and `CreateAccountView` (redirecting to SSO sign-in). These views can be extracted as turnkey components for any client application.
 - **Service Worker Engine**: Both applications run near-identical service worker scripts (`service-worker.mjs`, ~250 lines) managing versioned cache lifecycle, stale cache pruning, and offline fetch fallbacks.
 
+### Auth Utility Parity (`webapp/js/utils/`)
+Status as of v3.1.0, checked against Auth's copies on 2026-11-23:
+
+| Auth copy              | support.js module      | Status                                                                   |
+| :--------------------- | :--------------------- | :----------------------------------------------------------------------- |
+| `changelog-parser.mjs` | `changelog-parser.mjs` | Equal with `parseChangelog(text, { stripPreSuffix: true })`              |
+| `component.mjs`        | `component.mjs`        | Set `Component.errorIconSprite` and `Component.waitUIDelayTime`          |
+| `events.mjs`           | `events.mjs`           | Equal; style differences only                                            |
+| `log.mjs`              | `logs.mjs`             | Equal for every export Auth uses; `logs.mjs` adds the CLI logger         |
+| `utils.mjs` (dates)    | `dates.mjs`            | Equal for identical inputs                                               |
+| `utils.mjs` (forms)    | `forms.mjs`            | Equal since `isValidEmailAddress` adopted Auth's pattern                 |
+| `utils.mjs` (strings)  | `strings.mjs`          | Equal                                                                    |
+| `utils.mjs` (math)     | `math.mjs`             | Equal for numeric arguments; `random(min, null)` differs, unused by Auth |
+| `domutils.mjs`         | `dom.mjs`              | `htmlToElement` and `onDomReady` equal                                   |
+| `view/app-view.mjs`    | `app-view.mjs`         | Constructor and default `routeRegex` equal                               |
+
+Auth's error overlay markup stays Auth-specific: its retry button and dashboard link need an override of `createComponentUIHtml`.
+
 ---
 
 ## Phased Implementation Roadmap

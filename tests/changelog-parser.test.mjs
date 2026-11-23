@@ -120,6 +120,84 @@ All notable changes are documented here.
     assert.deepEqual(parseChangelog(''), []);
   });
 
+  test('9. Strips a bold **[breaking]** marker without leaving asterisks behind', () => {
+    const releases = parseChangelog(`
+## v4.0.0 [released: 2026-11-17]
+- SPA: **[breaking]** Moved the SPA's chrome onto the vendored look.
+- **[breaking]** Client: Dropped the legacy export.
+- Docs: Mentioned *[breaking]* changes in prose.
+`);
+    const [spa, client, docs] = releases[0].entries;
+    assert.equal(spa.isBreaking, true);
+    assert.equal(spa.category, 'ux');
+    assert.equal(spa.text, 'Moved the SPA\'s chrome onto the vendored look.');
+    assert.equal(client.isBreaking, true);
+    assert.equal(client.category, 'client');
+    assert.equal(client.text, 'Dropped the legacy export.');
+    assert.equal(docs.isBreaking, true);
+    assert.equal(docs.text, 'Mentioned changes in prose.');
+  });
+
+  test('10. Marks -pre versions with isPreRelease and keeps the suffix in version by default', () => {
+    const releases = parseChangelog(`
+# Versioned Changes
+
+## Version History
+
+## v1.1.2-pre
+- DevEx: Moved devops.py onto DevopsCli
+
+## v1.1.1 [released: 2026-09-07] [google-cloud-run: auth-00075-kxj]
+- Security: Escaped app-logo-url in outgoing mails
+`);
+    assert.equal(releases.length, 2);
+    assert.equal(releases[0].version, '1.1.2-pre');
+    assert.equal(releases[0].isPreRelease, true);
+    assert.equal(releases[0].tag, 'in development');
+    assert.equal(releases[0].entries.length, 1);
+    assert.equal(releases[1].version, '1.1.1');
+    assert.equal(releases[1].isPreRelease, false);
+    assert.equal(releases[1].tag, 'released: 2026-09-07 • google-cloud-run: auth-00075-kxj');
+  });
+
+  test('11. Strips the -pre suffix from version when stripPreSuffix is set', () => {
+    const releases = parseChangelog('## v1.1.2-pre\n\n## v1.1.1 [2026-09-07]\n', { stripPreSuffix: true });
+    assert.equal(releases[0].version, '1.1.2');
+    assert.equal(releases[0].isPreRelease, true);
+    assert.equal(releases[0].tag, 'in development');
+    assert.equal(releases[1].version, '1.1.1');
+    assert.equal(releases[1].isPreRelease, false);
+  });
+
+  test('12. Accepts second-level headings only with a v prefix and a digit or Next', () => {
+    const releases = parseChangelog(`
+## Next Steps
+- Not a release entry
+
+## 2.0.0
+- Not a release entry either
+
+## v2.0.0-pre
+- Real entry
+
+### v1.9.0
+- Older entry
+`);
+    assert.deepEqual(releases.map((r) => r.version), ['2.0.0-pre', '1.9.0']);
+    assert.equal(releases[0].entries.length, 1);
+  });
+
+  test('13. Parses the Auth CHANGELOG.md fixture without leaving asterisks in entry text', () => {
+    const content = fs.readFileSync(new URL('./fixtures/auth-changelog.md', import.meta.url), 'utf8');
+    const releases = parseChangelog(content, { maxReleases: Infinity });
+    assert.ok(releases.length > 10);
+    assert.equal(releases[0].isPreRelease, true);
+    const entries = releases.flatMap((r) => r.entries);
+    assert.ok(entries.some((e) => e.isBreaking));
+    const withAsterisks = entries.filter((e) => e.text.includes('**'));
+    assert.deepEqual(withAsterisks.map((e) => e.text), []);
+  });
+
   test('8. Parses real repository CHANGELOG.md without throwing', () => {
     const changelogPath = new URL('../CHANGELOG.md', import.meta.url);
     if (fs.existsSync(changelogPath)) {

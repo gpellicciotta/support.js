@@ -1,4 +1,4 @@
-import { test, describe } from 'vitest';
+import { test, describe, vi, afterEach } from 'vitest';
 import assert from 'node:assert/strict';
 import Component from '../src/component.mjs';
 import { Logger } from '../src/logs.mjs';
@@ -66,8 +66,8 @@ class FakeElement {
 // Builds a Component instance bypassing the real constructor (which needs a global `document`
 // to create/clone its <template>), pre-wired with the same overlay/element structure that
 // `attach()` would normally produce on first attach.
-function makeComponent() {
-  const comp = Object.create(Component.prototype);
+function makeComponent(ComponentClass = Component) {
+  const comp = Object.create(ComponentClass.prototype);
   comp.id = 'test-comp';
   comp.log = new Logger('test-comp');
   comp.app = {};
@@ -261,5 +261,72 @@ describe('startLongRunningOperation', () => {
 
     assert.equal(comp._hasActiveAppProgress, false);
     assert.equal(stopCalls, 1);
+  });
+});
+
+describe('configurable error icon', () => {
+  test('the default error overlay shows the text logo, and its title heading closes properly', () => {
+    const html = makeComponent().createComponentUIHtml();
+    assert.match(html, /<h1 class="logo">:\(<\/h1>/);
+    assert.match(html, /<h1 class="title">Error Title<\/h1>/);
+    assert.doesNotMatch(html, /<use /);
+  });
+
+  test('a subclass with errorIconSprite shows the sprite\'s alert icon instead of the text logo', () => {
+    class SpriteComponent extends Component {
+      static errorIconSprite = '/look/sprite.svg';
+    }
+    const html = makeComponent(SpriteComponent).createComponentUIHtml();
+    assert.match(html, /<svg class="logo icon icon--lg" aria-hidden="true" focusable="false">/);
+    assert.match(html, /<use href="\/look\/sprite\.svg#icon-alert"\/>/);
+    assert.doesNotMatch(html, /:\(/);
+  });
+
+  test('errorIconId selects another symbol from the sprite', () => {
+    class CustomIconComponent extends Component {
+      static errorIconSprite = '/look/sprite.svg';
+      static errorIconId = 'icon-warning';
+    }
+    const html = makeComponent(CustomIconComponent).createComponentUIHtml();
+    assert.match(html, /<use href="\/look\/sprite\.svg#icon-warning"\/>/);
+  });
+
+  test('the base class defaults keep the current behavior', () => {
+    assert.equal(Component.errorIconSprite, null);
+    assert.equal(Component.errorIconId, 'icon-alert');
+    assert.equal(Component.waitUIDelayTime, 700);
+  });
+});
+
+describe('configurable wait overlay delay', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  function startPendingOperation(comp) {
+    comp.startLongRunningOperation({ title: 'Slow task', start: () => new Promise(() => {}) });
+  }
+
+  test('the wait overlay appears after the default 700 ms', () => {
+    vi.useFakeTimers();
+    const comp = makeComponent();
+    startPendingOperation(comp);
+    vi.advanceTimersByTime(699);
+    assert.equal(comp.componentUIEl.classList.contains('wait-overlay'), false);
+    vi.advanceTimersByTime(1);
+    assert.equal(comp.componentUIEl.classList.contains('wait-overlay'), true);
+  });
+
+  test('a subclass with waitUIDelayTime shows the wait overlay after its own delay', () => {
+    class QuickComponent extends Component {
+      static waitUIDelayTime = 50;
+    }
+    vi.useFakeTimers();
+    const comp = makeComponent(QuickComponent);
+    startPendingOperation(comp);
+    vi.advanceTimersByTime(49);
+    assert.equal(comp.componentUIEl.classList.contains('wait-overlay'), false);
+    vi.advanceTimersByTime(1);
+    assert.equal(comp.componentUIEl.classList.contains('wait-overlay'), true);
   });
 });

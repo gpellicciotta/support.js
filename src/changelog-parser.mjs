@@ -15,7 +15,8 @@
 
 /**
  * @typedef {Object} ChangelogRelease
- * @property {string} version - Semantic version number or release identifier
+ * @property {string} version - Semantic version number or release identifier, with any `-pre` suffix unless stripped
+ * @property {boolean} isPreRelease - Whether the heading carried a `-pre` suffix
  * @property {string} tag - Tag or date string (e.g. '2026-08-24' or 'in development')
  * @property {boolean} isLatest - Whether this is the most recent release
  * @property {ChangelogEntry[]} entries - Parsed change items
@@ -27,6 +28,7 @@
  * @param {string} markdownText - Raw markdown content
  * @param {Object} [options] - Parsing configuration options
  * @param {number} [options.maxReleases=20] - Max number of releases to parse
+ * @param {boolean} [options.stripPreSuffix=false] - Drop the `-pre` suffix from `version`
  * @returns {ChangelogRelease[]} Array of parsed release descriptors.
  */
 export function parseChangelog(markdownText, options = {}) {
@@ -41,8 +43,9 @@ export function parseChangelog(markdownText, options = {}) {
     const line = lines[i].trim();
 
     // Match release header: "### vNext" or "### v1.0.2 [in development]" or "## v0.82.1-pre" or "### v0.23.0 [2023-08-14] - First Useable Version"
+    // A "## " heading needs the "v" prefix, so "## Version History" or "## Next Steps" never start a release
     const versionMatch = line.match(
-      /^#{2,3}\s+v?([0-9]+[0-9a-zA-Z._-]*|next\b)(?:(?:\s+\[([^\]]+)\])+|\s+\(([^)]+)\)|\s*[:-]?\s*(.*))?/i,
+      /^(?:###\s+v?|##\s+v)([0-9]+[0-9a-zA-Z._-]*|next\b)(?:(?:\s+\[([^\]]+)\])+|\s+\(([^)]+)\)|\s*[:-]?\s*(.*))?/i,
     );
     if (versionMatch) {
       if (currentRelease) {
@@ -50,7 +53,8 @@ export function parseChangelog(markdownText, options = {}) {
         if (releases.length >= maxReleases) { break; }
       }
 
-      const version = versionMatch[1];
+      const isPreRelease = /-pre$/i.test(versionMatch[1]);
+      const version = options.stripPreSuffix ? versionMatch[1].replace(/-pre$/i, '') : versionMatch[1];
       let tag = '';
 
       // Extract all bracket tags or trailing text
@@ -67,9 +71,8 @@ export function parseChangelog(markdownText, options = {}) {
 
       currentRelease = {
         version,
-        tag:
-          tag ||
-          (version.toLowerCase() === 'next' || version.toLowerCase().endsWith('-pre') ? 'in development' : 'Released'),
+        isPreRelease,
+        tag: tag || (isPreRelease || version.toLowerCase() === 'next' ? 'in development' : 'Released'),
         isLatest: releases.length === 0,
         entries: [],
       };
@@ -84,7 +87,8 @@ export function parseChangelog(markdownText, options = {}) {
       let isBreaking = false;
       if (rawText.toLowerCase().includes('[breaking]')) {
         isBreaking = true;
-        rawText = rawText.replace(/\[breaking\]/gi, '').trim();
+        // Also strip the emphasis around "**[breaking]**", which would otherwise leave "****" in the text
+        rawText = rawText.replace(/\s*\*{0,2}\[breaking\]\*{0,2}\s*/gi, ' ').trim();
       }
 
       // Check category prefix (e.g. "SPA:", "BackEnd:", "Clients:", "Feature:", "Fix:", "DevOps:", etc.)

@@ -350,6 +350,17 @@ describe('validation helpers', () => {
     assert.equal(isValidEmailAddress(null), false);
   });
 
+  test('isValidEmailAddress accepts plus addressing and long top-level domains, like Auth', () => {
+    assert.equal(isValidEmailAddress('user+tag@example.com'), true);
+    assert.equal(isValidEmailAddress('first.last@sub.example.info'), true);
+    assert.equal(isValidEmailAddress('x@example.technology'), true);
+    assert.equal(isValidEmailAddress('u_1@ex-ample.org'), true);
+    assert.equal(isValidEmailAddress('@example.com'), false);
+    assert.equal(isValidEmailAddress('a@b'), false);
+    assert.equal(isValidEmailAddress('a@b.c'), false);
+    assert.equal(isValidEmailAddress('a b@c.com'), false);
+  });
+
   test('isValidPassword rejects short passwords', () => {
     assert.equal(isValidPassword(''), false);
     assert.equal(isValidPassword(null), false);

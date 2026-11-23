@@ -1,5 +1,5 @@
 import { Logger } from './logs.mjs';
-import { capitalize } from './strings.mjs';
+import { capitalize, escapeHtml } from './strings.mjs';
 
 /**
  * Base SPA component lifecycle, event bookkeeping, and UI overlay management.
@@ -9,8 +9,6 @@ import { capitalize } from './strings.mjs';
  *
  * @module component
  */
-
-const DEFAULT_WAIT_UI_DELAY_TIME = 700; // ms before the wait overlay is shown for a long-running operation
 
 /**
  * @typedef {Object} LongRunningOperationSpec
@@ -26,6 +24,28 @@ const DEFAULT_WAIT_UI_DELAY_TIME = 700; // ms before the wait overlay is shown f
  * Base class for all attachable/detachable DOM components in the application.
  */
 export default class Component {
+  /**
+   * URL of an SVG sprite holding the error overlay icon; `null` shows the text logo instead.
+   * Set it on `Component` for all components, or on a subclass for that subclass only.
+   *
+   * @type {string|null}
+   */
+  static errorIconSprite = null;
+
+  /**
+   * Symbol ID of the error overlay icon within `errorIconSprite`.
+   *
+   * @type {string}
+   */
+  static errorIconId = 'icon-alert';
+
+  /**
+   * Milliseconds a long-running operation runs before the wait overlay is shown.
+   *
+   * @type {number}
+   */
+  static waitUIDelayTime = 700;
+
   /**
    * Create a Component instance.
    *
@@ -136,8 +156,8 @@ export default class Component {
     return `
       <div id="${this.id}" class="component">
         <div class="error-overlay">
-          <h1 class="logo">:(</h1>
-          <h1 class="title">Error Title</h2>
+          ${this.createErrorIconHtml()}
+          <h1 class="title">Error Title</h1>
           <p class="description">Error Description</p>
         </div>
         <div class="wait-overlay progress-component">
@@ -148,6 +168,20 @@ export default class Component {
         </div>
         ${this.createMainUIHtml()}
       </div>`;
+  }
+
+  /**
+   * Generate the error overlay icon: the `errorIconSprite` symbol when configured, else a text logo.
+   *
+   * @returns {string} Error icon HTML string.
+   */
+  createErrorIconHtml() {
+    const { errorIconSprite, errorIconId } = this.constructor;
+    if (!errorIconSprite) {
+      return '<h1 class="logo">:(</h1>';
+    }
+    const href = escapeHtml(`${errorIconSprite}#${errorIconId}`);
+    return `<svg class="logo icon icon--lg" aria-hidden="true" focusable="false"><use href="${href}"/></svg>`;
   }
 
   /**
@@ -314,7 +348,7 @@ export default class Component {
         }
         this.showWaitOverlay({ 'progress-message': op.description || op.title || 'Waiting for data...' });
       }
-    }, DEFAULT_WAIT_UI_DELAY_TIME);
+    }, this.constructor.waitUIDelayTime);
     this.startWaitUITimer = currentTimer;
 
     this.log.info(`Long-running operation '${op.title}' has started`);
