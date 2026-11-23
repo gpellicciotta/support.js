@@ -48,7 +48,7 @@ const RETAINED_MODULES = [
 ];
 
 describe('Non-UI Package Surface', () => {
-  it('package.json exports no CSS and omits css from files', () => {
+  it('package.json exports no CSS, omits css from files, and ships docs', () => {
     const pkgPath = path.join(rootDir, 'package.json');
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
     assert.ok(pkg.exports, 'package.json should have exports field');
@@ -57,6 +57,12 @@ describe('Non-UI Package Surface', () => {
     assert.equal(pkg.exports['./css/*.css'], undefined, 'package.json must not export ./css/*.css');
     assert.ok(!pkg.files.includes('css'), 'package.json files must not include css');
     assert.ok(!pkg.files.includes('img'), 'package.json files must not include img');
+    assert.ok(pkg.files.includes('docs'), 'package.json files must include docs');
+    assert.equal(
+      fs.existsSync(path.join(rootDir, 'docs', 'specs', 'client-upgrade-guide.md')),
+      true,
+      'client-upgrade-guide.md should exist in docs/specs/',
+    );
   });
 
   it('css/ and img/ directories and visual-style-guide.md are absent', () => {

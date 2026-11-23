@@ -12,7 +12,16 @@ All notable changes to this project are documented here.
 - FrontEnd: **[breaking]** Removed `component.mjs`, `app-view.mjs`, `app-menu.mjs`, `app-action-bar.mjs`, `app-notification-bar.mjs`, `app-internals-view.mjs`, and `home-view.mjs`.
 - FrontEnd: **[breaking]** Removed `dialog.mjs`, `collection-editor.mjs`, `reorder.mjs`, `installer.mjs`, and provider logos under `img/`.
 - FrontEnd: **[breaking]** Removed DOM helpers from [forms.mjs](src/forms.mjs), keeping `isValidEmailAddress`, `isValidPassword`, and `validPasswordDescription`.
-- Docs: **[breaking]** Removed `docs/specs/visual-style-guide.md` and added the v4.0.0 `support.webapp` migration table in [client-upgrade-guide.md](docs/specs/client-upgrade-guide.md).
+- Docs: **[breaking]** Removed `docs/specs/visual-style-guide.md` and shipped the v4.0.0 `support.webapp` migration table in [client-upgrade-guide.md](docs/specs/client-upgrade-guide.md).
+
+### Migration Guide
+- Replace `css/*.css` imports with `support.webapp` base, reset, shell, component, and look stylesheets (`src/css/`).
+- Replace `component.mjs`, `app-view.mjs`, `app-menu.mjs`, `app-action-bar.mjs`, and `app-notification-bar.mjs` with `support.webapp` shell and behavior modules.
+- Replace `dialog.mjs` and `collection-editor.mjs` with `support.webapp` `dialog.js`, `inline-confirm.js`, and list-editor shell patterns.
+- Replace `app-internals-view.mjs` and `home-view.mjs` with shell pages built by each application.
+- Replace DOM helpers from [forms.mjs](src/forms.mjs) with `support.webapp` `form.js` and `field.js`; keep pure validators from [forms.mjs](src/forms.mjs).
+- Stay on v3.1.0 if your application still depends on `reorder.mjs`, `installer.mjs`, or provider logos under `img/`.
+- Consult [client-upgrade-guide.md](docs/specs/client-upgrade-guide.md) (included in the published package under `docs/`) for the complete mapping table.
 
 ## v3.1.0 [released: 2026-11-23]
 - Build: Pinned support-python v3.3.0 and moved [devops.py](scripts/devops.py) onto its `DevopsCli`, replacing `pack` with `build`.
